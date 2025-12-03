@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <util/util.h>
+#include <parser/parser.h>
 
 int main(int ac, char **av)
 {
-	style(1, COL_WHITE, COL_RED, STYLE_BOLD);
-	printf(" ERROR: \n");
-	style(1, 0, 0, STYLE_RESET);
-	printf("Test 123\n");
+	//t_err_str errs = err_style(0, NULL, (t_text_style){0,0,0});
+	//err_free(errs);
+	parse_map(av[1]);
 	return 0;
 }

@@ -7,6 +7,7 @@
 # include <mlx_int.h>
 
 # include <libft.h>
+# include <get_next_line.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Text style                                                                 //
@@ -37,12 +38,12 @@ enum e_text_style
 };
 
 /** @brief Internal bookkeeping struct */
-struct s_text_style
+typedef struct s_text_style
 {
 	enum e_text_colors	fg;
 	enum e_text_colors	bg;
 	enum e_text_style	style;
-};
+}	t_text_style;
 
 /**
  * @brief Sets the style globally on a file descriptor
@@ -86,15 +87,28 @@ typedef char* t_err_str;
 /** @brief Hidden header for the header string */
 struct s_err_str_hdr
 {
-	size_t	size;
-	size_t	capacity;
+	/** @brief String size */
+	size_t			size;
+	/** @brief String capacity */
+	size_t			capacity;
+	/** @brief Current active style */
+	t_text_style	style;
 };
 
 t_err_str
 err(t_err_str err, const char *str);
 
+t_err_str
+err_style(t_err_str errstr,
+	const char *str,
+	t_text_style style);
+
 void
 err_free(t_err_str err);
+
+/** @brief Get the header for an error */
+struct s_err_str_hdr
+*err_hdr(t_err_str err);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Memory utils                                                               //

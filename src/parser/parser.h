@@ -41,7 +41,7 @@ struct s_parser
 	size_t line_num;
 };
 
-int
+bool
 parse_map(const char *file);
 
 
@@ -51,5 +51,7 @@ parse_map(const char *file);
 
 void
 parser_error(t_err_str err);
+void
+parser_error_loc(const struct s_parser *parser, t_err_str err);
 
 #endif // PARSER_H

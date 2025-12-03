@@ -1,41 +1,48 @@
 #include <util/util.h>
 
-static size_t
-	hdr_size()
+static inline size_t
+	hdr_size(void)
 {
 	static size_t hdr_size;
 
 	if (!hdr_size)
 	{
 		hdr_size = sizeof(struct s_err_str_hdr);
-		if (hdr_size < 16)
-			hdr_size = 16;
+		if (hdr_size % 16)
+			hdr_size += 16 - (hdr_size % 16);
 	}
 	return (hdr_size);
 }
 
-t_err_str
-	err(t_err_str err, const char *str)
+struct s_err_str_hdr
+	*err_hdr(t_err_str err)
 {
-	struct s_err_str_hdr	*hdr = (struct s_err_str_hdr*)(err - hdr_size());
+	return ((struct s_err_str_hdr *)((char *)err - hdr_size()));
+}
+
+t_err_str
+	err(t_err_str errstr, const char *str)
+{
+	struct s_err_str_hdr	*hdr = err_hdr(errstr);
 	char					*buf;
 	const size_t			len = ft_strlen(str);
 
-	if (!err || !err[0])
+	if (!errstr)
 	{
-		buf = xmalloc(hdr_size() + len);
-		*((struct s_err_str_hdr *)buf) = (struct s_err_str_hdr){len, len};
+		buf = xmalloc(hdr_size() + len + 1);
+		*((struct s_err_str_hdr *)buf) = (struct s_err_str_hdr){len, len + 1,
+			{0, 0, 0}};
+		ft_memcpy(buf + hdr_size(), str, len + 1);
 		return (buf + hdr_size());
 	}
 	while (hdr->capacity <= hdr->size + len + 1)
 		hdr->capacity = hdr->capacity * 2 + !hdr->capacity * 16;
 	buf = xmalloc(hdr_size() + hdr->capacity);
 	*((struct s_err_str_hdr *)buf) = (struct s_err_str_hdr){hdr->size + len,
-		hdr->capacity};
-	ft_memcpy(buf + hdr_size(), err, hdr->size);
-	ft_memcpy(buf + hdr_size() + hdr->size, str, len);
-	buf[hdr_size() + hdr->size + len] = 0;
-	free(err);
+		hdr->capacity, hdr->style};
+	ft_memcpy(buf + hdr_size(), errstr, hdr->size);
+	ft_memcpy(buf + hdr_size() + hdr->size, str, len + 1);
+	free(hdr);
 	return (buf + hdr_size());
 
 }
