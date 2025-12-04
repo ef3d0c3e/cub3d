@@ -11,47 +11,67 @@
 /* ************************************************************************** */
 #include <parser/parser.h>
 
-/** @brief Gets the identifier and display name of a header field */
-static const char
-	**fields(size_t id, bool color)
+const char
+	**parser_hdr_fields(size_t id, bool is_color)
 {
-	static const char	*colors[] = {"F", "Floor Color", "C", "Ceiling Color"};
-	static const char	*textures[] = {"NO", "North", "WE", "West",
-	"SO", "South", "EA", "East"};
+	static const char	*colors[] = {"F", "Floor", "C", "Ceiling"};
+	static const char	*textures[] = {"NO", "North", "EA", "East",
+		"SO", "South", "WE", "West"};
 
-	if (color)
+	if (is_color)
 		return (&colors[id * 2]);
 	return (&textures[id * 2]);
 }
 
-/** @brief Attempt to parse a basic texture with orientation */
-static int
-	parse_texture(struct s_parser *parser, const char *line)
+/** @brief Check for missing fields in the header */
+static bool
+	hdr_check_missing(struct s_parser *parser)
 {
 	size_t		i;
-	const char	**field;
+	bool		status;
 
+	status = true;
 	i = 0;
 	while (i++ < 4)
 	{
-		field = fields(i - 1, false);
-		if (ft_strncmp(line, field[0], 2))
-			continue ;
 		if (parser->s_data.textures[i - 1])
-			return (parser_error_loc(parser, err(err_style(err(0,
-				"Duplicate texture '"), field[1], (t_text_style){COL_YELLOW, 0,
-				STYLE_BOLD}), "'")), -1);
-		
-		return (1);
+			continue ;
+		parser_error_file(parser, err_style(err_style(err(0, "Missing texture "
+						"for '"), parser_hdr_fields(i - 1, false)[1],
+					(t_text_style){COL_YELLOW, 0, STYLE_BOLD}), "'",
+				(t_text_style){0, 0, 0}));
+		status = false;
 	}
-	return (0);
+	while (i++ < 7)
+	{
+		if (parser->s_data.colors[i - 6] != (t_color)COLOR_UNINIT)
+			continue ;
+		parser_error_file(parser, err_style(err_style(err(0, "Missing color for"
+						" '"), parser_hdr_fields(i - 6, true)[1], (t_text_style)
+				{COL_YELLOW, 0, STYLE_BOLD}), "'", (t_text_style){0, 0, 0}));
+		status = false;
+	}
+	return (status);
 }
 
 bool
-	parser_parse_header(struct s_parser *parser)
+	parser_hdr(struct s_parser *parser)
 {
-	const char	*line = parser_trim_start(parser->line, " \t");
+	const char	*line = parser_trim_start(parser->line, " \t\n");
+	int			status;
 
 	if (!line[0])
+		return (true);
+	status = parse_hdr_texture(parser, line);
+	if (status == 0)
+		status = parse_hdr_color(parser, line);
+	if (status == -1)
 		return (false);
+	if (status == 0)
+	{
+		if (!hdr_check_missing(parser))
+			return (false);
+		parser->state = PARSE_MAT;
+	}
+	return (true);
 }

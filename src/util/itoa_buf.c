@@ -42,10 +42,10 @@ char
 		val = -(unsigned int)x;
 	}
 	pos = base10_len(val);
-	buf[pos + 1] = 0;
+	buf[pos] = 0;
 	while (val)
 	{
-		buf[pos--] = (val % 10) + '0';
+		buf[--pos] = (val % 10) + '0';
 		val /= 10;
 	}
 	return (buf);

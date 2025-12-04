@@ -21,6 +21,47 @@
 # include <get_next_line.h>
 
 ////////////////////////////////////////////////////////////////////////////////
+// Definitions                                                                //
+////////////////////////////////////////////////////////////////////////////////
+
+/** @brief A 2D float vector */
+typedef struct s_vec2
+{
+	float	x;
+	float	y;
+}	t_vec2;
+
+/** @brief A 2D int vector */
+typedef struct s_pos
+{
+	int	x;
+	int	y;
+}	t_pos;
+
+/** @brief Represent orientation (clockwise) */
+enum e_orientation
+{
+	/** @brief Facing North */
+	ORI_NORTH,
+	/** @brief Facing East */
+	ORI_EAST,
+	/** @brief Facing South */
+	ORI_SOUTH,
+	/** @brief Facing West */
+	ORI_WEST,
+};
+
+
+/** @brief Color type */
+typedef uint32_t	t_color;
+
+enum
+{
+	/** @brief Uninitialized color value */
+	COLOR_UNINIT = ~0
+};
+
+////////////////////////////////////////////////////////////////////////////////
 // Text style                                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -67,7 +108,7 @@ enum e_text_style
 	STYLE_RESET = 0x10,
 };
 
-/** @brief Represents text style */
+/** @brief Represent text style */
 typedef struct s_text_style
 {
 	/** @brief Foreground color */
@@ -79,7 +120,7 @@ typedef struct s_text_style
 }	t_text_style;
 
 /**
- * @brief Sets the style globally on a file descriptor
+ * @brief Set the style globally on a file descriptor
  *
  * @param fd The destination file descriptor (1 or 2)
  * @param fg The foreground color
@@ -92,30 +133,7 @@ style(int fd,
 	enum e_text_colors bg,
 	enum e_text_style style);
 
-/**
- * @}
- */
-
-////////////////////////////////////////////////////////////////////////////////
-// Definitions                                                                //
-////////////////////////////////////////////////////////////////////////////////
-
-/** @brief A 2D float vector */
-typedef struct s_vec2
-{
-	float	x;
-	float	y;
-}	t_vec2;
-
-/** @brief A 2D int vector */
-typedef struct s_pos
-{
-	int	x;
-	int	y;
-}	t_pos;
-
-/** @brief Color type */
-typedef uint32_t	t_color;
+/** @} */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Error messages                                                             //
@@ -145,7 +163,7 @@ struct s_err_str_hdr
 };
 
 /**
- * @brief Appends a string to the error
+ * @brief Append a string to the error
  *
  * @param err The base error message (can be NULL)
  * @param str String to append to err
@@ -154,7 +172,7 @@ struct s_err_str_hdr
 t_err_str
 err(t_err_str err, const char *str);
 /**
- * @brief Appends a string to the error with style formatting
+ * @brief Append a string to the error with style formatting
  *
  * @param errstr The base error message (can be NULL)
  * @param str String to append to err
@@ -187,11 +205,30 @@ struct s_err_str_hdr
 // Memory utils                                                               //
 ////////////////////////////////////////////////////////////////////////////////
 
-/** @brief Allocates and @ref exit(1) on errors */
+/**
+ * @brief Allocate by calling `malloc` and `exit(1)` on errors
+ *
+ * @note If `size == 0`, then allocation is performed with `size = 1`.
+ * This guarantees unique pointers that can be passed to free.
+ *
+ * @param size Number of bytes to allocate
+ */
 void
 *xmalloc(size_t size);
 
-/** @brief Reallocates and @ref exit(1) on errors */
+/**
+ * @brief Reallocate by calling `malloc`, `ft_memcpy` and `exit(1)` on errors
+ *
+ * @note If @p ptr is `NULL`, this is equivalent to `xmalloc(newsz)`
+ * @note If @p newsz is `0`, this is equivalent to `free(newsz)`
+ *
+ * @param ptr Pointer to reallocate
+ * @param oldsz Current size of ptr
+ * @param newsz Size of the returned buffer
+ *
+ * @returns A buffer containing the first @p oldsz of @p ptr and can hold at
+ * least @p newsz bytes.
+ */
 void
 *xrealloc(void *ptr, size_t oldsz, size_t newsz);
 
@@ -200,7 +237,7 @@ void
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief Formats an integer into a string buffer
+ * @brief Format an integer into a string buffer
  *
  * @param buf Buffer to format into (must be able to hold at least 12
  * characters)
