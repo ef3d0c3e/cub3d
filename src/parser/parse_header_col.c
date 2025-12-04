@@ -57,7 +57,8 @@ static bool
 		if ((i != 2 && (*line)[0] != ','))
 			return (parser_error_loc(parser, err(0, "Expected a triplet for "
 						"color")), false);
-		*line = ++*line;
+		if (i != 2)
+			*line = ++*line;
 		++i;
 	}
 	if (**line)

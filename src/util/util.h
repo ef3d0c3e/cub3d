@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <mlx_int.h>
+# include <mlx.h>
 
 # include <libft.h>
 # include <get_next_line.h>
@@ -51,7 +52,6 @@ enum e_orientation
 	ORI_WEST,
 };
 
-
 /** @brief Color type */
 typedef uint32_t	t_color;
 
@@ -70,7 +70,7 @@ enum
  * @{
  */
 
-/** @brief Colors for the text */
+/** @brief Colors for text */
 enum e_text_colors
 {
 	/** @brief No color (keeps the current active colorf) */
@@ -93,7 +93,7 @@ enum e_text_colors
 	COL_WHITE,
 };
 
-/** @brief Styles for the text */
+/** @brief Styles for text */
 enum e_text_style
 {
 	/** @brief No style (keeps the current active style) */

@@ -18,8 +18,9 @@ void
 	const t_text_style	st_none = {0, 0, 0};
 	t_err_str			msg;
 
-	msg = err_style(err(err_style(err_style(0, " ERROR: ", (t_text_style){COL_WHITE, COL_RED,
-						STYLE_BOLD}), "\n", st_none), errstr), "\n", st_none);
+	msg = err_style(err(err_style(err_style(0, " ERROR: ", (t_text_style){
+						COL_WHITE, COL_RED, STYLE_BOLD}), "\n", st_none),
+				errstr), "\n", st_none);
 	write(STDOUT_FILENO, msg, ft_strlen(msg));
 	err_free(errstr);
 	err_free(msg);

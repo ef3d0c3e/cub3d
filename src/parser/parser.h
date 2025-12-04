@@ -14,6 +14,7 @@
 
 # include <util/util.h>
 # include <stdlib.h>
+# include <assets/assets.h>
 
 /**
  * @defgroup Parser Parser
@@ -59,6 +60,10 @@ struct s_parser
 		int					map_width;
 		/** @brief Current maximum map height */
 		int					map_height;
+		/** @brief Atlas for textures */
+		t_texture_atlas		tex_atlas;
+		/** @brief Atlas for materials */
+		t_material_atlas	mat_atlas;
 	}						s_data;
 	/** @brief Parsed file */
 	const char				*file;
@@ -70,7 +75,7 @@ struct s_parser
 	int						line_num;
 
 	/** @brief Parser state */
-	enum e_parser_state	state;
+	enum e_parser_state		state;
 };
 
 /**
@@ -168,6 +173,11 @@ parse_hdr_texture(struct s_parser *parser, const char *line);
  */
 int
 parse_hdr_color(struct s_parser *parser, const char *line);
+
+/* --- Map parsing --- */
+
+bool
+parser_map(struct s_parser *parser);
 
 /** @} */
 

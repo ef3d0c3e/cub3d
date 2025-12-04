@@ -19,6 +19,9 @@
  * @{
  */
 
+/** @brief ID of an object in an atlas */
+typedef unsigned int	t_atlas_id;
+
 ////////////////////////////////////////////////////////////////////////////////
 // Textures                                                                   //
 ////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +52,27 @@ typedef struct s_texture_atlas
 	t_texture	*textures;
 	/** @brief The number of textures */
 	size_t		size;
+	/** @brief Capacity of the atlas */
+	size_t		capacity;
 }	t_texture_atlas;
+
+/**
+ * @brief Add a texture in the texture atlas
+ *
+ * @param atlas The atlas
+ * @param material The texture to add
+ * @return The ID of the inserted texture
+ */
+t_atlas_id
+atlas_tex_add(t_texture_atlas *atlas, t_texture texture);
+/**
+ * @brief Free the texture atlas
+ *
+ * @param mlx_ptr The mlx instance
+ * @param atlas The atlas to free
+ */
+void
+atlas_tex_free(void *mlx_ptr, t_texture_atlas *atlas);
 
 /** @} */
 
@@ -79,10 +102,12 @@ enum e_mat_type
 /** @brief A material */
 typedef struct s_material
 {
+	/** @brief Material character id */
+	char				id;
 	/** @brief Material type */
 	enum e_mat_type		type;
 	/** @brief Material textures */
-	int					tdx_ids[4];
+	int					tex_ids[4];
 	/** @brief Material orientation */
 	enum e_orientation	orientation;
 }	t_material;
@@ -94,7 +119,35 @@ typedef struct s_material_atlas
 	t_material	*materials;
 	/** @brief Number of materials */
 	size_t		size;
+	/** @brief Capacity of the atlas */
+	size_t		capacity;
 }	t_material_atlas;
+
+/**
+ * @brief Add a material in the material atlas
+ *
+ * @param atlas The atlas
+ * @param material The material to add
+ * @return The ID of the inserted material
+ */
+t_atlas_id
+atlas_mat_add(t_material_atlas *atlas, t_material material);
+/**
+ * @brief Free the material atlas
+ *
+ * @param atlas The atlas to free
+ */
+void
+atlas_mat_free(t_material_atlas *atlas);
+/**
+ * @brief Get a material by it's character id
+ *
+ * @param atlas The atlas to get the material from
+ * @param ch The material character id
+ * @return The material, or `NULL` if not found
+ */	
+t_material
+*atlas_mat_get(t_material_atlas *atlas, char ch);
 
 /** @} */
 

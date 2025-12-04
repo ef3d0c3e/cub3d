@@ -17,7 +17,7 @@ static bool
 	parse_line(struct s_parser *parser)
 {
 	parser->line = get_next_line(parser->fd);
-	while (parser->line && parser->state != PARSE_ERROR)
+	while (parser->line)
 	{
 		++parser->line_num;
 		if (parser->state == PARSE_HDR && !parser_hdr(parser))
@@ -25,6 +25,8 @@ static bool
 		free(parser->line);
 		parser->line = get_next_line(parser->fd);
 	}
+	if (parser->state != PARSE_MAP)
+		return (parser_error_file(parser, err(0, "Unexpected end of file")), 0);
 	return (parser->state != PARSE_ERROR);
 }
 
