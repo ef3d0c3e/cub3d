@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 05:57:40 by lgamba            #+#    #+#             */
+/*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef UTIL_H
 # define UTIL_H
 
@@ -13,35 +24,57 @@
 // Text style                                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @defgroup TextStyle Text Styling
+ * @{
+ */
+
 /** @brief Colors for the text */
 enum e_text_colors
 {
+	/** @brief No color (keeps the current active colorf) */
 	COL_NONE = 0,
+	/** @brief Black */
 	COL_BLACK,
+	/** @brief Red */
 	COL_RED,
+	/** @brief Green */
 	COL_GREEN,
+	/** @brief Yellow */
 	COL_YELLOW,
+	/** @brief Blue */
 	COL_BLUE,
+	/** @brief Magenta */
 	COL_MAGENTA,
+	/** @brief Cyan */
 	COL_CYAN,
+	/** @brief White */
 	COL_WHITE,
 };
 
 /** @brief Styles for the text */
 enum e_text_style
 {
+	/** @brief No style (keeps the current active style) */
 	STYLE_NONE = 0x00,
+	/** @brief Underline */
 	STYLE_UNDERLINE = 0x01,
+	/** @brief Bold */
 	STYLE_BOLD = 0x02,
+	/** @brief Italic */
 	STYLE_ITALIC = 0x04,
+	/** @brief Resets style and colors */
 	STYLE_RESET = 0x10,
 };
 
-/** @brief Internal bookkeeping struct */
+/** @brief Represents text style */
 typedef struct s_text_style
 {
+	/** @brief Foreground color */
 	enum e_text_colors	fg;
+	/** @brief Background color */
 	enum e_text_colors	bg;
+	/** @brief Text style attributes */
 	enum e_text_style	style;
 }	t_text_style;
 
@@ -52,7 +85,6 @@ typedef struct s_text_style
  * @param fg The foreground color
  * @param bg The background color
  * @param style The style
- *
  */
 bool
 style(int fd,
@@ -60,29 +92,46 @@ style(int fd,
 	enum e_text_colors bg,
 	enum e_text_style style);
 
+/**
+ * @}
+ */
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions                                                                //
 ////////////////////////////////////////////////////////////////////////////////
 
+/** @brief A 2D float vector */
 typedef struct s_vec2
 {
-	float x;
-	float y;
+	float	x;
+	float	y;
 }	t_vec2;
 
+/** @brief A 2D int vector */
 typedef struct s_pos
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 }	t_pos;
 
-typedef uint32_t t_color;
+/** @brief Color type */
+typedef uint32_t	t_color;
 
 ////////////////////////////////////////////////////////////////////////////////
-// String utils                                                               //
+// Error messages                                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
-typedef char* t_err_str;
+/**
+ * @defgroup ErrorMessageBuilder Error Messages Builder
+ * @{
+ */
+
+/**
+ * @brief Type for representing error messages
+ *
+ * @warning Never pass this to `free()` directly. Instead call @ref err_free.
+ */
+typedef char		*t_err_str;
 
 /** @brief Hidden header for the header string */
 struct s_err_str_hdr
@@ -95,30 +144,71 @@ struct s_err_str_hdr
 	t_text_style	style;
 };
 
+/**
+ * @brief Appends a string to the error
+ *
+ * @param err The base error message (can be NULL)
+ * @param str String to append to err
+ * @return The result of concatenation
+ */
 t_err_str
 err(t_err_str err, const char *str);
-
+/**
+ * @brief Appends a string to the error with style formatting
+ *
+ * @param errstr The base error message (can be NULL)
+ * @param str String to append to err
+ * @param style The custom text styling to apply on the appended string
+ * @return The result of concatenation
+ */
 t_err_str
 err_style(t_err_str errstr,
 	const char *str,
 	t_text_style style);
-
+/**
+ * @brief Free an error message
+ *
+ * @param err The error message to free
+ */
 void
 err_free(t_err_str err);
 
-/** @brief Get the header for an error */
+/**
+ * @brief Get the header from a valid error string
+ *
+ * @returns The header of the error string
+ */
 struct s_err_str_hdr
 *err_hdr(t_err_str err);
+
+/** @} */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Memory utils                                                               //
 ////////////////////////////////////////////////////////////////////////////////
 
-
+/** @brief Allocates and @ref exit(1) on errors */
 void
 *xmalloc(size_t size);
 
+/** @brief Reallocates and @ref exit(1) on errors */
 void
 *xrealloc(void *ptr, size_t oldsz, size_t newsz);
+
+////////////////////////////////////////////////////////////////////////////////
+// Misc utils                                                               //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Formats an integer into a string buffer
+ *
+ * @param buf Buffer to format into (must be able to hold at least 12
+ * characters)
+ * @param x Integer to format
+ *
+ * @returns @p buf
+ */
+char
+*itoa_buf(char *buf, int x);
 
 #endif // UTIL_H

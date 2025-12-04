@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory.c                                           :+:      :+:    :+:   */
+/*   itoa_buf.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,36 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include <util/util.h>
+#include <limits.h>
 
-void
-	*xmalloc(size_t size)
+static inline size_t
+	base10_len(unsigned int x)
 {
-	void	*ptr;
+	size_t	len;
 
-	if (size == 0)
-		size = 1;
-	ptr = malloc(size);
-	if (!ptr)
+	len = 0;
+	while (x)
 	{
-		asm("int $3");
-		exit(1);
+		++len;
+		x /= 10;
 	}
-	return (ptr);
+	return (len);
 }
 
-void
-	*xrealloc(void *ptr, size_t oldsz, size_t newsz)
+char
+	*itoa_buf(char *buf, int x)
 {
-	void	*new;
+	size_t			pos;
+	unsigned int	val;
 
-	if (newsz == 0)
+	if (!x)
+		return (ft_memcpy(buf, "0", 2));
+	pos = 0;
+	val = (unsigned int)x;
+	if (x < 0)
 	{
-		free(ptr);
-		return (NULL);
+		buf[pos++] = '-';
+		val = -(unsigned int)x;
 	}
-	if (oldsz >= newsz)
-		return (ptr);
-	new = ft_memcpy(xmalloc(newsz), ptr, oldsz);
-	free(ptr);
-	return (new);
+	pos = base10_len(val);
+	buf[pos + 1] = 0;
+	while (val)
+	{
+		buf[pos--] = (val % 10) + '0';
+		val /= 10;
+	}
+	return (buf);
 }

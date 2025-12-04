@@ -1,6 +1,6 @@
 NAME := cub3D
 CC := cc
-CFLAGS := -Wall -Wextra -pedantic -ggdb
+CFLAGS := -Wall -Wextra -pedantic -ggdb -std=gnu99
 IFLAGS := -I./src
 LFLAGS := -lm
 
@@ -27,6 +27,14 @@ $(NAME): LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
 $(NAME): $(LIB_FT) $(LIB_GNL) $(LIB_MLX) $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LFLAGS)
 
+# Bonus
+.PHONY: all
+bonus: $(NAME)
+
+# All
+.PHONY: all
+all: $(NAME)
+
 # Libraries build
 # libft
 $(LIB_FT):
@@ -41,7 +49,7 @@ $(LIB_GNL):
 # MLX
 $(LIB_MLX):
 	echo "Building libmlx..."
-	cd $(dir $(LIB_MLX)) && ./configure
+	cd $(dir $(LIB_MLX)) && CFLAGS="-std=gnu89" ./configure
 
 .PHONY: clangd
 clangd:
@@ -49,11 +57,10 @@ clangd:
 	cd build && cmake ..
 	cp build/compile_commands.json .
 
-.PHONY: all
-bonus: $(NAME)
-
-.PHONY: all
-all: $(NAME)
+.PHONY: docs
+docs:
+	@mkdir -p docs
+	doxygen doxygen
 
 .PHONY: clean
 clean:

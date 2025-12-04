@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   style.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 05:57:40 by lgamba            #+#    #+#             */
+/*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "util.h"
-#include <stdio.h>
 
+/** @brief Gets the currently active style on a file descriptor */
 static struct s_text_style
 	*style_opt(int fd)
 {
@@ -11,6 +22,7 @@ static struct s_text_style
 	return (&styles[fd - 1]);
 }
 
+/** @brief Applies color on a file descriptor */
 static bool
 	set_color(
 	int fd,
@@ -33,6 +45,7 @@ static bool
 	return (write(fd, buf, 5) == 5);
 }
 
+/** @brief Applies text style on a file descriptor */
 static bool
 	set_style(
 	int fd,
