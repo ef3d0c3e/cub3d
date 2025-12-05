@@ -152,6 +152,95 @@ t_material
 
 /** @} */
 
+////////////////////////////////////////////////////////////////////////////////
+// Sprites                                                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup Sprites Sprites
+ * @ingroup Assets
+ * @{
+ */
+
+/** @brief A sprite */
+typedef struct s_sprite
+{
+	/** @brief Texture of the sprite */
+	const t_texture	*texture;
+	/** @brief Background color of the sprite (for transparency) */
+	t_color			background;
+	/** @brief Sprite rectangle `x` coordinate */
+	int				left;
+	/** @brief Sprite rectangle `y` coordinate */
+	int				top;
+	/** @brief Sprite rectangle width */
+	int				width;
+	/** @brief Sprite rectangle height */
+	int				height;
+}	t_sprite;
+
+/**
+ * @brief Sample a pixel from a sprite
+ *
+ * @param spr Sprite to sample from
+ * @param u X-axis factor, in range `[0.f, 1.f]`
+ * @param v Y-axis factor, in range `[0.f, 1.f]`
+ * @return The sampled color (or `COLOR_UNINIT` if sampling background)
+ */
+t_color
+sprite_sample(const t_sprite *spr, float u, float v);
+
+/**
+ * @brief A sprite-sheet
+ *
+ * A 2D grid containing multiple sprites.
+ * The left dimension represent separate animation states.
+ * The down dimension represent animation frames.
+ */
+typedef struct s_sprite_sheet
+{
+	/** @brief Texture of the sheet */
+	const t_texture	*texture;
+	/** @brief Background color of the sheet (for transparency) */
+	t_color			background;
+
+	/** @brief Left-offset of the sheet */
+	int				off_left;
+	/** @brief Top-offset of the sheet */
+	int				off_top;
+	/** @brief Left separator width */
+	int				sep_left;
+	/** @brief Top separator height */
+	int				sep_top;
+	/** @brief Width of a single sprite in the sheet */
+	int				width;
+	/** @brief Height of a single sprite in the sheet */
+	int				height;
+}	t_sprite_sheet;
+
+/**
+ * @brief Get a sprite from a sheet
+ *
+ * @param sheet The sprite sheet to get a sprite from
+ * @param x Sprite `x` id (state)
+ * @param y Sprite `y` id (animation)
+ * @return The sprite at index `(x, y)`
+ */
+t_sprite
+sprite_sheet_get(const t_sprite_sheet *sheet, int x, int y);
+/**
+ * @brief Sample directly from a sprite sheet
+ *
+ * @param sheet The sheet to sample from
+ * @param id The sprite's id in the sheet
+ * @param uv The sprite's uv in the sheet
+ * @return The sampled pixel, or `COLOR_UNINIT` for background
+ */
+t_color
+sprite_sheet_sample(const t_sprite_sheet *sheet, t_pos id, t_vec2 uv);
+
+/** @} */
+
 /** @} */
 
 #endif // ASSETS_H
