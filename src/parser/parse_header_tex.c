@@ -44,7 +44,7 @@ int
 	i = ORI_NORTH;
 	while (i++ <= ORI_WEST)
 	{
-		field = parser_hdr_fields(i - 1, false);
+		field = parser_hdr_fields((size_t)(i - 1), false);
 		if (ft_strncmp(line, field[0], 2))
 			continue ;
 		if (parser->s_data.textures[i - 1])

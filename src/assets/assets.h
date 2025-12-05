@@ -60,15 +60,16 @@ typedef struct s_texture_atlas
  * @brief Add a texture in the texture atlas
  *
  * @param atlas The atlas
- * @param material The texture to add
- * @return The ID of the inserted texture
+ * @param texture The texture to add
+ * @return The ID of the inserted texture, or the ID of a previous texture if a
+ * texture with the same path already exists. In that case @p texture is freed.
  */
 t_atlas_id
 atlas_tex_add(t_texture_atlas *atlas, t_texture texture);
 /**
  * @brief Free the texture atlas
  *
- * @param mlx_ptr The mlx instance
+ * @param mlx_ptr The mlx instance, if `NULL` no images will be freed
  * @param atlas The atlas to free
  */
 void
@@ -107,7 +108,7 @@ typedef struct s_material
 	/** @brief Material type */
 	enum e_mat_type		type;
 	/** @brief Material textures */
-	int					tex_ids[4];
+	t_atlas_id			tex_ids[4];
 	/** @brief Material orientation */
 	enum e_orientation	orientation;
 }	t_material;

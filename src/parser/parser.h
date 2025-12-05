@@ -50,11 +50,11 @@ struct s_parser
 		t_pos				player_spawn;
 		/** @brief Player orientation */
 		enum e_orientation	player_orientation;
-		/** @brief Map vertical strides */
+		/** @brief Map horizontal strides */
 		char				**lines;
-		/** @brief Number of vertical map strides */
+		/** @brief Number of horizontal map strides */
 		size_t				lines_size;
-		/** @brief Capacity of vertical map strides */
+		/** @brief Capacity of horizontal map strides */
 		size_t				lines_capacity;
 		/** @brief Current maximum map width */
 		int					map_width;
@@ -100,6 +100,12 @@ void
 parser_free(struct s_parser *parser);
 
 /**
+ * @defgroup ErrorParsing Parser Errors
+ * @ingroup Parser
+ * @{
+ */
+
+/**
  * @brief Display a general parser error
  *
  * @param err The error message
@@ -129,7 +135,13 @@ parser_error_file(const struct s_parser *parser, t_err_str err);
 const char
 *parser_trim_start(const char *str, const char *set);
 
-/* --- Header parsing --- */
+/** @} */
+
+/**
+ * @defgroup HeaderParsing Header Parsing
+ * @ingroup Parser
+ * @{
+ */
 
 /**
  * @brief Parse a line from the header
@@ -174,10 +186,45 @@ parse_hdr_texture(struct s_parser *parser, const char *line);
 int
 parse_hdr_color(struct s_parser *parser, const char *line);
 
-/* --- Map parsing --- */
+/** @} */
 
+/**
+ * @defgroup MaterialParsing Material Parsing
+ * @ingroup Parser
+ * @{
+ */
+
+/**
+ * @brief Parse a line from the map materials
+ *
+ * Will advance the parser's state when the header is successfully parsed
+ *
+ * @param parser The parser
+ * @return true on success, false on errors
+ */
+bool
+parser_mat(struct s_parser *parser);
+
+/** @} */
+
+/**
+ * @defgroup MapParsing Map Parsing
+ * @ingroup Parser
+ * @{
+ */
+
+/**
+ * @brief Parse a line from the map content
+ *
+ * Will advance the parser's state when the header is successfully parsed
+ *
+ * @param parser The parser
+ * @return true on success, false on errors
+ */
 bool
 parser_map(struct s_parser *parser);
+
+/** @} */
 
 /** @} */
 

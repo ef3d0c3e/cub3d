@@ -22,6 +22,8 @@ static bool
 		++parser->line_num;
 		if (parser->state == PARSE_HDR && !parser_hdr(parser))
 			parser->state = PARSE_ERROR;
+		else if (parser->state == PARSE_MAT && !parser_mat(parser))
+			parser->state = PARSE_ERROR;
 		free(parser->line);
 		parser->line = get_next_line(parser->fd);
 	}
@@ -67,6 +69,8 @@ void
 	free(parser->s_data.textures[1]);
 	free(parser->s_data.textures[2]);
 	free(parser->s_data.textures[3]);
+	atlas_mat_free(&parser->s_data.mat_atlas);
+	atlas_tex_free(NULL, &parser->s_data.tex_atlas);
 	i = 0;
 	while (i < parser->s_data.lines_size)
 		free(parser->s_data.lines[i]);

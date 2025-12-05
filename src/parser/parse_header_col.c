@@ -77,7 +77,7 @@ int
 	i = 0;
 	while (i++ < 2)
 	{
-		field = parser_hdr_fields(i - 1, true);
+		field = parser_hdr_fields((size_t)(i - 1), true);
 		if (ft_strncmp(line, field[0], 1))
 			continue ;
 		if (parser->s_data.colors[i - 1] != (t_color)COLOR_UNINIT)

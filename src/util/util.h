@@ -42,6 +42,8 @@ typedef struct s_pos
 /** @brief Represent orientation (clockwise) */
 enum e_orientation
 {
+	/** @brief No oritnation */
+	ORI_NONE = -1,
 	/** @brief Facing North */
 	ORI_NORTH,
 	/** @brief Facing East */
@@ -247,5 +249,26 @@ void
  */
 char
 *itoa_buf(char *buf, int x);
+/**
+ * @brief Compare string `a` against string `b`
+ *
+ * @param a First string
+ * @param b Second string
+ *
+ * @returns `a[i] - b[i]` where `i` is the first byte where `a != b`
+ * If `a == b`, then this function returns `0`
+ */
+int
+ft_strcmp(const char *a, const char *b);
+/**
+ * @brief Copy `n` bytes of `str` into a newly allocated string
+ *
+ * @param str The string to copy from
+ * @param n The number of bytes of `str` to copy
+
+ * @returns The newly created string
+ */
+char
+*ft_strndup(const char *str, size_t n);
 
 #endif // UTIL_H
