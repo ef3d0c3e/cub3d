@@ -98,6 +98,16 @@ parse_map(const char *file);
  */
 void
 parser_free(struct s_parser *parser);
+/**
+ * @brief Trim a string at its start
+ *
+ * @param str String to trim
+ * @param set Characters to trim
+ * @return The first substring of `str` that does not start with a character in
+ * `set`
+ */
+const char
+*parser_trim_start(const char *str, const char *set);
 
 /**
  * @defgroup ErrorParsing Parser Errors
@@ -132,9 +142,6 @@ parser_error_loc(const struct s_parser *parser, t_err_str err);
 void
 parser_error_file(const struct s_parser *parser, t_err_str err);
 
-const char
-*parser_trim_start(const char *str, const char *set);
-
 /** @} */
 
 /**
@@ -153,7 +160,6 @@ const char
  */
 bool
 parser_hdr(struct s_parser *parser);
-
 /**
  * @brief Get the identifier and display name of a header field
  *
@@ -163,7 +169,6 @@ parser_hdr(struct s_parser *parser);
  */
 const char
 **parser_hdr_fields(size_t id, bool is_color);
-
 /**
  * @brief Attempt to parse a texture with orientation in the header
  *
@@ -174,7 +179,6 @@ const char
  */
 int
 parse_hdr_texture(struct s_parser *parser, const char *line);
-
 /**
  * @brief Attempt to parse a color in the header
  *
@@ -204,6 +208,44 @@ parse_hdr_color(struct s_parser *parser, const char *line);
  */
 bool
 parser_mat(struct s_parser *parser);
+/**
+ * @brief Default parser for materials
+ *
+ * @param parser The parser
+ * @return 1 on success, 0 if no materials were parsed, -1 on errors
+ */
+int
+parse_mat_default(struct s_parser *parser);
+/**
+ * @brief Parse a material
+ *
+ * @param parser The parser
+ * @param ident Identifier for the material
+ * @param tex_attrs Textures attributes and names: `{{IDENT1, NAME1}, .., NULL}`
+ * @param mat The material
+ * @return `1` on success, `0` is not the correct identifier, `-1` on errors
+ */
+int
+parse_material(
+	struct s_parser *parser,
+	const char *ident,
+	const char **tex_attrs,
+	t_material *mat);
+/**
+ * @brief Parse materials textures
+ *
+ * @param parser The parser
+ * @param line Current position in line
+ * @param tex_attrs Attributes to parse: `{{IDENT1, NAME1}, .., NULL}`
+ * @param mat The material
+ * @return `true` on success, `false` on errors
+ */
+bool
+parse_mat_textures(
+	struct s_parser *parser,
+	const char **line,
+	const char **tex_attrs,
+	t_material *mat);
 
 /** @} */
 
