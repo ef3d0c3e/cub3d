@@ -99,6 +99,14 @@ parse_map(const char *file);
 void
 parser_free(struct s_parser *parser);
 /**
+ * @brief Validate the parsed data
+ *
+ * @param parser The parser
+ * @return `true` if parsed data is valid, `false` otherwise
+ */
+bool
+parser_validate(struct s_parser *parser);
+/**
  * @brief Trim a string at its start
  *
  * @param str String to trim

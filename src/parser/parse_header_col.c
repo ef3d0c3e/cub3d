@@ -24,7 +24,7 @@ static int
 							"value for "), field), ". Expected a value in "
 					"the range [0, 255]")), -1);
 	pos = 0;
-	val = -1;
+	val = 0;
 	while (ft_isdigit((*line)[pos]))
 	{
 		val = val * 10 + (*line)[pos++] - '0';
@@ -58,7 +58,7 @@ static bool
 			return (parser_error_loc(parser, err(0, "Expected a triplet for "
 						"color")), false);
 		if (i != 2)
-			*line = ++*line;
+			*line = *line + 1;
 		++i;
 	}
 	if (**line)

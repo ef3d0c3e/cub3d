@@ -24,12 +24,14 @@ static bool
 			parser->state = PARSE_ERROR;
 		else if (parser->state == PARSE_MAT && !parser_mat(parser))
 			parser->state = PARSE_ERROR;
+		else if (parser->state == PARSE_MAP && !parser_map(parser))
+			parser->state = PARSE_ERROR;
 		free(parser->line);
 		parser->line = get_next_line(parser->fd);
 	}
 	if (parser->state != PARSE_MAP)
 		return (parser_error_file(parser, err(0, "Unexpected end of file")), 0);
-	return (parser->state != PARSE_ERROR);
+	return (parser->state != PARSE_ERROR && parser_validate(parser));
 }
 
 bool
@@ -40,6 +42,7 @@ bool
 	ft_memset(&parser, 0, sizeof(parser));
 	parser.file = file;
 	parser.fd = -1;
+	parser.s_data.player_orientation = ORI_NONE;
 	parser.s_data.colors[0] = (t_color)COLOR_UNINIT;
 	parser.s_data.colors[1] = (t_color)COLOR_UNINIT;
 	if (ft_strlen(file) < 4 || ft_strncmp(file + ft_strlen(file) - 4, ".cub",
@@ -72,7 +75,7 @@ void
 	atlas_mat_free(&parser->s_data.mat_atlas);
 	atlas_tex_free(NULL, &parser->s_data.tex_atlas);
 	i = 0;
-	while (i < parser->s_data.lines_size)
+while (i < parser->s_data.lines_size)
 		free(parser->s_data.lines[i]);
 	free(parser->s_data.lines);
 	free(parser->line);

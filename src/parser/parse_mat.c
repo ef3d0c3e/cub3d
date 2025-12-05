@@ -33,14 +33,14 @@ static void
 	texs[3] = atlas_tex_add(&parser->s_data.tex_atlas, tex);
 	parser->s_data.textures[3] = NULL;
 	atlas_mat_add(&parser->s_data.mat_atlas, (t_material){
-		.id = '0', .tex_ids = {0, 0, 0, 0}, .orientation = 0, .type = MAT_FLOOR,
+		.id = ' ', .tex_ids = {0, 0, 0, 0}, .orientation = 0, .type = MAT_OPEN,
 	});
 	atlas_mat_add(&parser->s_data.mat_atlas, (t_material){
-		.id = '1',
-		.tex_ids = {texs[0], texs[1], texs[2], texs[3]},
-		.orientation = 0,
-		.type = MAT_CUBE,
+		.id = '0', .tex_ids = {0, 0, 0, 0}, .orientation = 0, .type = MAT_FLOOR,
 	});
+	atlas_mat_add(&parser->s_data.mat_atlas, (t_material){.id = '1', .tex_ids
+		= {texs[0], texs[1], texs[2], texs[3]}, .orientation = 0, .type
+		= MAT_CUBE});
 }
 
 bool

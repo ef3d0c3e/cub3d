@@ -18,7 +18,8 @@ t_atlas_id
 	{
 		atlas->capacity = atlas->capacity * 2 + !atlas->capacity * 16;
 		atlas->materials = xrealloc(atlas->materials,
-			atlas->size * sizeof(material), atlas->capacity * sizeof(material));
+				atlas->size * sizeof(material),
+				atlas->capacity * sizeof(material));
 	}
 	atlas->materials[atlas->size++] = material;
 	return ((t_atlas_id)(atlas->size - 1));
@@ -30,8 +31,8 @@ void
 	free(atlas->materials);
 }
 
-t_material
-	*atlas_mat_get(t_material_atlas *atlas, char ch)
+const t_material
+	*atlas_mat_get(const t_material_atlas *atlas, char ch)
 {
 	size_t	i;
 

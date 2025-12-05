@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 05:57:40 by lgamba            #+#    #+#             */
+/*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <parser/parser.h>
 #include <stdio.h>
 #include <util/util.h>
 #include <parser/parser.h>
 
-int main(int ac, char **av)
+int
+	main(int ac, char **av)
 {
-	//t_err_str errs = err_style(0, NULL, (t_text_style){0,0,0});
-	//err_free(errs);
 	parse_map(av[1]);
-	return 0;
+	return (0);
 }

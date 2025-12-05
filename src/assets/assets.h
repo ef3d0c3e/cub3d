@@ -90,6 +90,8 @@ atlas_tex_free(void *mlx_ptr, t_texture_atlas *atlas);
 /** @brief Represent the type of a material */
 enum e_mat_type
 {
+	/** @brief Outside area */
+	MAT_OPEN,
 	/** @brief Empty space with a floor and ceiling texture */
 	MAT_FLOOR,
 	/** @brief Cube wall with four sides */
@@ -147,8 +149,8 @@ atlas_mat_free(t_material_atlas *atlas);
  * @param ch The material character id
  * @return The material, or `NULL` if not found
  */	
-t_material
-*atlas_mat_get(t_material_atlas *atlas, char ch);
+const t_material
+*atlas_mat_get(const t_material_atlas *atlas, char ch);
 
 /** @} */
 
