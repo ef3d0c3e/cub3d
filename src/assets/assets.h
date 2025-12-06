@@ -74,6 +74,15 @@ atlas_tex_add(t_texture_atlas *atlas, t_texture texture);
  */
 void
 atlas_tex_free(void *mlx_ptr, t_texture_atlas *atlas);
+/**
+ * @brief Get a texture from it's atlas id
+ *
+ * @param atlas The atlas to get the texture from
+ * @param tex_id The texture ID in the atlas
+ * @return The texture, or `NULL` if not found
+ */
+const t_texture
+*atlas_tex_get(const t_texture_atlas *atlas, t_atlas_id tex_id);
 
 /** @} */
 
@@ -151,6 +160,15 @@ atlas_mat_free(t_material_atlas *atlas);
  */	
 const t_material
 *atlas_mat_get(const t_material_atlas *atlas, char ch);
+/**
+ * @brief Get that atlas id of a material
+ *
+ * @param atlas The material atlas
+ * @param ch The id of the material
+ * @return The ID of the material or `0` if not found
+ */
+t_atlas_id
+atlas_mat_get_id(const t_material_atlas *atlas, char ch);
 
 /** @} */
 

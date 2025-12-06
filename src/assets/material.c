@@ -47,3 +47,18 @@ const t_material
 	}
 	return (NULL);
 }
+
+t_atlas_id
+	atlas_mat_get_id(const t_material_atlas *atlas, char ch)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < atlas->size)
+	{
+		if (atlas->materials[i].id == ch)
+			return ((t_atlas_id)i);
+		++i;
+	}
+	return ((t_atlas_id)0);
+}

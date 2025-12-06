@@ -36,8 +36,58 @@ static bool
 	return (parser->state != PARSE_ERROR && parser_validate(parser));
 }
 
+/** @brief Fill the map using the parsed map content */
+static void
+	fill_map(const struct s_parser *parser, t_map *map)
+{
+	t_pos	pos;
+	size_t	len;
+	char	id;
+
+	pos = (t_pos){0, 0};
+	while ((size_t)pos.y < parser->s_data.lines_size)
+	{
+		len = ft_strlen(parser->s_data.lines[pos.y]);
+		while ((size_t)pos.x < len)
+		{
+			id = parser->s_data.lines[pos.y][pos.x];
+			if (ft_strchr("NESW", id))
+				id = map->props.player_spawn;
+			map->map[pos.x + map->size_x * pos.y]
+				= atlas_mat_get_id(&map->material_atlas, id);
+			++pos.x;
+		}
+		++pos.y;
+		pos.x = 0;
+	}
+}
+
+/** @brief Make a map from the parsed data */
+static void
+	make_map(struct s_parser *parser, t_map *map)
+{
+	map->props = parser->s_data.properties;
+	map->player_spawn = parser->s_data.player_spawn;
+	map->player_orientation = parser->s_data.player_orientation;
+	map->colors[0] = parser->s_data.colors[0];
+	map->colors[1] = parser->s_data.colors[1];
+	map->material_atlas = parser->s_data.mat_atlas;
+	map->texture_atlas = parser->s_data.tex_atlas;
+	parser->s_data.mat_atlas.materials = NULL;
+	parser->s_data.mat_atlas.size = 0;
+	parser->s_data.tex_atlas.textures = NULL;
+	parser->s_data.tex_atlas.size = 0;
+	map->size_x = parser->s_data.map_width;
+	map->size_y = parser->s_data.map_height;
+	map->map = xmalloc(sizeof(t_atlas_id)
+			* (size_t)map->size_x * (size_t)map->size_y);
+	ft_memset(map->map, 0, sizeof(t_atlas_id)
+		* (size_t)map->size_x * (size_t)map->size_y);
+	fill_map(parser, map);
+}
+
 bool
-	parse_map(const char *file)
+	parse_map(const char *file, t_map *map)
 {
 	struct s_parser	parser;
 
@@ -60,7 +110,7 @@ bool
 		parser_free(&parser), false);
 	if (!parse_line(&parser))
 		return (parser_free(&parser), false);
-	// TODO: Make into map
+	make_map(&parser, map);
 	parser_free(&parser);
 	return (true);
 }
@@ -70,7 +120,7 @@ void
 {
 	size_t	i;
 
-	free(parser->s_data.textures[0]);
+free(parser->s_data.textures[0]);
 	free(parser->s_data.textures[1]);
 	free(parser->s_data.textures[2]);
 	free(parser->s_data.textures[3]);

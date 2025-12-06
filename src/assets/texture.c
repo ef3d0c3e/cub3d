@@ -46,9 +46,17 @@ void
 	while (i < atlas->size)
 	{
 		free(atlas->textures[i].path);
-		if (mlx_ptr)
+		if (mlx_ptr && atlas->textures[i].img)
 			mlx_destroy_image(mlx_ptr, atlas->textures[i].img);
 		++i;
 	}
 	free(atlas->textures);
+}
+
+const t_texture
+	*atlas_tex_get(const t_texture_atlas *atlas, t_atlas_id tex_id)
+{
+	if (tex_id >= atlas->size)
+		return (NULL);
+	return (&atlas->textures[tex_id]);
 }

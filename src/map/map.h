@@ -75,7 +75,7 @@ map_free(void *mlx_ptr, t_map *map);
  * @return `true` on success, `false` on errors
  */
 bool
-map_load_assets(void *mlx_ptr, t_map *map);
+map_asset_load(void *mlx_ptr, t_map *map);
 
 /** @} */
 

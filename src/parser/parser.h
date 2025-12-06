@@ -89,10 +89,11 @@ struct s_parser
  * @brief Parses the map provided by a file
  *
  * @param file Map path
+ * @param map Output
  * @return `true` on success, `false` on failures
  */
 bool
-parse_map(const char *file);
+parse_map(const char *file, t_map *map);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Internal                                                                   //
