@@ -54,6 +54,6 @@ bool
 	if (status == -1)
 		return (false);
 	else if (status == 0)
-		parser->state = PARSE_MAP; // TODO: PARSE_ENT
+		parser->state = PARSE_PROPS;
 	return (true);
 }

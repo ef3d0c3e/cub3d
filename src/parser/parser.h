@@ -13,8 +13,8 @@
 # define PARSER_H
 
 # include <util/util.h>
-# include <stdlib.h>
 # include <assets/assets.h>
+# include <map/map.h>
 
 /**
  * @defgroup Parser Parser
@@ -28,6 +28,8 @@ enum e_parser_state
 	PARSE_HDR = 0,
 	/** @brief Parsing materials */
 	PARSE_MAT,
+	/** @brief Parsing properties */
+	PARSE_PROPS,
 	/** @brief Parsing entities */
 	PARSE_ENT,
 	/** @brief Parsing the map */
@@ -64,6 +66,11 @@ struct s_parser
 		t_texture_atlas		tex_atlas;
 		/** @brief Atlas for materials */
 		t_material_atlas	mat_atlas;
+		/** @brief Flag to indicate whether custom properties have been
+		 * initialized */
+		bool				parsing_properties;
+		/** @brief Custom properties for the map */
+		t_map_props			properties;
 	}						s_data;
 	/** @brief Parsed file */
 	const char				*file;
@@ -116,6 +123,22 @@ parser_validate(struct s_parser *parser);
  */
 const char
 *parser_trim_start(const char *str, const char *set);
+
+/**
+ * @brief Expect a space token after another token
+ *
+ * A space token is any combination of ` ` and `\t`.
+ *
+ * @param parser The parser
+ * @param line Current line position (will be advanced on success)
+ * @param after Token to expect a space after (for error messages..)
+ * @return `true` on success, `false` on errors
+ */
+bool
+parser_expect_space(
+	struct s_parser *parser,
+	const char **line,
+	const char *after);
 
 /**
  * @defgroup ErrorParsing Parser Errors
@@ -254,6 +277,26 @@ parse_mat_textures(
 	const char **line,
 	const char **tex_attrs,
 	t_material *mat);
+
+/** @} */
+
+
+/**
+ * @defgroup PropertyParsing Property Parsing
+ * @ingroup Parser
+ * @{
+ */
+
+/**
+ * @brief Parse a line of properties
+ *
+ * Will advance the parser's state when the header is successfully parsed
+ *
+ * @param parser The parser
+ * @return true on success, false on errors
+ */
+bool
+parser_props(struct s_parser *parser);
 
 /** @} */
 
