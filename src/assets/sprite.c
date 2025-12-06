@@ -57,10 +57,13 @@ inline t_color
 	cols[1] = buf[tp[1].x + spr->left + (tp[0].y + spr->top) * spr->line_size];
 	cols[2] = buf[tp[0].x + spr->left + (tp[1].y + spr->top) * spr->line_size];
 	cols[3] = buf[tp[1].x + spr->left + (tp[1].y + spr->top) * spr->line_size];
-	return (color_lerp8(
+	cols[0] = color_lerp8(
 			color_lerp8(cols[0], cols[1], factor[0]),
 			color_lerp8(cols[2], cols[3], factor[0]),
-			factor[1]));
+			factor[1]);
+	if (cols[0] == spr->background)
+		return ((t_color)COLOR_UNINIT);
+	return (cols[0]);
 }
 
 inline t_sprite

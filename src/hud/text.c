@@ -16,7 +16,7 @@ static void
 {
 	const t_sprite	sprite = sprite_sheet_get(&app->assets.hud_font,
 			glyph % 16, glyph / 16);
-	hud_blit(app, &sprite, (t_vec2){.5, .5}, (t_vec2){5, 5});
+	hud_blit(app, &sprite, (t_vec2){(float)pos.x / (float)app->sizes.x, (float)pos.y / (float)app->sizes.y}, (t_vec2){.8, .8});
 }
 
 void
@@ -28,7 +28,7 @@ void
 	while (text[i])
 	{
 		glyph_blit(app, pos, text[i]);
-		pos.x += app->assets.hud_font.width / 2;
+		pos.x += app->assets.hud_font.width * .8;
 		++i;
 	}
 }
