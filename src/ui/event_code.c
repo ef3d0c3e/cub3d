@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   event_code.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,30 +9,17 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef CUB3D_H
-# define CUB3D_H
+#include <ui/ui.h>
 
-# include <util/util.h>
-# include <map/map.h>
-
-/** @brief Initialization status */
-enum e_init_error
+t_event_code
+	encode_event_code(enum e_event_type type, uint32_t code)
 {
-	INIT_ERR_PARSE,
-	INIT_ERR_MLX,
-	INIT_ERR_WINDOW,
-	INIT_ERR_LOAD,
-	INIT_OK,
-};
+	return ((uint8_t)type | (code << 8));
+}
 
-typedef struct s_app
+enum e_event_type
+	decode_event_code(t_event_code event, uint32_t *code)
 {
-	/** @brief MLX instance pointer */
-	void	*mlx_ptr;
-	/** @brief MLX window pointer */
-	void	*mlx_window;
-	/** @brief The map */
-	t_map	map;
-}	t_app;
-
-#endif // CUB3D_H
+	*code = (uint32_t)(event >> 8);
+	return (event & 0xFF);
+}
