@@ -26,7 +26,7 @@ enum e_init_error
 	INIT_ERR_MLX,
 	/** @brief Error during MLX window creation */
 	INIT_ERR_WINDOW,
-	/** @brief Error while loading map assets */
+	/** @brief Error while loading assets */
 	INIT_ERR_LOAD,
 	/** @brief Error during UI setup */
 	INIT_ERR_UI,
@@ -36,23 +36,28 @@ enum e_init_error
 
 typedef struct s_app
 {
+	/* -- Render data -- */
 	/** @brief Window sizes */
-	t_pos			sizes;
+	t_pos				sizes;
 	/** @brief MLX instance pointer */
-	void			*mlx_ptr;
+	void				*mlx_ptr;
 	/** @brief MLX window pointer */
-	void			*mlx_window;
-	/** @brief The map */
-	t_map			map;
+	void				*mlx_window;
+	/** @brief Texture atlas */
+	t_texture_atlas		texture_atlas;
+	/** @brief Material atlas */
+	t_material_atlas	material_atlas;
 
 	/* --- UI Data --- */
 	/** @brief Event data */
-	struct s_event	event;
+	struct s_event		event;
 	/** @brief The application's framer buffer */
-	t_img			*framebuffer;
+	t_img				*framebuffer;
 	/** @brief Application assets */
-	t_assets		assets;
+	t_assets			assets;
 
+	/** @brief The map */
+	t_map				map;
 }	t_app;
 
 #endif // CUB3D_H

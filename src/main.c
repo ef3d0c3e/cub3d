@@ -30,11 +30,13 @@ static int
 	if (status >= INIT_ERR_WINDOW)
 		mlx = app->mlx_ptr;
 	if (status >= INIT_ERR_MLX)
-		map_free(mlx, &app->map);
+		map_free(&app->map);
 	if (status >= INIT_ERR_WINDOW)
 		mlx_destroy_window(app->mlx_ptr, app->mlx_window);
 	if (status >= INIT_ERR_LOAD)
 	{
+		atlas_mat_free(&app->material_atlas);
+		atlas_tex_free(app->mlx_ptr, &app->texture_atlas);
 		mlx_destroy_display(app->mlx_ptr);
 		free(app->mlx_ptr);
 	}
@@ -52,7 +54,7 @@ int
 		return (printf("USAGE: %s MAP.cub\n", av[0]), 1);
 	ft_memset(&app, 0, sizeof(app));
 	app.sizes = (t_pos){512, 512};
-	if (!parse_map(av[1], &app.map))
+	if (!parse_map(av[1], &app))
 		return (cleanup(&app, INIT_ERR_PARSE));
 	app.mlx_ptr = mlx_init();
 	if (!app.mlx_ptr)
@@ -61,7 +63,7 @@ int
 			app.sizes.x, app.sizes.y, "Cub3D");
 	if (!app.mlx_window)
 		return (cleanup(&app, INIT_ERR_WINDOW));
-	if (!map_asset_load(app.mlx_ptr, &app.map))
+	if (!assets_load(app.mlx_ptr, &app))
 		return (cleanup(&app, INIT_ERR_LOAD));
 	if (!ui_setup(&app))
 		return (cleanup(&app, INIT_ERR_UI));

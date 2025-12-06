@@ -16,6 +16,8 @@
 # include <assets/assets.h>
 # include <map/map.h>
 
+struct	s_app;
+
 /**
  * @defgroup Parser Parser
  * @{
@@ -89,11 +91,11 @@ struct s_parser
  * @brief Parses the map provided by a file
  *
  * @param file Map path
- * @param map Output
+ * @param app Application pointer
  * @return `true` on success, `false` on failures
  */
 bool
-parse_map(const char *file, t_map *map);
+parse_map(const char *file, struct s_app *app);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Internal                                                                   //

@@ -18,10 +18,10 @@ void
 
 	msg = err_style(err(err_style(err_style(err_style(err_style(0, " ERROR: ",
 								(t_text_style){COL_WHITE, COL_RED, STYLE_BOLD}),
-							"Failed to load asset '", (t_text_style){0, 0, 0}),
-						path, (t_text_style){COL_GREEN, 0, STYLE_UNDERLINE}),
-					"':", (t_text_style){0, 0, 0}), errstr), "\n",
-			(t_text_style){0, 0, 0});
+							"\nFailed to load asset '", (t_text_style){0, 0, 0}
+							), path, (t_text_style){COL_GREEN, 0,
+						STYLE_UNDERLINE}), "':", (t_text_style){0, 0, 0}),
+				errstr), "\n", (t_text_style){0, 0, 0});
 	write(STDOUT_FILENO, msg, ft_strlen(msg));
 	err_free(errstr);
 	err_free(msg);
@@ -55,7 +55,7 @@ bool
 bool
 	assets_loader_font(void *mlx_ptr, t_app *app, t_assets *assets)
 {
-	atlas_tex_load(mlx_ptr, &app->map.texture_atlas, "assets/font.xpm",
+	atlas_tex_load(mlx_ptr, &app->texture_atlas, "assets/font.xpm",
 		&assets->hud_font.texture);
 	if (!assets->hud_font.texture)
 		return (false);
@@ -69,10 +69,38 @@ bool
 	return (asset_size_check(assets->hud_font.texture, 768, 768));
 }
 
+/** @brief Load map assets */
+bool
+	asset_loader_map(void *mlx_ptr, t_app *app, t_assets *assets)
+{
+	t_atlas_id	id;
+	t_texture	*tex;
+	int			fd;
+
+	(void)assets;
+	id = 0;
+	while (id < app->texture_atlas.size)
+	{
+		tex = &app->texture_atlas.textures[id];
+		fd = open(tex->path, O_RDONLY);
+		if (fd == -1)
+			return (assets_error(tex->path, err(0, "Failed to open file")),
+				false);
+		close(fd);
+		tex->img = mlx_xpm_file_to_image(mlx_ptr, tex->path,
+				&tex->width, &tex->height);
+		if (!tex->img)
+			return (assets_error(tex->path, err(0, "Invalid texture")), false);
+		++id;
+	}
+	return (true);
+}
+
 bool
 	assets_load(void *mlx_ptr, t_app *app)
 {
 	static const t_asset_loader	loaders[] = {
+		asset_loader_map,
 		assets_loader_font,
 		NULL,
 	};

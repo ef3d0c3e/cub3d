@@ -14,7 +14,7 @@
 
 # include <util/util.h>
 
-typedef struct s_app	t_app;
+struct				s_app;
 
 /**
  * @defgroup UI UI
@@ -148,14 +148,14 @@ enum e_evmask
  * @return `true` on success, `false` on errors
  */
 bool
-ui_setup(t_app *app);
+ui_setup(struct s_app *app);
 /**
  * @brief Cleanup the UI
  *
  * @param app Application pointer
  */
 void
-ui_cleanup(t_app *app);
+ui_cleanup(struct s_app *app);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Event Handling                                                             //
@@ -199,14 +199,14 @@ enum e_event_status
  * @param app Application pointer
  */
 void
-event_setup(t_app *app);
+event_setup(struct s_app *app);
 /**
  * @brief Cleanup event handlers
  *
  * @param app Application pointer
  */
 void
-event_cleanup(t_app *app);
+event_cleanup(struct s_app *app);
 /**
  * @brief Function to call at the end of every frames to mark released keys as
  * no longer active
@@ -214,7 +214,7 @@ event_cleanup(t_app *app);
  * @param app Application pointer
  */
 void
-event_update(t_app *app);
+event_update(struct s_app *app);
 
 /**
  * @brief Check if a @ref e_keycode is being pressed
@@ -224,7 +224,7 @@ event_update(t_app *app);
  * @return `true` if key @p code is being pressed, `false` otherwise
  */
 bool
-ui_key_held(t_app *app, enum e_keycode code);
+ui_key_held(struct s_app *app, enum e_keycode code);
 /**
  * @brief Check if a @ref e_keycode has been pressed (held then released)
  *
@@ -233,7 +233,7 @@ ui_key_held(t_app *app, enum e_keycode code);
  * @return `true` if key @p code has been pressed, `false` otherwise
  */
 bool
-ui_key_pressed(t_app *app, enum e_keycode code);
+ui_key_pressed(struct s_app *app, enum e_keycode code);
 /**
  * @brief Check if a @ref e_mousecode is being pressed
  *
@@ -242,7 +242,7 @@ ui_key_pressed(t_app *app, enum e_keycode code);
  * @return `true` if button @p code is being pressed, `false` otherwise
  */
 bool
-ui_mouse_held(t_app *app, enum e_keycode code);
+ui_mouse_held(struct s_app *app, enum e_keycode code);
 /**
  * @brief Check if a @ref e_mousecode has been pressed (held then released)
  *
@@ -251,7 +251,7 @@ ui_mouse_held(t_app *app, enum e_keycode code);
  * @return `true` if button @p code has been pressed, `false` otherwise
  */
 bool
-ui_mouse_pressed(t_app *app, enum e_keycode code);
+ui_mouse_pressed(struct s_app *app, enum e_keycode code);
 
 /**
  * @brief Encode an event code from an event type and a @ref e_keycode /
@@ -292,7 +292,7 @@ typedef struct s_event
  * @param app Application pointer
  */
 int
-ui_ev_keyup(enum e_keycode code, t_app *app);
+ui_ev_keyup(enum e_keycode code, struct s_app *app);
 /**
  * @brief Event handler for keyboard presses
  *
@@ -300,7 +300,7 @@ ui_ev_keyup(enum e_keycode code, t_app *app);
  * @param app Application pointer
  */
 int
-ui_ev_keydown(enum e_keycode code, t_app *app);
+ui_ev_keydown(enum e_keycode code, struct s_app *app);
 /**
  * @brief Event handler for mouse relases
  *
@@ -310,7 +310,7 @@ ui_ev_keydown(enum e_keycode code, t_app *app);
  * @param app Application pointer
  */
 int
-ui_ev_mouseup(enum e_mousecode code, int x, int y, t_app *app);
+ui_ev_mouseup(enum e_mousecode code, int x, int y, struct s_app *app);
 /**
  * @brief Event handler for mouse presses
  *
@@ -320,7 +320,7 @@ ui_ev_mouseup(enum e_mousecode code, int x, int y, t_app *app);
  * @param app Application pointer
  */
 int
-ui_ev_mousedown(enum e_mousecode code, int x, int y, t_app *app);
+ui_ev_mousedown(enum e_mousecode code, int x, int y, struct s_app *app);
 /**
  * @brief Event handler for mouse movements
  *
@@ -329,7 +329,7 @@ ui_ev_mousedown(enum e_mousecode code, int x, int y, t_app *app);
  * @param app Application pointer
  */
 int
-ui_ev_mousemove(int x, int y, t_app *app);
+ui_ev_mousemove(int x, int y, struct s_app *app);
 
 /** @} */
 

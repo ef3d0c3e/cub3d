@@ -14,14 +14,14 @@
 
 # include <assets/assets.h>
 
+struct			s_assets;
+struct			s_app;
+
 /**
  * @defgroup PredefinedAssets Predefined Assets
  * @ingroup Assets
  * @{
  */
-
-typedef struct s_assets	t_assets;
-typedef struct s_app	t_app;
 
 /**
  * @brief Asset loader function
@@ -29,10 +29,10 @@ typedef struct s_app	t_app;
  * @param mlx_pointer MLX instance pointer
  * @param assets The global asset registry
  */
-typedef bool			(*t_asset_loader)(
+typedef bool	(*t_asset_loader)(
 	void *mlx_pointer,
-	t_app *app,
-	t_assets *assets);
+	struct s_app *app,
+	struct s_assets *assets);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Weapons                                                                    //
@@ -95,7 +95,7 @@ typedef struct s_assets
  * @return `true` on success, `false` on errors
  */
 bool
-assets_load(void *mlx_ptr, t_app *app);
+assets_load(void *mlx_ptr, struct s_app *app);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Internal                                                                   //

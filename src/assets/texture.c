@@ -9,6 +9,7 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "assets/defs/defs.h"
 #include <assets/assets.h>
 
 t_atlas_id
@@ -76,13 +77,7 @@ t_atlas_id
 	tex.img = mlx_xpm_file_to_image(mlx_ptr, tex.path, &tex.width, &tex.height);
 	if (!tex.img)
 	{
-		msg = err_style(err_style(err_style(err_style(0, " ERROR: ",
-							(t_text_style){COL_WHITE, COL_RED, STYLE_BOLD}),
-						"Failed to load asset '", (t_text_style){0, 0, 0}),
-					path, (t_text_style){COL_GREEN, 0, STYLE_UNDERLINE}), "'\n",
-				(t_text_style){0, 0, 0});
-		write(STDOUT_FILENO, msg, ft_strlen(msg));
-		err_free(msg);
+		assets_error(tex.path, err(0, " `mlx_xpm_file_to_image` failed"));
 		free(tex.path);
 		if (*out)
 			*out = NULL;

@@ -30,4 +30,3 @@ typedef struct s_player
 }	t_player;
 
 #endif // PLAYER_H
-

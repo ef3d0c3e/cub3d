@@ -36,10 +36,6 @@ typedef struct s_map_props
 /** @brief The Cub3D map */
 typedef struct s_map
 {
-	/** @brief Material atlas */
-	t_material_atlas	material_atlas;
-	/** @brief Texture atlas */
-	t_texture_atlas		texture_atlas;
 	/** @brief Default color for floor/ceiling */
 	t_color				colors[2];
 
@@ -62,20 +58,10 @@ typedef struct s_map
 /**
  * @brief Free the map
  *
- * @param mlx_ptr The mlx instance
  * @param map The map
  */
 void
-map_free(void *mlx_ptr, t_map *map);
-/**
- * @brief Load map assets from disk
- *
- * @param mlx_ptr The mlx instance
- * @param map The map
- * @return `true` on success, `false` on errors
- */
-bool
-map_asset_load(void *mlx_ptr, t_map *map);
+map_free(t_map *map);
 
 /** @} */
 
