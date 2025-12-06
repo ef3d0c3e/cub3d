@@ -22,13 +22,9 @@ static int
 	[INIT_ERR_LOAD] = "Failed to load assets\n",
 	[INIT_ERR_UI] = "Failed to setup UI\n",
 	};
-	void				*mlx;
 
-	mlx = NULL;
 	if (status >= INIT_ERR_UI)
 		ui_cleanup(app);
-	if (status >= INIT_ERR_WINDOW)
-		mlx = app->mlx_ptr;
 	if (status >= INIT_ERR_MLX)
 		map_free(&app->map);
 	if (status >= INIT_ERR_WINDOW)

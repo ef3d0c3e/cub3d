@@ -30,7 +30,7 @@ inline t_color
 		y = spr->top;
 	else
 		y = spr->top + (int)((float)(spr->height - 1) * v);
-	col = ((t_color *)spr->texture->img->data)[x + y * spr->width];
+	col = ((t_color *)spr->texture->img->data)[x + y * spr->line_size];
 	if (col == spr->background)
 		return ((t_color)COLOR_UNINIT);
 	return (col);
@@ -45,12 +45,9 @@ inline t_sprite
 	spr.background = sheet->background;
 	spr.width = sheet->width;
 	spr.height = sheet->height;
-	spr.left = sheet->off_left + sheet->sep_left * x;
-	if (x)
-		spr.left += spr.width * (x - 1);
-	spr.top = sheet->off_top + sheet->sep_top * y;
-	if (y)
-		spr.top += spr.height * (y - 1);
+	spr.left = sheet->off_left + sheet->sep_left * x + spr.width * x;
+	spr.top = sheet->off_top + sheet->sep_top * y + spr.height * y;
+	spr.line_size = sheet->texture->width;
 	return (spr);
 }
 

@@ -218,6 +218,8 @@ typedef struct s_sprite
 	int				width;
 	/** @brief Sprite rectangle height */
 	int				height;
+	/** @brief Number of pixels in a line on the sprite's sheet texture */
+	int				line_size;
 }	t_sprite;
 
 /**

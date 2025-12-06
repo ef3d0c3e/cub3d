@@ -14,6 +14,7 @@
 
 # include <util/util.h>
 # include <map/map.h>
+# include <hud/hud.h>
 # include <ui/ui.h>
 # include <assets/defs/defs.h>
 

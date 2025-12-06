@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui.c                                               :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,31 +11,30 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-/** @brief Frame draw function */
-static int
-	ui_update(t_app *app)
-{
-	const float	dt = app->map.props.frame_time;
-
-	hud_text(app, (t_pos){64, 64}, "ABC");
-	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
-		app->framebuffer, 0, 0);
-	event_update(app);
-	return (0);
-}
-
-bool
-	ui_setup(t_app *app)
-{
-	app->framebuffer = mlx_new_image(app->mlx_ptr, app->sizes.x, app->sizes.y);
-	event_setup(app);
-	mlx_loop_hook(app->mlx_ptr, ui_update, app);
-	return (true);
-}
-
 void
-	ui_cleanup(t_app *app)
+	hud_blit(t_app *app, const t_sprite *spr, t_vec2 origin, t_vec2 scale)
 {
-	event_cleanup(app);
-	mlx_destroy_image(app->mlx_ptr, app->framebuffer);
+	t_color *const	fb = (t_color *)app->framebuffer->data;
+	const	t_pos	screen = (t_pos){
+		(int)((float)app->sizes.x * origin.x - (float)spr->width * .5f * scale.x),
+		(int)((float)app->sizes.y * origin.y - (float)spr->height * .5f * scale.y)
+	};
+	t_color			color;
+	t_pos			uv;
+
+	uv.y = 0;
+	while ((float)uv.y < (float)app->sizes.y * scale.y)
+	{
+		uv.x = 0;
+		while ((float)uv.x < (float)app->sizes.x * scale.x)
+		{
+			color = sprite_sample(spr,
+					(float)uv.x / ((float)spr->width * scale.x),
+					(float)uv.y / ((float)spr->height * scale.y));
+			if (color != (t_color)COLOR_UNINIT)
+				fb[(screen.x + uv.x) + (screen.y + uv.y) * app->sizes.x] = color;
+			++uv.x;
+		}
+		++uv.y;
+	}
 }

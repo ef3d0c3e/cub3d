@@ -115,7 +115,7 @@ assets_error(const char *path, t_err_str errstr);
  * @param tex Loaded texture
  * @param width Expected width
  * @param height Expected height
- * @return `true` if sizes matches, `false` otherwise and print
+ * @return `true` if sizes match, `false` otherwise and print
  * an error message
  */
 bool
