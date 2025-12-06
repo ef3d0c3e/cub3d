@@ -49,6 +49,7 @@ bool
 								"e '"), tex->path, (t_text_style){COL_GREEN, 0,
 							STYLE_UNDERLINE}), "'", (t_text_style){0, 0, 0})),
 					false);
+		close(fd);
 		tex->img = mlx_xpm_file_to_image(mlx_ptr, tex->path,
 				&tex->width, &tex->height);
 		if (!tex->img)

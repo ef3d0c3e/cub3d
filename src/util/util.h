@@ -15,6 +15,7 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <math.h>
 
 # include <mlx_int.h>
 # include <mlx.h>

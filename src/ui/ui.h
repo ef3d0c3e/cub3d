@@ -14,17 +14,19 @@
 
 # include <util/util.h>
 
+typedef struct s_app	t_app;
+
 /**
  * @defgroup UI UI
  * @{
  */
 
 ////////////////////////////////////////////////////////////////////////////////
-// MLX wrapper                                                                //
+// MLX Wrapper                                                                //
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup MLX MLX wrapper
+ * @defgroup MLX MLX Wrapper
  * @ingroup UI
  * @{
  */
@@ -146,22 +148,83 @@ enum e_evmask
  * @brief Event code
  *
  * First byte encodes a @ref e_event_type
- * Next 4 bytes encode the event @ref e_keycode/@ref e_mousecode code
+ * Next 4 bytes encode the event @ref e_keycode / @ref e_mousecode code
  */
 typedef uintptr_t	t_event_code;
 
 /** @brief Types of events */
 enum e_event_type
 {
-	EV_MOUSE_DOWN,
-	EV_MOUSE_UP,
-	EV_MOUSE_MOVE,
-	EV_KEY_DOWN,
-	EV_KEY_UP,
+	EV_TYPE_MOUSE,
+	EV_TYPE_KEY,
+};
+
+/** @brief Status of an event */
+enum e_event_status
+{
+	/** @brief Not being used */
+	EV_STATUS_INACTIVE,
+	/** @brief Key/Button is being held */
+	EV_STATUS_HELD,
+	/** @brief Key/Button has been released */
+	EV_STATUS_RELEASED
 };
 
 /**
- * @brief Encode an event code from an event type and a key/button code
+ * @brief Setup event handlers
+ *
+ * @param app Application pointer
+ */
+void
+event_setup(t_app *app);
+/**
+ * @brief Cleanup event handlers
+ *
+ * @param app Application pointer
+ */
+void
+event_cleanup(t_app *app);
+
+/**
+ * @brief Check if a @ref e_keycode is being pressed
+ *
+ * @param app Application pointer
+ * @param code Keycode to check
+ * @return `true` if key @p code is being pressed, `false` otherwise
+ */
+bool
+ui_key_held(t_app *app, enum e_keycode code);
+/**
+ * @brief Check if a @ref e_keycode has been pressed (held then released)
+ *
+ * @param app Application pointer
+ * @param code Keycode to check
+ * @return `true` if key @p code has been pressed, `false` otherwise
+ */
+bool
+ui_key_pressed(t_app *app, enum e_keycode code);
+/**
+ * @brief Check if a @ref e_mousecode is being pressed
+ *
+ * @param app Application pointer
+ * @param code Mouse button to check
+ * @return `true` if button @p code is being pressed, `false` otherwise
+ */
+bool
+ui_mouse_held(t_app *app, enum e_keycode code);
+/**
+ * @brief Check if a @ref e_mousecode has been pressed (held then released)
+ *
+ * @param app Application pointer
+ * @param code Mouse button to check
+ * @return `true` if button @p code has been pressed, `false` otherwise
+ */
+bool
+ui_mouse_pressed(t_app *app, enum e_keycode code);
+
+/**
+ * @brief Encode an event code from an event type and a @ref e_keycode /
+ * @ref e_mousecode code
  *
  * @param type Type of event
  * @param code Code of the event (key/button)
@@ -170,7 +233,8 @@ enum e_event_type
 t_event_code
 encode_event_code(enum e_event_type type, uint32_t code);
 /**
- * @brief Decode an event code into an event type and a key/button code
+ * @brief Decode an event code into an event type and a @ref e_keycode /
+ * @ref e_mousecode code
  *
  * @param event Event to decode
  * @param code Resulting key/button
@@ -189,6 +253,52 @@ typedef struct s_event
 	/** @brief Mouse delta from last frame */
 	t_vec2		mouse_delta;
 }	t_event;
+
+/**
+ * @brief Event handler for keyboard releases
+ *
+ * @param code Released key
+ * @param app Application pointer
+ */
+int
+ui_ev_keyup(enum e_keycode code, t_app *app);
+/**
+ * @brief Event handler for keyboard presses
+ *
+ * @param code Pressed key
+ * @param app Application pointer
+ */
+int
+ui_ev_keydown(enum e_keycode code, t_app *app);
+/**
+ * @brief Event handler for mouse relases
+ *
+ * @param code Released button
+ * @param x Mouse X coordinate
+ * @param y Mouse Y coordinate
+ * @param app Application pointer
+ */
+int
+ui_ev_mouseup(enum e_mousecode code, int x, int y, t_app *app);
+/**
+ * @brief Event handler for mouse presses
+ *
+ * @param code Pressed button
+ * @param x Mouse X coordinate
+ * @param y Mouse Y coordinate
+ * @param app Application pointer
+ */
+int
+ui_ev_mousedown(enum e_mousecode code, int x, int y, t_app *app);
+/**
+ * @brief Event handler for mouse movements
+ *
+ * @param x Mouse X coordinate
+ * @param y Mouse Y coordinate
+ * @param app Application pointer
+ */
+int
+ui_ev_mousemove(int x, int y, t_app *app);
 
 /** @} */
 

@@ -14,6 +14,7 @@
 
 # include <util/util.h>
 # include <map/map.h>
+# include <ui/ui.h>
 
 /** @brief Initialization status */
 enum e_init_error
@@ -27,12 +28,17 @@ enum e_init_error
 
 typedef struct s_app
 {
+	/** @brief Window sizes */
+	t_pos			sizes;
 	/** @brief MLX instance pointer */
-	void	*mlx_ptr;
+	void			*mlx_ptr;
 	/** @brief MLX window pointer */
-	void	*mlx_window;
+	void			*mlx_window;
 	/** @brief The map */
-	t_map	map;
+	t_map			map;
+	/** @brief Event data */
+	struct s_event	event;
+
 }	t_app;
 
 #endif // CUB3D_H

@@ -49,12 +49,14 @@ int
 	t_app	app;
 
 	ft_memset(&app, 0, sizeof(app));
+	app.sizes = (t_pos){512, 512};
 	if (!parse_map(av[1], &app.map))
 		return (cleanup(&app, INIT_ERR_PARSE));
 	app.mlx_ptr = mlx_init();
 	if (!app.mlx_ptr)
 		return (cleanup(&app, INIT_ERR_MLX));
-	app.mlx_window = mlx_new_window(app.mlx_ptr, 512, 512, "Cub3D");
+	app.mlx_window = mlx_new_window(app.mlx_ptr,
+			app.sizes.x, app.sizes.y, "Cub3D");
 	if (!app.mlx_window)
 		return (cleanup(&app, INIT_ERR_WINDOW));
 	if (!map_asset_load(app.mlx_ptr, &app.map))
