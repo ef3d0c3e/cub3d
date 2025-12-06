@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include <parser/parser.h>
 
+/** @brief Parser for the @ref MAT_CUBE material */
 static inline int
 	cube_parser(struct s_parser *parser)
 {
@@ -33,6 +34,7 @@ static inline int
 	return (status);
 }
 
+/** @brief Parser for the @ref MAT_FLOOR material */
 static inline int
 	floor_parser(struct s_parser *parser)
 {

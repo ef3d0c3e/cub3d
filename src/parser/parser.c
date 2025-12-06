@@ -75,8 +75,8 @@ void
 	atlas_mat_free(&parser->s_data.mat_atlas);
 	atlas_tex_free(NULL, &parser->s_data.tex_atlas);
 	i = 0;
-while (i < parser->s_data.lines_size)
-		free(parser->s_data.lines[i]);
+	while (i < parser->s_data.lines_size)
+		free(parser->s_data.lines[i++]);
 	free(parser->s_data.lines);
 	free(parser->line);
 	if (parser->fd != -1)
