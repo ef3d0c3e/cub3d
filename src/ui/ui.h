@@ -22,11 +22,11 @@ typedef struct s_app	t_app;
  */
 
 ////////////////////////////////////////////////////////////////////////////////
-// MLX Wrapper                                                                //
+// MLX Definitions                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup MLX MLX Wrapper
+ * @defgroup MLX MLX Definitions
  * @ingroup UI
  * @{
  */
@@ -135,6 +135,29 @@ enum e_evmask
 /** @} */
 
 ////////////////////////////////////////////////////////////////////////////////
+// UI Handling                                                                //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Initialize the UI
+ *
+ * This will setup the MLX handlers, the event handler and the
+ * frame loop function.
+ *
+ * @param app Application pointer
+ * @return `true` on success, `false` on errors
+ */
+bool
+ui_setup(t_app *app);
+/**
+ * @brief Cleanup the UI
+ *
+ * @param app Application pointer
+ */
+void
+ui_cleanup(t_app *app);
+
+////////////////////////////////////////////////////////////////////////////////
 // Event Handling                                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -184,6 +207,14 @@ event_setup(t_app *app);
  */
 void
 event_cleanup(t_app *app);
+/**
+ * @brief Function to call at the end of every frames to mark released keys as
+ * no longer active
+ *
+ * @param app Application pointer
+ */
+void
+event_update(t_app *app);
 
 /**
  * @brief Check if a @ref e_keycode is being pressed
