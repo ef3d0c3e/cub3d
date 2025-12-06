@@ -16,10 +16,16 @@
 # include <stdlib.h>
 # include <stdint.h>
 
+////////////////////////////////////////////////////////////////////////////////
+// Red-Black Tree                                                             //
+////////////////////////////////////////////////////////////////////////////////
+
 /**
- * @file Red-Black tree implementation
- * based on this: http://www.sgi.com/tech/stl/stl_tree.h
+ * @defgroup RBTree Red-Black Tree
+ * based on this: http://www.sgi.com/tech/stl/stl_tree.h (https://web.archive.or
+ * g/web/20151027100052/http://www.sgi.com/tech/stl/stl_tree.h)
  * and this: https://github.com/xieqing/red-black-tree
+ * @{
  */
 
 /** @brief RB tree node */
@@ -55,7 +61,7 @@ typedef struct s_rbtree
 }	t_rbtree;
 
 /**
- * @brief Creates a new red-black tree
+ * @brief Create a new red-black tree
  *
  * @param key_cmp Key comparison function
  * @param key_destroy Key destroy function
@@ -70,7 +76,7 @@ rb_new(
 	void (*data_destroy)(void *data));
 
 /**
- * @brief Frees a red-black tree
+ * @brief Free a red-black tree
  *
  * This function only frees the node-related data for the tree. Essentially
  * clearing the tree, meaning it can be used again as an empty tree (keeping
@@ -82,7 +88,7 @@ void
 rb_free(t_rbtree *tree);
 
 /**
- * @brief Inserts new key/value pair into the tree
+ * @brief Insert new key/value pair into the tree
  *
  * @param tree Tree to insert into
  * @param key Key
@@ -94,7 +100,7 @@ t_rbnode
 *rb_insert(t_rbtree *tree, void *key, void *data);
 
 /**
- * @brief Deletes a key/value pair by calling the destroy functions
+ * @brief Delete a key/value pair by calling the destroy functions
  *
  * @param tree Tree to delete into
  * @param key Key to delete
@@ -105,7 +111,7 @@ int
 rb_delete(t_rbtree *tree, const void *key);
 
 /**
- * @brief Tries to find node by key
+ * @brief Try to find node by key
  *
  * @param tree Tree to search
  * @param key Key to search in tree
@@ -116,7 +122,7 @@ t_rbnode
 *rb_find_node(t_rbtree *tree, const void *key);
 
 /**
- * @brief Tries to value by key
+ * @brief Try to value by key
  *
  * @param tree Tree to search
  * @param key Key to search in tree
@@ -127,14 +133,15 @@ void
 *rb_find(t_rbtree *tree, const void *key);
 
 /**
- * @brief Applies function to tree
+ * @brief Apply function to tree
  *
  * The tree is traversed in DFS order
  *
  * @param tree Tree to apply function
- * @param fn Function to apply on every node
- * @param depth Node's depth
- * @param node Node
+ * @param fn Function to apply on every node:
+ *		- `depth`: Node's depth
+ *		- `node`: Node
+ *		- `data`: Caller-provided data
  * @param data Caller-provided data
  */
 void
@@ -143,16 +150,16 @@ rb_apply(
 	void (*fn)(size_t depth, t_rbnode *node, void *data),
 	void *data);
 
-/* ************************************************************************** */
-/* Internal                                                                   */
-/* ************************************************************************** */
+////////////////////////////////////////////////////////////////////////////////
+// RBTree internals                                                           //
+////////////////////////////////////////////////////////////////////////////////
 
 void
 rb_rotate_left(t_rbtree *rbt, t_rbnode *x);
 void
 rb_rotate_right(t_rbtree *rbt, t_rbnode *x);
 /**
- * @brief Returns the minimum of subtree designated by `node`
+ * @brief Return the minimum of subtree designated by `node`
  *
  * @returns node Subtree to get the minimal value from
  *
@@ -162,7 +169,7 @@ rb_rotate_right(t_rbtree *rbt, t_rbnode *x);
 t_rbnode
 *rb_minimum(t_rbnode *node);
 /**
- * @brief Returns the maximum of subtree designated by `node`
+ * @brief Return the maximum of subtree designated by `node`
  *
  * @returns node Subtree to get the maximal value from
  *
@@ -172,7 +179,7 @@ t_rbnode
 t_rbnode
 *rb_maximum(t_rbnode *node);
 /**
- * @brief Replaces the subtree rooted at u with the subtree rooted at v.
+ * @brief Replace the subtree rooted at u with the subtree rooted at v.
  * If u->parent is NULL, then v becomes root; otherwise
  * v is attached to u->parent in place of u.
  *
@@ -192,5 +199,7 @@ rb_transplant(t_rbtree *tree, t_rbnode *u, t_rbnode *v);
  * */
 void
 rb_delete_fixup(t_rbtree *tree, t_rbnode *x, t_rbnode *x_parent);
+
+/** @} */
 
 #endif // BTREE_H
