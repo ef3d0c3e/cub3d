@@ -69,18 +69,25 @@ t_atlas_id
 	const char *path,
 	const t_texture **out)
 {
-	t_err_str	msg;
 	t_texture	tex;
 	t_atlas_id	id;
+	int			fd;
 
+	if (*out)
+		*out = NULL;
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+	{
+		assets_error(path, err(0, " File does not exist"));
+		return ((t_atlas_id)ATLAS_INVALID);
+	}
+	close(fd);
 	tex.path = ft_strdup(path);
 	tex.img = mlx_xpm_file_to_image(mlx_ptr, tex.path, &tex.width, &tex.height);
 	if (!tex.img)
 	{
 		assets_error(tex.path, err(0, " `mlx_xpm_file_to_image` failed"));
 		free(tex.path);
-		if (*out)
-			*out = NULL;
 		return ((t_atlas_id)ATLAS_INVALID);
 	}
 	id = atlas_tex_add(atlas, tex);

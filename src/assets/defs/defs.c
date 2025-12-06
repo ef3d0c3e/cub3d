@@ -69,7 +69,7 @@ bool
 	return (asset_size_check(assets->hud_font.texture, 768, 768));
 }
 
-/** @brief Load map assets */
+/** @brief Loader for map assets */
 bool
 	asset_loader_map(void *mlx_ptr, t_app *app, t_assets *assets)
 {
