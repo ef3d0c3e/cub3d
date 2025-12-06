@@ -15,11 +15,13 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <stdbool.h>
+
 # include <mlx_int.h>
 # include <mlx.h>
-
 # include <libft.h>
 # include <get_next_line.h>
+
+# include <util/rbtree/rbtree.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions                                                                //
