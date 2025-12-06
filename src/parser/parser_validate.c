@@ -42,14 +42,16 @@ static bool
 {
 	const t_material	*mat;
 
-	if ((size_t)pos.x >= ft_strlen(parser->s_data.lines[pos.y]) || pos.x < 0
-		|| (size_t)pos.y >= parser->s_data.lines_size || pos.y < 0)
+	if ((size_t)pos.y >= parser->s_data.lines_size || pos.y < 0
+		|| (size_t)pos.x >= ft_strlen(parser->s_data.lines[pos.y]) || pos.x < 0)
 		return (parser_error_file(parser, leak_msg(pos)), false);
 	if (traversed[pos.x + pos.y * parser->s_data.map_width])
 		return (true);
 	traversed[pos.x + pos.y * parser->s_data.map_width] = true;
 	mat = atlas_mat_get(&parser->s_data.mat_atlas,
 			parser->s_data.lines[pos.y][pos.x]);
+	if (mat->type == MAT_CUBE)
+		return (true);
 	if (mat->type == MAT_OPEN)
 		return (parser_error_file(parser, leak_msg(pos)), false);
 	return (traverse_dfs(parser, traversed, (t_pos){pos.x + 1, pos.y})

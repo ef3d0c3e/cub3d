@@ -75,7 +75,7 @@ bool
 	parser->s_data.lines[parser->s_data.lines_size] = xmalloc((size_t)len + 1);
 	ft_memcpy(parser->s_data.lines[parser->s_data.lines_size], parser->line,
 		(size_t)len);
-	parser->s_data.lines[parser->s_data.lines_size++][len] = '0';
+	parser->s_data.lines[parser->s_data.lines_size++][len] = 0;
 	++parser->s_data.map_height;
 	if (len > parser->s_data.map_width)
 		parser->s_data.map_width = len;

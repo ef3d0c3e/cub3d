@@ -36,6 +36,8 @@ const t_material
 {
 	size_t	i;
 
+	if (ft_strchr("NESW", ch))
+		return (atlas_mat_get(atlas, '0'));
 	i = 0;
 	while (i < atlas->size)
 	{

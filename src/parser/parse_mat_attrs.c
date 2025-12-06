@@ -67,7 +67,7 @@ static bool
 
 /** @brief Check for duplicate and invalid material ID */
 static bool
-	validate_id(struct s_parser *parser, const char *ident, char id[2])
+	validate_id(struct s_parser *parser, char id[2])
 {
 	static const char	*reserved = "NESW";
 	const t_material	*mat = atlas_mat_get(&parser->s_data.mat_atlas, id[0]);
@@ -80,7 +80,6 @@ static bool
 		return (parser_error_loc(parser, err_style(err_style(err(0, "Illegal "
 							"material id: "), id, (t_text_style){COL_GREEN, 0,
 						STYLE_BOLD}), "", (t_text_style){0, 0, 0})), false);
-
 	return (true);
 }
 
@@ -107,7 +106,7 @@ int
 		return (parser_error_loc(parser, err(0, "Missing material ID")), -1);
 	buf[0] = *line;
 	buf[1] = 0;
-	if (!expect_space(parser, &line, buf) || !validate_id(parser, ident, buf))
+	if (!expect_space(parser, &line, buf) || !validate_id(parser, buf))
 		return (-1);
 	mat->id = buf[0];
 	if (!parse_material_orientation(parser, &line, mat)
