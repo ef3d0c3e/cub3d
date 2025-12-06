@@ -29,6 +29,8 @@ typedef struct s_map_props
 	float	friction;
 	/** @brief Ideal frame time in seconds */
 	float	frame_time;
+	/** @brief Material for the player's spawn point */
+	char	player_spawn;
 }	t_map_props;
 
 /** @brief The Cub3D map */

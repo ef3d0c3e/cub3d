@@ -232,7 +232,7 @@ parse_hdr_color(struct s_parser *parser, const char *line);
 /**
  * @brief Parse a line from the map materials
  *
- * Will advance the parser's state when the header is successfully parsed
+ * Will advance the parser's state when the material is successfully parsed
  *
  * @param parser The parser
  * @return true on success, false on errors
@@ -280,7 +280,6 @@ parse_mat_textures(
 
 /** @} */
 
-
 /**
  * @defgroup PropertyParsing Property Parsing
  * @ingroup Parser
@@ -290,13 +289,47 @@ parse_mat_textures(
 /**
  * @brief Parse a line of properties
  *
- * Will advance the parser's state when the header is successfully parsed
+ * Will advance the parser's state when the property is successfully parsed.
+ * Properties must follow this format:
+ * `PROP <NAME> <VALUE>` where `<VALUE>` must be a positive floating point
+ * value. This function will initialize the properties with default values when
+ * called for the first time.
+ *
  *
  * @param parser The parser
  * @return true on success, false on errors
  */
 bool
 parser_props(struct s_parser *parser);
+
+/**
+ * @brief Parse a single floating point property
+ *
+ * @param parser The parser
+ * @param name Name of the property
+ * @param value Value to parse into
+ * @return 0 if not a property line, -2 if not the correct property name,
+ * 1 on success, -1 on errors
+ */
+int
+parse_property_float(
+	struct s_parser *parser,
+	const char *name,
+	float *value);
+/**
+ * @brief Parse a single material id property
+ *
+ * @param parser The parser
+ * @param name Name of the property
+ * @param mat_id Value to parse into
+ * @return 0 if not a property line, -2 if not the correct property name,
+ * 1 on success, -1 on errors
+ */
+int
+parse_property_mat(
+	struct s_parser *parser,
+	const char *name,
+	char *mat_id);
 
 /** @} */
 
@@ -308,8 +341,6 @@ parser_props(struct s_parser *parser);
 
 /**
  * @brief Parse a line from the map content
- *
- * Will advance the parser's state when the header is successfully parsed
  *
  * @param parser The parser
  * @return true on success, false on errors
