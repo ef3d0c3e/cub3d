@@ -15,15 +15,6 @@
 #include <parser/parser.h>
 #include <cub3d.h>
 
-enum e_init_error
-{
-	INIT_ERR_PARSE,
-	INIT_ERR_MLX,
-	INIT_ERR_WINDOW,
-	INIT_ERR_LOAD,
-	INIT_OK,
-};
-
 static int
 	cleanup(t_app *app, enum e_init_error status)
 {

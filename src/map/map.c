@@ -14,7 +14,6 @@
 void
 	map_free(void *mlx_ptr, t_map *map)
 {
-	printf("map free: %p\n",mlx_ptr);
 	free(map->map);
 	atlas_mat_free(&map->material_atlas);
 	atlas_tex_free(mlx_ptr, &map->texture_atlas);
@@ -54,7 +53,7 @@ bool
 				&tex->width, &tex->height);
 		if (!tex->img)
 			return (map_error(err_style(err_style(err(0, "Invalid texture '"),
-								tex->path, (t_text_style){COL_GREEN, 0,
+							tex->path, (t_text_style){COL_GREEN, 0,
 							STYLE_UNDERLINE}), "'", (t_text_style){0, 0, 0})),
 					false);
 		++id;

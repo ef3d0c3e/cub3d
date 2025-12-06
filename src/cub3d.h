@@ -15,6 +15,16 @@
 # include <util/util.h>
 # include <map/map.h>
 
+/** @brief Initialization status */
+enum e_init_error
+{
+	INIT_ERR_PARSE,
+	INIT_ERR_MLX,
+	INIT_ERR_WINDOW,
+	INIT_ERR_LOAD,
+	INIT_OK,
+};
+
 typedef struct s_app
 {
 	void	*mlx_ptr;

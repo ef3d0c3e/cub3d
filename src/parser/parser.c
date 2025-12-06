@@ -120,7 +120,7 @@ void
 {
 	size_t	i;
 
-free(parser->s_data.textures[0]);
+	free(parser->s_data.textures[0]);
 	free(parser->s_data.textures[1]);
 	free(parser->s_data.textures[2]);
 	free(parser->s_data.textures[3]);
