@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   text.c                                             :+:      :+:    :+:   */
+/*   arith.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,26 +9,24 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <cub3d.h>
+#include <util/util.h>
 
-static void
-	glyph_blit(t_app *app, t_pos pos, int glyph)
+inline int
+	clamp(int value, int min, int max)
 {
-	const t_sprite	sprite = sprite_sheet_get(&app->assets.hud_font,
-			glyph % 16, glyph / 16);
-	hud_blit(app, &sprite, (t_vec2){.5, .5}, (t_vec2){5, 5});
+	if (value < min)
+		return (min);
+	else if (value > max)
+		return (max);
+	return (value);
 }
 
-void
-	hud_text(t_app *app, t_pos pos, const char *text)
+inline float
+	clampf(float value, float min, float max)
 {
-	size_t	i;
-
-	i = 0;
-	while (text[i])
-	{
-		glyph_blit(app, pos, text[i]);
-		pos.x += app->assets.hud_font.width / 2;
-		++i;
-	}
+	if (value < min)
+		return (min);
+	else if (value > max)
+		return (max);
+	return (value);
 }

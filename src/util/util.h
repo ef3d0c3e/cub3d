@@ -60,6 +60,27 @@ enum e_orientation
 /** @brief Color type */
 typedef uint32_t	t_color;
 
+/**
+ * @brief Interpolate between two colors
+ *
+ * @param x First color
+ * @param y Second color
+ * @param f Interpolate factor
+ * @return `x * f / 255 + y * (1 - f / 255)`
+ */
+t_color
+color_lerp8(t_color x, t_color y, uint8_t f);
+/**
+ * @brief Interpolate between two colors
+ *
+ * @param x First color
+ * @param y Second color
+ * @param f Interpolate factor
+ * @return `x * f + y * (1 - f)`
+ */
+t_color
+color_lerp(t_color x, t_color y, float f);
+
 enum
 {
 	/** @brief Uninitialized color value */
@@ -273,5 +294,25 @@ ft_strcmp(const char *a, const char *b);
  */
 char
 *ft_strndup(const char *str, size_t n);
+/**
+ * @brief Clamp an integer value
+ *
+ * @param value Value to clamp
+ * @param min Minimum value
+ * @param max Maximum value
+ * @return `value` clamped between `min` and `max`
+ */
+int
+clamp(int value, int min, int max);
+/**
+ * @brief Clamp a floating point value
+ *
+ * @param value Value to clamp
+ * @param min Minimum value
+ * @param max Maximum value
+ * @return `value` clamped between `min` and `max`
+ */
+float
+clampf(float value, float min, float max);
 
 #endif // UTIL_H

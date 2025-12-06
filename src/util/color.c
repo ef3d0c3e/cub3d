@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   text.c                                             :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,26 +9,31 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <cub3d.h>
+#include <util/util.h>
 
-static void
-	glyph_blit(t_app *app, t_pos pos, int glyph)
+inline t_color
+	color_lerp8(t_color x, t_color y, uint8_t f)
 {
-	const t_sprite	sprite = sprite_sheet_get(&app->assets.hud_font,
-			glyph % 16, glyph / 16);
-	hud_blit(app, &sprite, (t_vec2){.5, .5}, (t_vec2){5, 5});
+	uint8_t	c[3];
+	uint8_t	w;
+	uint8_t	iw;
+
+	w = f;
+	iw = 255 - w;
+	c[0] = (uint8_t)(((x & 0xFF) * iw + (y & 0xFF) * w) / 255);
+	c[1] = (uint8_t)((((x >> 8) & 0xFF) * iw
+				+ ((y >> 8) & 0xFF) * w) / 255);
+	c[2] = (uint8_t)((((x >> 16) & 0xFF) * iw
+				+ ((y >> 16) & 0xFF) * w) / 255);
+	return ((t_color)c[0] | ((t_color)c[1] << 8) | ((t_color)c[2] << 16));
 }
 
-void
-	hud_text(t_app *app, t_pos pos, const char *text)
+inline t_color
+	color_lerp(t_color x, t_color y, float f)
 {
-	size_t	i;
-
-	i = 0;
-	while (text[i])
-	{
-		glyph_blit(app, pos, text[i]);
-		pos.x += app->assets.hud_font.width / 2;
-		++i;
-	}
+	if (f <= 0.f)
+		return (x);
+	if (f >= 1.f)
+		return (y);
+	return color_lerp8(x, y, (uint8_t)(f * 255.f + 0.5f));
 }

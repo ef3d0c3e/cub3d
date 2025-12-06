@@ -36,6 +36,33 @@ inline t_color
 	return (col);
 }
 
+inline t_color
+	sprite_sample_bilinear(const t_sprite *spr, float u, float v)
+{
+	const t_color	*buf = (const t_color *)spr->texture->img->data;
+	t_color			cols[4];
+	t_vec2			texel;
+	t_pos			tp[2];
+	uint8_t			factor[2];
+
+	u = clampf(u, 0.f, 1.f);
+	v = clampf(v, 0.f, 1.f);
+	texel = (t_vec2){(float)spr->width * u - .5f, (float)spr->height * v - .5f};
+	tp[0] = (t_pos){(int)texel.x, (int)texel.y};
+	tp[1] = (t_pos){clamp(tp[0].x + 1, 0, spr->width - 1),
+		clamp(tp[0].y + 1, 0, spr->height - 1)};
+	factor[0] = (uint8_t)((texel.x - (float)tp[0].x) * 255.f + 0.5f);
+	factor[1] = (uint8_t)((texel.y - (float)tp[0].y) * 255.f + 0.5f);
+	cols[0] = buf[tp[0].x + spr->left + (tp[0].y + spr->top) * spr->line_size];
+	cols[1] = buf[tp[1].x + spr->left + (tp[0].y + spr->top) * spr->line_size];
+	cols[2] = buf[tp[0].x + spr->left + (tp[1].y + spr->top) * spr->line_size];
+	cols[3] = buf[tp[1].x + spr->left + (tp[1].y + spr->top) * spr->line_size];
+	return (color_lerp8(
+			color_lerp8(cols[0], cols[1], factor[0]),
+			color_lerp8(cols[2], cols[3], factor[0]),
+			factor[1]));
+}
+
 inline t_sprite
 	sprite_sheet_get(const t_sprite_sheet *sheet, int x, int y)
 {

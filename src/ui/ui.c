@@ -17,7 +17,7 @@ static int
 {
 	const float	dt = app->map.props.frame_time;
 
-	hud_text(app, (t_pos){64, 64}, "ABC");
+	hud_text(app, (t_pos){64, 64}, "A");
 	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
 		app->framebuffer, 0, 0);
 	event_update(app);

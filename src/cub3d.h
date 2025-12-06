@@ -48,6 +48,8 @@ typedef struct s_app
 	t_texture_atlas		texture_atlas;
 	/** @brief Material atlas */
 	t_material_atlas	material_atlas;
+	/** @brief Last rame duration in seconds */
+	float				frame_delta;
 
 	/* --- UI Data --- */
 	/** @brief Event data */

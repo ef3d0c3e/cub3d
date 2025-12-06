@@ -18,6 +18,21 @@
 struct	s_app;
 
 /**
+ * @defgroup HUD HUD
+ * @{
+ */
+
+////////////////////////////////////////////////////////////////////////////////
+// HUD Draw                                                                   //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup DrawHUD HUD Draw helpers
+ * @ingroup HUD
+ * @{
+ */
+
+/**
  * @brief Display a sprite on screen
  *
  * @param app Application pointer
@@ -27,7 +42,6 @@ struct	s_app;
  */
 void
 hud_blit(struct s_app *app, const t_sprite *spr, t_vec2 origin, t_vec2 scale);
-
 /**
  * @brief Display text on the screen
  *
@@ -37,5 +51,27 @@ hud_blit(struct s_app *app, const t_sprite *spr, t_vec2 origin, t_vec2 scale);
  */
 void
 hud_text(struct s_app *app, t_pos pos, const char *text);
+
+/** @} */
+
+////////////////////////////////////////////////////////////////////////////////
+// HUD                                                                        //
+////////////////////////////////////////////////////////////////////////////////
+
+typedef struct s_hud
+{
+	/** @brief HUD scaling */
+	float	scale;
+}	t_hud;
+
+/**
+ * @brief Initalize the HUD
+ *
+ * @param app Application pointer
+ */
+void
+init_hud(struct s_app *app);
+
+/** @} */
 
 #endif // HUD_H
