@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui.c                                               :+:      :+:    :+:   */
+/*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,32 +9,25 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <cub3d.h>
+#ifndef PLAYER_H
+# define PLAYER_H
 
-/** @brief Frame draw function */
-static int
-	ui_update(t_app *app)
+# include <util/util.h>
+
+typedef struct s_player
 {
-	const float	dt = app->map.props.frame_time;
+	/** @brief Acceleration (m/s²) */
+	t_vec2		accel;
+	/** @brief Velocity (m/s) */
+	t_vec2		velocity;
+	/** @brief Position (m) */
+	t_vec2		position;
+	/** @brief View angles (yaw, pitch) */
+	t_vec2		angle;
 
-	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
-		app->framebuffer, 0, 0);
-	event_update(app);
-	return (0);
-}
+	/** @brief Player's health */
+	int			health;
+}	t_player;
 
-bool
-	ui_setup(t_app *app)
-{
-	app->framebuffer = mlx_new_image(app->mlx_ptr, app->sizes.x, app->sizes.y);
-	event_setup(app);
-	mlx_loop_hook(app->mlx_ptr, ui_update, app);
-	return (true);
-}
+#endif // PLAYER_H
 
-void
-	ui_cleanup(t_app *app)
-{
-	event_cleanup(app);
-	mlx_destroy_image(app->mlx_ptr, app->framebuffer);
-}

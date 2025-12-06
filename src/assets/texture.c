@@ -60,3 +60,36 @@ const t_texture
 		return (NULL);
 	return (&atlas->textures[tex_id]);
 }
+
+t_atlas_id
+	atlas_tex_load(
+	void *mlx_ptr,
+	t_texture_atlas *atlas,
+	const char *path,
+	const t_texture **out)
+{
+	t_err_str	msg;
+	t_texture	tex;
+	t_atlas_id	id;
+
+	tex.path = ft_strdup(path);
+	tex.img = mlx_xpm_file_to_image(mlx_ptr, tex.path, &tex.width, &tex.height);
+	if (!tex.img)
+	{
+		msg = err_style(err_style(err_style(err_style(0, " ERROR: ",
+							(t_text_style){COL_WHITE, COL_RED, STYLE_BOLD}),
+						"Failed to load asset '", (t_text_style){0, 0, 0}),
+					path, (t_text_style){COL_GREEN, 0, STYLE_UNDERLINE}), "'\n",
+				(t_text_style){0, 0, 0});
+		write(STDOUT_FILENO, msg, ft_strlen(msg));
+		err_free(msg);
+		free(tex.path);
+		if (*out)
+			*out = NULL;
+		return ((t_atlas_id)ATLAS_INVALID);
+	}
+	id = atlas_tex_add(atlas, tex);
+	if (*out)
+		*out = &atlas->textures[id];
+	return (id);
+}

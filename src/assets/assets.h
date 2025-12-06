@@ -22,6 +22,12 @@
 /** @brief ID of an object in an atlas */
 typedef unsigned int	t_atlas_id;
 
+enum
+{
+	/** @brief Invalid atlas ID */
+	ATLAS_INVALID = ~0,
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // Textures                                                                   //
 ////////////////////////////////////////////////////////////////////////////////
@@ -83,6 +89,21 @@ atlas_tex_free(void *mlx_ptr, t_texture_atlas *atlas);
  */
 const t_texture
 *atlas_tex_get(const t_texture_atlas *atlas, t_atlas_id tex_id);
+/**
+ * @brief Load a texture and store it in the atlas
+ *
+ * @param mlx_ptr MLX instance pointer
+ * @param atlas The texture atlas
+ * @param path Path to the image
+ * @param out Output the texture's pointer
+ * @return The texture id on success, `ATLAS_INVALID` otherwise
+ */
+t_atlas_id
+atlas_tex_load(
+	void *mlx_ptr,
+	t_texture_atlas *atlas,
+	const char *path,
+	const t_texture **out);
 
 /** @} */
 

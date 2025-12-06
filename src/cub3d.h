@@ -15,6 +15,7 @@
 # include <util/util.h>
 # include <map/map.h>
 # include <ui/ui.h>
+# include <assets/defs/defs.h>
 
 /** @brief Initialization status */
 enum e_init_error
@@ -49,6 +50,8 @@ typedef struct s_app
 	struct s_event	event;
 	/** @brief The application's framer buffer */
 	t_img			*framebuffer;
+	/** @brief Application assets */
+	t_assets		assets;
 
 }	t_app;
 
