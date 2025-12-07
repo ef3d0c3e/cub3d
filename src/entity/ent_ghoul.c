@@ -17,7 +17,7 @@ static bool
 	t_entity_type *const	type = ent_type_ghoul();
 
 	atlas_tex_load(app->mlx_ptr, &app->texture_atlas,
-			"assets/ghoul.xpm", &type->model.texture);
+		"assets/ghoul.xpm", &type->model.texture);
 	if (!type->model.texture)
 		return (false);
 	type->model.background = (t_color)0x00FFFF;

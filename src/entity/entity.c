@@ -15,8 +15,8 @@ const t_entity_type
 	*ent_get_type(enum e_ent_id id)
 {
 	static t_entity_type	*(*getters[])(void) = {
-		//[ENT_ITEM] = ent_type_item,
-		[ENT_GHOUL] = ent_type_ghoul,
+	[ENT_ITEM] = ent_type_item,
+	[ENT_GHOUL] = ent_type_ghoul,
 	};
 
 	return (getters[id]());

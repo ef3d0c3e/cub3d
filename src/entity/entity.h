@@ -87,7 +87,7 @@ typedef struct s_entity
 /** @brief Entity types */
 enum e_ent_id
 {
-	//ENT_ITEM,
+	ENT_ITEM,
 	ENT_GHOUL,
 	ENT_NUM_,
 };
