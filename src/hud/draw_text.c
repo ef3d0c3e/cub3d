@@ -48,11 +48,12 @@ void
 	p1.origin = item->draw.text_shadow.pos;
 	p2 = p1;
 	p2.color = item->draw.text_shadow.color_shadow;
-	p2.origin.x += 2.f / (float)app->sizes.x;
-	p2.origin.y += 2.f / (float)app->sizes.y;
+	p2.origin.x += .12f * (float)font->size.x / (float)app->sizes.x;
+	p2.origin.y += .12f * (float)font->size.y / (float)app->sizes.y;
 	while (item->draw.text_shadow.text[i])
 	{
 		sprite = font_get(font, item->draw.text_shadow.text[i]);
+		hud_draw_sprite(app, &sprite, p2);
 		hud_draw_sprite(app, &sprite, p1);
 		p1.origin.x += (float)font->base_size.x * font->scale.x
 			/ (float)app->sizes.x;

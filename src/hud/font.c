@@ -15,6 +15,7 @@ t_font
 	font_new(const t_font *base, t_color color, float scale)
 {
 	t_font	new;
+
 	new = *base;
 	new.scale.x *= scale;
 	new.scale.y *= scale;
