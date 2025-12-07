@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.h                                           :+:      :+:    :+:   */
+/*   hud.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,36 +9,28 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PLAYER_H
-# define PLAYER_H
+#include <cub3d.h>
 
-struct	s_app;
-
-# include <util/util.h>
-
-typedef struct s_player
+void
+	hud_init(t_app *app)
 {
-	/** @brief Acceleration (m/s²) */
-	t_vec2		accel;
-	/** @brief Velocity (m/s) */
-	t_vec2		velocity;
-	/** @brief Position (m) */
-	t_vec2		position;
-	/** @brief View angles (yaw, pitch) */
-	t_vec2		angle;
+	float	sx;
+	float	sy;
 
-	/** @brief Player's health */
-	int			health;
-}	t_player;
+	sx = (float)app->sizes.x / 1024.f * .5f;
+	sy = (float)app->sizes.y / 1024.f * .5f;
+	if (sx <= sy)
+		app->hud.scale = sx;
+	else
+		app->hud.scale = sy;
+}
 
-/**
- * @brief Setup the player
- *
- * @param app Application pointer
- */
 void
-player_setup(struct s_app *app);
-void
-player_input(struct s_app *app);
-
-#endif // PLAYER_H
+	hud_draw(t_app *app)
+{
+	const t_vec2	size = hud_textsize(app, "a");
+	char	buf[1024];
+	
+	sprintf(buf, "(%f %f) (%f %f)", app->player.position.x, app->player.position.y, app->player.angle.x, app->player.angle.y);
+	hud_texts(app, (t_pos){8, 8}, buf, .7f);
+}

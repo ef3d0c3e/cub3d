@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.h                                           :+:      :+:    :+:   */
+/*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,36 +9,10 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PLAYER_H
-# define PLAYER_H
+#include <cub3d.h>
 
-struct	s_app;
-
-# include <util/util.h>
-
-typedef struct s_player
+void
+	app_setup(t_app *app)
 {
-	/** @brief Acceleration (m/s²) */
-	t_vec2		accel;
-	/** @brief Velocity (m/s) */
-	t_vec2		velocity;
-	/** @brief Position (m) */
-	t_vec2		position;
-	/** @brief View angles (yaw, pitch) */
-	t_vec2		angle;
-
-	/** @brief Player's health */
-	int			health;
-}	t_player;
-
-/**
- * @brief Setup the player
- *
- * @param app Application pointer
- */
-void
-player_setup(struct s_app *app);
-void
-player_input(struct s_app *app);
-
-#endif // PLAYER_H
+	player_setup(app);
+}

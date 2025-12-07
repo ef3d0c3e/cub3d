@@ -15,6 +15,8 @@
 # include <util/util.h>
 # include <assets/assets.h>
 
+struct	s_app;
+
 /**
  * @defgroup Map Map
  * @{
@@ -62,6 +64,16 @@ typedef struct s_map
  */
 void
 map_free(t_map *map);
+/**
+ * @brief Get a material at a given position in the map
+ *
+ * @param app Application pointer
+ * @param x X coordinate
+ * @param y Y coordinate
+ * @return The material at `(x, y)`, or `NULL` if not found
+ */
+t_material
+*map_get(struct s_app *app, int x, int y);
 
 /** @} */
 

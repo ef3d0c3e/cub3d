@@ -13,10 +13,11 @@
 # define CUB3D_H
 
 # include <util/util.h>
+# include <assets/defs/defs.h>
 # include <map/map.h>
 # include <hud/hud.h>
 # include <ui/ui.h>
-# include <assets/defs/defs.h>
+# include <player/player.h>
 
 /** @brief Initialization status */
 enum e_init_error
@@ -58,9 +59,21 @@ typedef struct s_app
 	t_img				*framebuffer;
 	/** @brief Application assets */
 	t_assets			assets;
+	/** @brief HUD */
+	t_hud				hud;
 
+	/** @brief The player */
+	t_player			player;
 	/** @brief The map */
 	t_map				map;
 }	t_app;
+
+/**
+ * @brief Setup the application
+ *
+ * @param app Setup the last required variables for the application
+ */
+void
+app_setup(t_app *app);
 
 #endif // CUB3D_H

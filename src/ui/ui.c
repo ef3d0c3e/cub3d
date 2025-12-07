@@ -12,34 +12,34 @@
 #include <cub3d.h>
 #include <sys/time.h>
 
+/** @brief Measure frame time and sleeps using spinlock to attempt to limit the
+ * framerate */
 static void
 	frame_time(t_app *app, bool is_start)
 {
-	static struct timeval	start;
-	static struct timeval	end;
+	static struct timeval	t[2];
 	time_t					sec;
 	long					usec;
 	float					rem;
 
-	if (is_start && gettimeofday(&start, NULL))
+	if (is_start && (gettimeofday(&t[0], NULL), 1))
 		return ;
-	gettimeofday(&end, NULL);
-	sec = end.tv_sec - start.tv_sec;
-	usec = end.tv_usec - start.tv_usec;
+	gettimeofday(&t[1], NULL);
+	sec = t[1].tv_sec - t[0].tv_sec;
+	usec = t[1].tv_usec - t[0].tv_usec;
+	usec += 1000000L * (usec < 0) + (0 * --sec);
 	if (usec < 0 && (--sec, 1))
 		usec += 1000000L;
 	app->frame_delta = (float)sec + 1e-6f * (float)usec;
 	rem = app->map.props.frame_time - app->frame_delta;
-	if (rem <= 0.0)
-		return ;
-	while (rem < app->map.props.frame_time)
+	while (rem > 0.f)
 	{
-		gettimeofday(&end, NULL);
-		sec = end.tv_sec - start.tv_sec;
-		usec = end.tv_usec - start.tv_usec;
+		gettimeofday(&t[1], NULL);
+		sec = t[1].tv_sec - t[0].tv_sec;
+		usec = t[1].tv_usec - t[0].tv_usec;
 		if (usec < 0 && (--sec, 1))
 			usec += 1000000L;
-		rem = (float)sec + 1e-6f * (float)usec;
+		rem -= (float)sec + 1e-6f * (float)usec;
 	}
 	app->frame_delta = app->map.props.frame_time;
 }
@@ -48,15 +48,12 @@ static void
 static int
 	ui_update(t_app *app)
 {
-	char buf[128];
-
-
 	ft_memset(app->framebuffer->data, 0, app->sizes.x * app->sizes.y * 4);
 	if (app->frame_delta == 0)
 		app->frame_delta = 1.f;
 	frame_time(app, true);
-	sprintf(buf, "FPS = %d", (int)(1.f / app->frame_delta));
-	hud_text(app, (t_pos){64, 65}, buf);
+	player_input(app);
+	hud_draw(app);
 	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
 		app->framebuffer, 0, 0);
 	event_update(app);
@@ -71,6 +68,7 @@ bool
 	app->framebuffer = mlx_new_image(app->mlx_ptr, app->sizes.x, app->sizes.y);
 	event_setup(app);
 	mlx_loop_hook(app->mlx_ptr, ui_update, app);
+	hud_init(app);
 	return (true);
 }
 

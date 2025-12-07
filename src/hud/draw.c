@@ -31,7 +31,6 @@ void
 			color = sprite_sample_bilinear(spr, (float)uv.x / ((float)spr->width
 						* scale.x), (float)uv.y / ((float)spr->height
 						* scale.y));
-			//color = color_lerp8(color, 0xFF0000, 127);
 			screen = (t_pos){screen0.x + uv.x, screen0.y + uv.y};
 			if (color != (t_color)COLOR_UNINIT && screen.x >= 0 && screen.x
 				< app->sizes.x && screen.y >= 0 && screen.y < app->sizes.y)

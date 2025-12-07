@@ -51,6 +51,25 @@ hud_blit(struct s_app *app, const t_sprite *spr, t_vec2 origin, t_vec2 scale);
  */
 void
 hud_text(struct s_app *app, t_pos pos, const char *text);
+/**
+ * @brief Display text on the screen
+ *
+ * @param app Application pointer
+ * @param pos Text TopLeft origin
+ * @param text Text to display
+ * @param s Text scale
+ */
+void
+hud_texts(struct s_app *app, t_pos pos, const char *text, float s);
+/**
+ * @brief Compute the size of text
+ *
+ * @param app Application pointer
+ * @param text Text to compute the size of
+ * @return The size of `text`
+ */
+t_vec2
+hud_textsize(struct s_app *app, const char *text);
 
 /** @} */
 
@@ -70,7 +89,14 @@ typedef struct s_hud
  * @param app Application pointer
  */
 void
-init_hud(struct s_app *app);
+hud_init(struct s_app *app);
+/**
+ * @brief Draw the HUD
+ *
+ * @param app Application pointer
+ */
+void
+hud_draw(struct s_app *app);
 
 /** @} */
 
