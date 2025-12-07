@@ -37,3 +37,14 @@ inline t_color
 		return (y);
 	return color_lerp8(x, y, (uint8_t)(f * 255.f + 0.5f));
 }
+
+inline t_color
+	color_tint(t_color x, t_color y)
+{
+	uint8_t	c[3];
+
+	c[0] = ((x & 0xFF) * (y & 0xFF) + 128) >> 8;
+	c[1] = (((x >> 8) & 0xFF) * ((y >> 8) & 0xFF) + 128) >> 8;
+	c[2] = (((x >> 16) & 0xFF) * ((y >> 16) & 0xFF) + 128) >> 8;
+	return ((t_color)c[0] | ((t_color)c[1] << 8) | ((t_color)c[2] << 16));
+}

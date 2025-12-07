@@ -89,12 +89,11 @@ typedef struct s_assets
 /**
  * @brief Load all assets
  *
- * @param mlx_ptr MLX instance pointer
  * @param app Application pointer
  * @return `true` on success, `false` on errors
  */
 bool
-assets_load(void *mlx_ptr, struct s_app *app);
+assets_load(struct s_app *app);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Internal                                                                   //

@@ -32,27 +32,133 @@ struct	s_app;
  * @{
  */
 
+/** @brief Draw parameters */
+typedef struct s_draw_params
+{
+	/** @brief Draw origin */
+	t_vec2	origin;
+	/** @brief Draw scale */
+	t_vec2	scale;
+	/** @brief Custom color */
+	t_color	color;
+}	t_draw_params;
+
 /**
- * @brief Display a sprite on screen
+ * @brief Draw a sprite on screen
  *
  * @param app Application pointer
- * @param spr Sprite to display
- * @param origin Sprite origin (relative to the screen)
- * @param scale Sprite scale
+ * @param spr Sprite to draw
+ * @param p Draw parameters
  */
 void
-hud_blit(struct s_app *app, const t_sprite *spr, t_vec2 origin, t_vec2 scale);
+hud_draw_sprite(
+	struct s_app *app,
+	const t_sprite *spr,
+	t_draw_params p);
 /**
- * @brief Display text on the screen
+ * @brief Draw a sprite on screen with bilinear sampling
  *
  * @param app Application pointer
- * @param pos Text TopLeft origin
- * @param text Text to display
+ * @param spr Sprite to draw
+ * @param p Draw parameters
  */
 void
-hud_text(struct s_app *app, t_pos pos, const char *text);
+hud_draw_sprite_bilinear(
+	struct s_app *app,
+	const t_sprite *spr,
+	t_draw_params p);
+
+/** @brief Drawable primitives */
+enum e_draw_item
+{
+	/** @brief Text */
+	DRAW_TEXT,
+	/** @brief Text with shadow */
+	DRAW_TEXT_SHADOW,
+};
+
+/** @brief Drawawable primitive data */
+typedef struct s_draw_item
+{
+	/** @brief Drawable type */
+	enum e_draw_item	type;
+	union u_draw_item
+	{
+		/** @brief Drawable text */
+		struct s_draw_item_text
+		{
+			/** @brief Text position */
+			t_vec2		pos;
+			/** @brief Text scale */
+			float		scale;
+			/** @brief Text color */
+			t_color		color;
+			const char	*text;
+		}	text;
+		/** @brief Drawable text */
+		struct s_draw_item_shadow
+		{
+			/** @brief Text position */
+			t_vec2		pos;
+			/** @brief Text scale */
+			float		scale;
+			/** @brief Text color */
+			t_color		color;
+			/** @brief Text shadow color */
+			t_color		color_shadow;
+			const char	*text;
+		}	text_shadow;
+	}	draw;
+}	t_draw_item;
+
+/** @brief A queue holding all elements that need to be drawn */
+typedef struct s_draw_queue
+{
+	/** @brief Items to draw */
+	t_draw_item	*items;
+	/** @brief Number items */
+	size_t		size;
+	/** @brief Capacity of @ref items */
+	size_t		capacity;
+}	t_draw_queue;
+
 /**
- * @brief Display text on the screen
+ * @brief Add an item to the HUD's @ref t_draw_queue
+ *
+ * @param app Application pointer
+ * @param item Item to draw
+ * @return A pointer to the inserter @ref t_draw_item
+ */
+t_draw_item
+*hud_draw(struct s_app *app, t_draw_item item);
+/**
+ * @brief Render the HUD from the @ref t_draw_queue
+ *
+ * @param app Application pointer
+ */
+void
+hud_render(struct s_app *app);
+
+/**
+ * @brief Draw function for @ref DRAW_TEXT
+ *
+ * @param app Application pointer
+ * @param item @ref DRAW_TEXT to draw
+ */
+void
+hud_draw_text(struct s_app *app, const t_draw_item *item);
+/**
+ * @brief Draw function for @ref DRAW_TEXT_SHADOW
+ *
+ * @param app Application pointer
+ * @param item @ref DRAW_TEXT_SHADOW to draw
+ */
+void
+hud_draw_text_shadow(struct s_app *app, const t_draw_item *item);
+
+/**
+ * @brief Convenience function to display text on the screen, bypassing the draw
+ * queue
  *
  * @param app Application pointer
  * @param pos Text TopLeft origin
@@ -60,7 +166,7 @@ hud_text(struct s_app *app, t_pos pos, const char *text);
  * @param s Text scale
  */
 void
-hud_texts(struct s_app *app, t_pos pos, const char *text, float s);
+hud_text(struct s_app *app, t_pos pos, const char *text, float s);
 /**
  * @brief Compute the size of text
  *
@@ -80,7 +186,9 @@ hud_textsize(struct s_app *app, const char *text);
 typedef struct s_hud
 {
 	/** @brief HUD scaling */
-	float	scale;
+	float			scale;
+	/** @brief HUD draw queue */
+	t_draw_queue	queue;
 }	t_hud;
 
 /**
@@ -91,12 +199,12 @@ typedef struct s_hud
 void
 hud_init(struct s_app *app);
 /**
- * @brief Draw the HUD
+ * @brief Free the HUD
  *
  * @param app Application pointer
  */
 void
-hud_draw(struct s_app *app);
+hud_free(struct s_app *app);
 
 /** @} */
 

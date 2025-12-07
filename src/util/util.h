@@ -80,6 +80,15 @@ color_lerp8(t_color x, t_color y, uint8_t f);
  */
 t_color
 color_lerp(t_color x, t_color y, float f);
+/**
+ * @brief Compute the tint of two colors
+ *
+ * @param x First color
+ * @param y Second color
+ * @return `x * y`
+ */
+t_color
+color_tint(t_color x, t_color y);
 
 enum
 {

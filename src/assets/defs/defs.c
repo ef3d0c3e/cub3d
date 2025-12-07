@@ -97,7 +97,7 @@ bool
 }
 
 bool
-	assets_load(void *mlx_ptr, t_app *app)
+	assets_load(t_app *app)
 {
 	static const t_asset_loader	loaders[] = {
 		asset_loader_map,

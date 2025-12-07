@@ -23,14 +23,12 @@ void
 		app->hud.scale = sx;
 	else
 		app->hud.scale = sy;
+	app->hud.queue.items = xmalloc(sizeof(t_draw_item) * 256);
+	app->hud.queue.capacity = 256;
 }
 
 void
-	hud_draw(t_app *app)
+	hud_free(t_app *app)
 {
-	const t_vec2	size = hud_textsize(app, "a");
-	char	buf[1024];
-	
-	sprintf(buf, "(%f %f) (%f %f)", app->player.position.x, app->player.position.y, app->player.angle.x, app->player.angle.y);
-	hud_texts(app, (t_pos){8, 8}, buf, .7f);
+	free(app->hud.queue.items);
 }

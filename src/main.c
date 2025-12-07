@@ -59,7 +59,7 @@ int
 			app.sizes.x, app.sizes.y, "Cub3D");
 	if (!app.mlx_window)
 		return (cleanup(&app, INIT_ERR_WINDOW));
-	if (!assets_load(app.mlx_ptr, &app))
+	if (!assets_load(&app))
 		return (cleanup(&app, INIT_ERR_LOAD));
 	if (!ui_setup(&app))
 		return (cleanup(&app, INIT_ERR_UI));

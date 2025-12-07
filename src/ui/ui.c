@@ -53,7 +53,17 @@ static int
 		app->frame_delta = 1.f;
 	frame_time(app, true);
 	player_input(app);
-	hud_draw(app);
+	hud_draw(app, (t_draw_item){
+		.type = DRAW_TEXT_SHADOW,
+		.draw.text_shadow = {
+			.text = "Hello",
+			.scale = 2,
+			.color = 0xFF0000,
+			.pos = {.5, .5},
+			.color_shadow = 0x00FF00,
+		}
+	});
+	hud_render(app);
 	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
 		app->framebuffer, 0, 0);
 	event_update(app);
@@ -75,6 +85,7 @@ bool
 void
 	ui_cleanup(t_app *app)
 {
+	hud_free(app);
 	event_cleanup(app);
 	mlx_destroy_image(app->mlx_ptr, app->framebuffer);
 }
