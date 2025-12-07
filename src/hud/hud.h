@@ -15,7 +15,8 @@
 # include <util/util.h>
 # include <assets/assets.h>
 
-struct	s_app;
+struct						s_app;
+typedef struct s_draw_item	t_draw_item;
 
 /**
  * @defgroup HUD HUD
@@ -27,7 +28,7 @@ struct	s_app;
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup DrawHUD HUD Draw helpers
+ * @defgroup DrawHUD HUD Drawing
  * @ingroup HUD
  * @{
  */
@@ -68,6 +69,72 @@ hud_draw_sprite_bilinear(
 	const t_sprite *spr,
 	t_draw_params p);
 
+/** @brief Text font */
+typedef struct s_font
+{
+	/** @brief Font base texture */
+	const t_texture	*texture;
+	/** @brief Background color */
+	t_color			background;
+	/** @brief Number of `(colums, rows)` of the font */
+	t_pos			geom;
+	/** @brief Base color of the font */
+	t_color			color;
+	/** @brief Font X/Y scaling */
+	t_vec2			scale;
+	/** @brief Font cell size */
+	t_pos			base_size;
+	/** @brief Scaled cell size */
+	t_pos			size;
+}	t_font;
+
+/**
+ * @brief Create a new font
+ *
+ * @param base Base font
+ * @param color Font base color
+ * @param scale Scale of the font
+ * @return New font
+ */
+t_font
+font_new(const t_font *base, t_color color, float scale);
+/**
+ * @brief Make a text @ref t_draw_item with a font
+ *
+ * @param font The font to use
+ * @param Coordinates of the text
+ * @param text Text to draw
+ *
+ * @returns A @ref t_draw_item for `text`
+ */
+t_draw_item
+font_text(t_font font, t_vec2 pos, const char *text);
+/**
+ * @brief Make a text @ref t_draw_item with a font with shadow
+ *
+ * @param font The font to use
+ * @param Coordinates of the text
+ * @param text Text to draw
+ * @param color_shadow Shadow color
+ *
+ * @returns A @ref t_draw_item for `text`
+ */
+t_draw_item
+font_text_shadow(
+	t_font font,
+	t_vec2 pos,
+	const char *text,
+	t_color color_shadow);
+/**
+ * @brief Get a sprite from a font
+ *
+ * @param font Font to get a sprite for
+ * @param ch Character to get a sprite for
+ * @return Sprite corresponding to @p ch in @p font
+ */
+t_sprite
+font_get(const t_font *font, int ch);
+
 /** @brief Drawable primitives */
 enum e_draw_item
 {
@@ -77,7 +144,7 @@ enum e_draw_item
 	DRAW_TEXT_SHADOW,
 };
 
-/** @brief Drawawable primitive data */
+/** @brief Drawable primitive data */
 typedef struct s_draw_item
 {
 	/** @brief Drawable type */
@@ -87,26 +154,24 @@ typedef struct s_draw_item
 		/** @brief Drawable text */
 		struct s_draw_item_text
 		{
+			/** @brief Text font */
+			t_font		font;
 			/** @brief Text position */
 			t_vec2		pos;
-			/** @brief Text scale */
-			float		scale;
-			/** @brief Text color */
-			t_color		color;
+			/** @brief Text to draw */
 			const char	*text;
 		}	text;
 		/** @brief Drawable text */
 		struct s_draw_item_shadow
 		{
+			/** @brief Text font */
+			t_font		font;
 			/** @brief Text position */
 			t_vec2		pos;
-			/** @brief Text scale */
-			float		scale;
-			/** @brief Text color */
-			t_color		color;
+			/** @brief Text to draw */
+			const char	*text;
 			/** @brief Text shadow color */
 			t_color		color_shadow;
-			const char	*text;
 		}	text_shadow;
 	}	draw;
 }	t_draw_item;
@@ -128,7 +193,7 @@ typedef struct s_draw_queue
  * @param app Application pointer
  * @param item Item to draw
  * @return A pointer to the inserter @ref t_draw_item
- */
+ */	
 t_draw_item
 *hud_draw(struct s_app *app, t_draw_item item);
 /**
@@ -138,6 +203,8 @@ t_draw_item
  */
 void
 hud_render(struct s_app *app);
+
+/* --- Draw functions --- */
 
 /**
  * @brief Draw function for @ref DRAW_TEXT
@@ -155,6 +222,8 @@ hud_draw_text(struct s_app *app, const t_draw_item *item);
  */
 void
 hud_draw_text_shadow(struct s_app *app, const t_draw_item *item);
+
+/* --- Misc --- */
 
 /**
  * @brief Convenience function to display text on the screen, bypassing the draw
@@ -189,6 +258,8 @@ typedef struct s_hud
 	float			scale;
 	/** @brief HUD draw queue */
 	t_draw_queue	queue;
+	/** @brief The base hud font */
+	t_font			font;
 }	t_hud;
 
 /**
@@ -205,6 +276,9 @@ hud_init(struct s_app *app);
  */
 void
 hud_free(struct s_app *app);
+
+void
+hud_menu(struct s_app *app, const char ***items, t_pos selected);
 
 /** @} */
 

@@ -49,7 +49,7 @@ int
 	if (ac != 2)
 		return (printf("USAGE: %s MAP.cub\n", av[0]), 1);
 	ft_memset(&app, 0, sizeof(app));
-	app.sizes = (t_pos){512, 512};
+	app.sizes = (t_pos){1024, 512};
 	if (!parse_map(av[1], &app))
 		return (cleanup(&app, INIT_ERR_PARSE));
 	app.mlx_ptr = mlx_init();

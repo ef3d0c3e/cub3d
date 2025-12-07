@@ -55,18 +55,18 @@ bool
 bool
 	assets_loader_font(t_app *app, t_assets *assets)
 {
+	(void)assets;
+
 	atlas_tex_load(app->mlx_ptr, &app->texture_atlas, "assets/font.xpm",
-		&assets->hud_font.texture);
-	if (!assets->hud_font.texture)
+		&app->hud.font.texture);
+	if (!app->hud.font.texture)
 		return (false);
-	assets->hud_font.background = (t_color)0x000000;
-	assets->hud_font.width = 48;
-	assets->hud_font.height = 48;
-	assets->hud_font.off_left = 0;
-	assets->hud_font.off_top = 0;
-	assets->hud_font.sep_left = 0;
-	assets->hud_font.sep_top = 0;
-	return (asset_size_check(assets->hud_font.texture, 768, 768));
+	app->hud.font.scale = (t_vec2){1.f, 1.f};
+	app->hud.font.color = (t_color)0xFFFFFF;
+	app->hud.font.geom = (t_pos){16, 16};
+	app->hud.font.base_size = (t_pos){768 / 16, 768 / 16};
+	app->hud.font.size = app->hud.font.base_size;
+	return (asset_size_check(app->hud.font.texture, 768, 768));
 }
 
 /** @brief Loader for map assets */

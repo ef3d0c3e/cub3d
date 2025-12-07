@@ -80,8 +80,6 @@ enum e_weapons
 /** @brief A struct holding all assets */
 typedef struct s_assets
 {
-	/** @brief Font sprite sheet for the HUD */
-	t_sprite_sheet	hud_font;
 	/** @brief Sprites for all weapons */
 	t_weapon		weapons[WEAPON_NUM_];
 }	t_assets;

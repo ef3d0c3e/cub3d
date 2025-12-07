@@ -53,6 +53,15 @@ static int
 		app->frame_delta = 1.f;
 	frame_time(app, true);
 	player_input(app);
+
+	const char **items[] = {
+		(const char *[]){"Foo", "bar", NULL},
+		(const char *[]){"test", NULL},
+		NULL
+	};
+
+	hud_menu(app, items, (t_pos){0, 1});
+	/*
 	hud_draw(app, (t_draw_item){
 		.type = DRAW_TEXT_SHADOW,
 		.draw.text_shadow = {
@@ -63,6 +72,7 @@ static int
 			.color_shadow = 0x00FF00,
 		}
 	});
+	*/
 	hud_render(app);
 	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
 		app->framebuffer, 0, 0);
