@@ -26,11 +26,10 @@ struct			s_app;
 /**
  * @brief Asset loader function
  *
- * @param mlx_pointer MLX instance pointer
+ * @param app Application pointer
  * @param assets The global asset registry
  */
 typedef bool	(*t_asset_loader)(
-	void *mlx_pointer,
 	struct s_app *app,
 	struct s_assets *assets);
 

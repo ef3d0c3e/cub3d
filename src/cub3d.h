@@ -18,6 +18,7 @@
 # include <hud/hud.h>
 # include <ui/ui.h>
 # include <player/player.h>
+# include <entity/entity.h>
 
 /** @brief Initialization status */
 enum e_init_error
@@ -66,6 +67,8 @@ typedef struct s_app
 	t_player			player;
 	/** @brief The map */
 	t_map				map;
+	/** @brief Spawned entities */
+	t_rbtree			entities;
 }	t_app;
 
 /**

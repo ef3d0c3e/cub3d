@@ -20,7 +20,7 @@ void
 								(t_text_style){COL_WHITE, COL_RED, STYLE_BOLD}),
 							"\nFailed to load asset '", (t_text_style){0, 0, 0}
 							), path, (t_text_style){COL_GREEN, 0,
-						STYLE_UNDERLINE}), "':", (t_text_style){0, 0, 0}),
+						STYLE_UNDERLINE}), "': ", (t_text_style){0, 0, 0}),
 				errstr), "\n", (t_text_style){0, 0, 0});
 	write(STDOUT_FILENO, msg, ft_strlen(msg));
 	err_free(errstr);
@@ -53,9 +53,9 @@ bool
 }
 
 bool
-	assets_loader_font(void *mlx_ptr, t_app *app, t_assets *assets)
+	assets_loader_font(t_app *app, t_assets *assets)
 {
-	atlas_tex_load(mlx_ptr, &app->texture_atlas, "assets/font.xpm",
+	atlas_tex_load(app->mlx_ptr, &app->texture_atlas, "assets/font.xpm",
 		&assets->hud_font.texture);
 	if (!assets->hud_font.texture)
 		return (false);
@@ -71,7 +71,7 @@ bool
 
 /** @brief Loader for map assets */
 bool
-	asset_loader_map(void *mlx_ptr, t_app *app, t_assets *assets)
+	asset_loader_map(t_app *app, t_assets *assets)
 {
 	t_atlas_id	id;
 	t_texture	*tex;
@@ -87,7 +87,7 @@ bool
 			return (assets_error(tex->path, err(0, "Failed to open file")),
 				false);
 		close(fd);
-		tex->img = mlx_xpm_file_to_image(mlx_ptr, tex->path,
+		tex->img = mlx_xpm_file_to_image(app->mlx_ptr, tex->path,
 				&tex->width, &tex->height);
 		if (!tex->img)
 			return (assets_error(tex->path, err(0, "Invalid texture")), false);
@@ -102,6 +102,7 @@ bool
 	static const t_asset_loader	loaders[] = {
 		asset_loader_map,
 		assets_loader_font,
+		ent_load_assets,
 		NULL,
 	};
 	size_t						i;
@@ -109,7 +110,7 @@ bool
 	i = 0;
 	while (loaders[i])
 	{
-		if (!loaders[i](mlx_ptr, app, &app->assets))
+		if (!loaders[i](app, &app->assets))
 			return (false);
 		++i;
 	}
