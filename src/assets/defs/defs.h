@@ -55,7 +55,7 @@ typedef struct s_weapon
 }	t_weapon;
 
 /** @brief All available weapons */
-enum e_weapons
+enum e_weapon_id
 {
 	/** @brief No weapon selected */
 	WEAPON_NONE = -1,

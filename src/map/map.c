@@ -26,7 +26,7 @@ t_material
 		|| x >= app->map.size_x || y >= app->map.size_y)
 		return (NULL);
 	id = app->map.map[x + y * app->map.size_x];
-	if (id == 0)
+	if (id == 0 || id == (t_atlas_id)ATLAS_INVALID)
 		return (NULL);
 	return (&app->material_atlas.materials[id]);
 }

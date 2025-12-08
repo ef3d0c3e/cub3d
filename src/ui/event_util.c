@@ -15,13 +15,23 @@ bool
 	ui_key_held(t_app *app, enum e_keycode code)
 {
 	const t_event_code	ev = encode_event_code(EV_TYPE_KEY, code);
+	const void			*status = rb_find(&app->event.events, (void *)ev);
 
-	return (rb_find(&app->event.events, (void *)ev)
-		== (void *)EV_STATUS_HELD);
+	return (status == (void *)EV_STATUS_HELD
+		|| status == (void *)EV_STATUS_HELD_FIRST);
 }
 
 bool
 	ui_key_pressed(t_app *app, enum e_keycode code)
+{
+	const t_event_code	ev = encode_event_code(EV_TYPE_KEY, code);
+
+	return (rb_find(&app->event.events, (void *)ev)
+		== (void *)EV_STATUS_HELD_FIRST);
+}
+
+bool
+	ui_key_released(t_app *app, enum e_keycode code)
 {
 	const t_event_code	ev = encode_event_code(EV_TYPE_KEY, code);
 

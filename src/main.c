@@ -63,6 +63,8 @@ int
 		return (cleanup(&app, INIT_ERR_LOAD));
 	if (!ui_setup(&app))
 		return (cleanup(&app, INIT_ERR_UI));
+	app_setup(&app);
 	mlx_loop(app.mlx_ptr);
+	app_cleanup(&app);
 	return (cleanup(&app, INIT_OK));
 }

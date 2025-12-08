@@ -31,14 +31,9 @@ void
 {
 	t_vec2	move;
 
-	move = (t_vec2){0, 0};
-	if (ui_key_held(app, KEY_W))
-		move.x += 1.f;
-	if (ui_key_held(app, KEY_S))
-		move.x += -1.f;
-	if (ui_key_held(app, KEY_D))
-		move.y += 1.f;
-	if (ui_key_held(app, KEY_A))
-		move.y += -1.f;
+	move = (t_vec2){
+		ui_key_held(app, KEY_W) - ui_key_held(app, KEY_S),
+		ui_key_held(app, KEY_D) - ui_key_held(app, KEY_A)
+	};
 	player_move(app, move);
 }

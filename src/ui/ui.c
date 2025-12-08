@@ -64,7 +64,6 @@ static int
 	t_pos move = (t_pos){1, 0};
 	move.y = ui_key_pressed(app, KEY_ARROW_RIGHT) - ui_key_pressed(app, KEY_ARROW_LEFT);
 	move.x = ui_key_pressed(app, KEY_ARROW_DOWN) - ui_key_pressed(app, KEY_ARROW_UP);
-
 	hud_menu_move(items, &pos, move);
 	hud_menu(app, items, pos);
 	/*

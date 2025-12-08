@@ -15,6 +15,7 @@
 struct	s_app;
 
 # include <util/util.h>
+# include <assets/defs/defs.h>
 
 typedef struct s_player
 {
@@ -29,6 +30,11 @@ typedef struct s_player
 
 	/** @brief Player's health */
 	int			health;
+
+	/** @brief Available weapons */
+	t_weapon			weapons[WEAPON_NUM_];
+	/** @brief Current weapon */
+	enum e_weapon_id	weapon;
 }	t_player;
 
 /**

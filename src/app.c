@@ -16,3 +16,9 @@ void
 {
 	player_setup(app);
 }
+
+void
+	app_cleanup(t_app *app)
+{
+	rb_free(&app->entities);
+}

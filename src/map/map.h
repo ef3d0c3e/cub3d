@@ -70,7 +70,7 @@ map_free(t_map *map);
  * @param app Application pointer
  * @param x X coordinate
  * @param y Y coordinate
- * @return The material at `(x, y)`, or `NULL` if not found
+ * @return The material at `(x, y)`, or `NULL` for empty spaces
  */
 t_material
 *map_get(struct s_app *app, int x, int y);

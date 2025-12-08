@@ -78,5 +78,12 @@ typedef struct s_app
  */
 void
 app_setup(t_app *app);
+/**
+ * @brief Cleanup the application
+ *
+ * @param app Setup the last required variables for the application
+ */
+void
+app_cleanup(t_app *app);
 
 #endif // CUB3D_H

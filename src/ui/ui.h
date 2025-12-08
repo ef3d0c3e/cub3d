@@ -187,6 +187,8 @@ enum e_event_status
 {
 	/** @brief Not being used */
 	EV_STATUS_INACTIVE,
+	/** @brief Key/Button is being held for the first frame */
+	EV_STATUS_HELD_FIRST,
 	/** @brief Key/Button is being held */
 	EV_STATUS_HELD,
 	/** @brief Key/Button has been released */
@@ -226,6 +228,16 @@ event_update(struct s_app *app);
 bool
 ui_key_held(struct s_app *app, enum e_keycode code);
 /**
+ * @brief Check if a @ref e_keycode is being held down for the first frame
+ *
+ * @param app Application pointer
+ * @param code Keycode to check
+ * @return `true` if key @p code is being held down for the first time, `false`
+ * otherwise
+ */
+bool
+ui_key_pressed(struct s_app *app, enum e_keycode code);
+/**
  * @brief Check if a @ref e_keycode has been pressed (held then released)
  *
  * @param app Application pointer
@@ -233,7 +245,7 @@ ui_key_held(struct s_app *app, enum e_keycode code);
  * @return `true` if key @p code has been pressed, `false` otherwise
  */
 bool
-ui_key_pressed(struct s_app *app, enum e_keycode code);
+ui_key_released(struct s_app *app, enum e_keycode code);
 /**
  * @brief Check if a @ref e_mousecode is being pressed
  *

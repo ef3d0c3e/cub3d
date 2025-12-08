@@ -52,15 +52,16 @@ void
 	rb_free(&app->event.events);
 }
 
-/** @brief A function to mark pressed keys as no longer active */
+/** @brief A function to mark released keys as no longer active */
 static void
 	update_pressed_keys(size_t depth, t_rbnode *node, void *cookie)
 {
 	(void)depth;
 	(void)cookie;
-	if (node->data != (void *)EV_STATUS_RELEASED)
-		return ;
-	node->data = (void *)EV_STATUS_INACTIVE;
+	if (node->data == (void *)EV_STATUS_RELEASED)
+		node->data = (void *)EV_STATUS_INACTIVE;
+	else if (node->data == (void *)EV_STATUS_HELD_FIRST)
+		node->data = (void *)EV_STATUS_HELD;
 }
 
 void
