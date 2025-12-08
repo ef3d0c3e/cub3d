@@ -55,12 +55,18 @@ static int
 	player_input(app);
 
 	const char **items[] = {
-		(const char *[]){"Foo", "bar", NULL},
-		(const char *[]){"test", NULL},
+		(const char *[]){"Foo", "bar", "quz", NULL},
+		(const char *[]){"test", "lorem", "ipsum", NULL},
+		(const char *[]){"dolor", "sit", NULL},
 		NULL
 	};
+	static t_pos pos;
+	t_pos move = (t_pos){1, 0};
+	move.y = ui_key_pressed(app, KEY_ARROW_RIGHT) - ui_key_pressed(app, KEY_ARROW_LEFT);
+	move.x = ui_key_pressed(app, KEY_ARROW_DOWN) - ui_key_pressed(app, KEY_ARROW_UP);
 
-	hud_menu(app, items, (t_pos){0, 1});
+	hud_menu_move(items, &pos, move);
+	hud_menu(app, items, pos);
 	/*
 	hud_draw(app, (t_draw_item){
 		.type = DRAW_TEXT_SHADOW,
