@@ -145,7 +145,7 @@ enum e_draw_item
 };
 
 /** @brief Drawable primitive data */
-typedef struct s_draw_item
+struct s_draw_item
 {
 	/** @brief Drawable type */
 	enum e_draw_item	type;
@@ -174,7 +174,7 @@ typedef struct s_draw_item
 			t_color		color_shadow;
 		}	text_shadow;
 	}	draw;
-}	t_draw_item;
+};
 
 /** @brief A queue holding all elements that need to be drawn */
 typedef struct s_draw_queue

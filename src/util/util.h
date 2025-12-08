@@ -207,6 +207,16 @@ struct s_err_str_hdr
 t_err_str
 err(t_err_str err, const char *str);
 /**
+ * @brief Append a string to the error
+ *
+ * @param err The base error message (can be NULL)
+ * @param str String to append to err
+ * @param n Maximum length of `str`
+ * @return The result of concatenation
+ */
+t_err_str
+err_n(t_err_str err, const char *str, size_t n);
+/**
  * @brief Append a string to the error with style formatting
  *
  * @param errstr The base error message (can be NULL)
@@ -217,6 +227,20 @@ err(t_err_str err, const char *str);
 t_err_str
 err_style(t_err_str errstr,
 	const char *str,
+	t_text_style style);
+/**
+ * @brief Append a string to the error with style formatting
+ *
+ * @param errstr The base error message (can be NULL)
+ * @param str String to append to err
+ * @param n Maximum length of `str`
+ * @param style The custom text styling to apply on the appended string
+ * @return The result of concatenation
+ */
+t_err_str
+err_style_n(t_err_str errstr,
+	const char *str,
+	size_t n,
 	t_text_style style);
 /**
  * @brief Free an error message
@@ -303,6 +327,15 @@ ft_strcmp(const char *a, const char *b);
  */
 char
 *ft_strndup(const char *str, size_t n);
+/**
+ * @brief Strnlen implementation
+ *
+ * @param str String
+ * @param n Maximum length of `str`
+ * @return The length of `str` <= `n`
+ */
+size_t
+ft_strnlen(const char *str, size_t n);
 /**
  * @brief Clamp an integer value
  *

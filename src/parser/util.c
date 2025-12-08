@@ -20,6 +20,27 @@ const char
 }
 
 bool
+	parser_expect(
+	struct s_parser *parser,
+	const char **line,
+	const char *token)
+{
+	const t_text_style	st_hi = (t_text_style){COL_CYAN, 0, STYLE_BOLD};
+	const t_text_style	st_none = (t_text_style){0, 0, 0};
+
+	if (!ft_strncmp(*line, token, ft_strlen(token)))
+	{
+		*line += ft_strlen(token);
+		return (true);
+	}
+	parser_error_loc(parser, err_style(err_style(err_style(err_style_n(err(0,
+							"Unexpected token: '"), *line, ft_strlen(token),
+						st_hi), "', expected: '", st_none), token, st_hi), "'",
+			st_none));
+	return (false);
+}
+
+bool
 	parser_expect_space(
 	struct s_parser *parser,
 	const char **line,

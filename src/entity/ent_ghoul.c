@@ -55,6 +55,7 @@ t_entity_type
 	*ent_type_ghoul(void)
 {
 	static t_entity_type	data = {
+		.name = "ghoul",
 		.load_fn = ghoul_load,
 		.create_fn = ghoul_create,
 		.tick_fn = ghoul_tick,

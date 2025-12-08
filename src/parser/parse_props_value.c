@@ -38,7 +38,7 @@ static bool
 }
 
 /** @brief Parse a floating point value */
-static bool
+bool
 	parse_float(
 	struct s_parser *parser,
 	const char **line,

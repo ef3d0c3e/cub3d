@@ -50,6 +50,7 @@ t_entity_type
 	*ent_type_item(void)
 {
 	static t_entity_type	data = {
+		.name = "item",
 		.load_fn = item_load,
 		.create_fn = item_create,
 		.tick_fn = item_tick,

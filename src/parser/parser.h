@@ -14,6 +14,7 @@
 
 # include <util/util.h>
 # include <assets/assets.h>
+# include <entity/entity.h>
 # include <map/map.h>
 
 struct	s_app;
@@ -38,6 +39,17 @@ enum e_parser_state
 	PARSE_MAP,
 	/** @brief An error happened */
 	PARSE_ERROR,
+};
+
+/** @brief Parsed entity data */
+struct s_parser_ent
+{
+	/** @brief Entity type */
+	const t_entity_type	*type;
+	/** @brief Init pos */
+	t_vec2				pos;
+	/** @brief Init angles */
+	t_vec2				angles;
 };
 
 /** @brief The parser */
@@ -73,6 +85,12 @@ struct s_parser
 		bool				parsing_properties;
 		/** @brief Custom properties for the map */
 		t_map_props			properties;
+		/** @brief Parsed entities */
+		struct s_parser_ent	*ents;
+		/** @brief Number of parsed entities */
+		size_t				ents_size;
+		/** @brief Capacity of parsed entities */
+		size_t				ents_capacity;
 	}						s_data;
 	/** @brief Parsed file */
 	const char				*file;
@@ -126,7 +144,19 @@ parser_validate(struct s_parser *parser);
  */
 const char
 *parser_trim_start(const char *str, const char *set);
-
+/**
+ * @brief Expect a token, advance line on success
+ *
+ * @param parser The parser
+ * @param line Current line position (will be advanced on success)
+ * @param token Expected token
+ * @return `true` on success, `false` on errors
+ */
+bool
+parser_expect(
+	struct s_parser *parser,
+	const char **line,
+	const char *token);
 /**
  * @brief Expect a space token after another token
  *
@@ -333,6 +363,40 @@ parse_property_mat(
 	struct s_parser *parser,
 	const char *name,
 	char *mat_id);
+/**
+ * @brief Parse a single floating-point value
+ *
+ * @param parser The parser
+ * @param line Current line, will be advanced
+ * @param name Float name (for error messages)
+ * @param val The parsed float
+ * @return `true` on success, `false` on errors
+ */
+bool
+	parse_float(
+	struct s_parser *parser,
+	const char **line,
+	const char *name,
+	float *val);
+
+/** @} */
+
+/**
+ * @defgroup EntityParsing Entity Parsing
+ * @ingroup Parser
+ * @{
+ */
+
+/**
+ * @brief Parse a line of entities
+ *
+ * Will advance the parser's state when the entity is successfully parsed.
+ *
+ * @param parser The parser
+ * @return true on success, false on errors
+ */
+bool
+parser_entities(struct s_parser *parser);
 
 /** @} */
 

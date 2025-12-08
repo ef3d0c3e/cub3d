@@ -88,3 +88,23 @@ t_err_str
 	else
 		return (err(err(errstr, buf), str));
 }
+
+t_err_str
+	err_style_n(t_err_str errstr,
+	const char *str,
+	size_t n,
+	t_text_style style)
+{
+	t_text_style	*active;
+	char			buf[128];
+
+	if (!errstr)
+		errstr = err(0, "");
+	active = &err_hdr(errstr)->style;
+	buf[0] = 0;
+	format_style(buf, style, active);
+	if (buf[0])
+		return (err_n(err(err(errstr, "\033[0m"), buf), str, n));
+	else
+		return (err_n(err(errstr, buf), str, n));
+}

@@ -15,6 +15,7 @@
 # include <assets/assets.h>
 
 struct	s_app;
+struct	s_assets;
 
 /**
  * @defgroup Entities Entities
@@ -43,6 +44,8 @@ typedef struct s_entity_data
 /** @brief Static data for each entity type */
 typedef struct s_entity_type
 {
+	/** @brief Entity type name */
+	const char		*name;
 	/** @brief Entity model data */
 	t_sprite_sheet	model;
 	/** @brief Entity hitbox size */
@@ -98,8 +101,8 @@ enum e_ent_id
  * @param id The entity to get the type for
  * @return Entity type for @p id
  */
-t_entity_type
-*ent_type(enum e_ent_id id);
+const t_entity_type
+*ent_get_type(enum e_ent_id id);
 
 /**
  * @brief Asset loader function for entities

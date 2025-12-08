@@ -28,6 +28,8 @@ static bool
 			parser->state = PARSE_ERROR;
 		else if (parser->state == PARSE_PROPS && !parser_props(parser))
 			parser->state = PARSE_ERROR;
+		else if (parser->state == PARSE_ENT && !parser_entities(parser))
+			parser->state = PARSE_ERROR;
 		else if (parser->state == PARSE_MAP && !parser_map(parser))
 			parser->state = PARSE_ERROR;
 		free(parser->line);
