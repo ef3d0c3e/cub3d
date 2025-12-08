@@ -19,6 +19,7 @@
 # include <ui/ui.h>
 # include <player/player.h>
 # include <entity/entity.h>
+# include <game/game.h>
 
 /** @brief Initialization status */
 enum e_init_error
@@ -63,12 +64,12 @@ typedef struct s_app
 	/** @brief HUD */
 	t_hud				hud;
 
-	/** @brief The player */
-	t_player			player;
 	/** @brief The map */
 	t_map				map;
 	/** @brief Spawned entities */
 	t_rbtree			entities;
+	/** @brief Game data */
+	t_game				game;
 }	t_app;
 
 /**

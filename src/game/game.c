@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app.c                                              :+:      :+:    :+:   */
+/*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,18 +9,16 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <cub3d.h>
+#include <game/game.h>
+
 
 void
-	app_setup(t_app *app)
+	game_setup(struct s_app *app)
 {
-	ent_setup(app);
-	game_setup(app);
+	player_setup(app);
 }
 
 void
-	app_cleanup(t_app *app)
+	game_cleanup(struct s_app *app)
 {
-	game_cleanup(app);
-	rb_free(&app->entities);
 }

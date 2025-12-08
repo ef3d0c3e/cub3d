@@ -14,8 +14,8 @@
 void
 	player_setup(t_app *app)
 {
-	app->player.health = 100;
-	app->player.angle.x = ((float)app->map.player_orientation / 2.f - 1.f)
+	app->game.player.health = 100;
+	app->game.player.angle.x = ((float)app->map.player_orientation / 2.f - 1.f)
 		* (float)M_PI;
 }
 

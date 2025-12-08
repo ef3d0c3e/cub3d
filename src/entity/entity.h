@@ -155,6 +155,36 @@ t_entity_type
 
 /** @} */
 
+////////////////////////////////////////////////////////////////////////////////
+// Entity system                                                              //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup SystemEntities Entity System
+ * @ingroup Entities
+ * @{
+ */
+
+/**
+ * @brief Setup the entity system
+ *
+ * @param app Application pointer
+ */
+void
+ent_setup(struct s_app *app);
+/**
+ * @brief Spawn a new entity
+ *
+ * @param app Application pointer
+ * @param id Entity id
+ * @param data Entity data
+ * @return The spawned entity
+ */
+void
+*ent_spawn(struct s_app *app, enum e_ent_id id, t_entity_data data);
+
+/** @} */
+
 /** @} */
 
 #endif // ENTITY_H
