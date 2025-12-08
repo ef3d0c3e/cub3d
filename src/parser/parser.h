@@ -373,7 +373,7 @@ parse_property_mat(
  * @return `true` on success, `false` on errors
  */
 bool
-	parse_float(
+parse_float(
 	struct s_parser *parser,
 	const char **line,
 	const char *name,
