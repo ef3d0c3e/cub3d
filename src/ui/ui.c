@@ -54,12 +54,12 @@ static int
 	frame_time(app, true);
 	ft_memset(app->framebuffer->data, 0,
 		(size_t)app->sizes.x * (size_t)app->sizes.y * sizeof(t_color));
-	pan_context_reset(app);
 	game_input(app);
 	game_render(app);
 	hud_render(app);
 	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
 		app->framebuffer, 0, 0);
+	pan_context_reset(app);
 	event_update(app);
 	frame_time(app, false);
 	return (0);

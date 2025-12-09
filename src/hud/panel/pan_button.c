@@ -30,31 +30,32 @@ static bool
 	button_draw(const t_drawable *drawable)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
-	const t_vec2		size = pan_drawable_size(ctx->app, drawable);
+	const t_bbox		bbox = pan_bbox(ctx->cursor,
+			pan_drawable_size(drawable), ctx->st_button.padding);
+	const bool			hovered = pan_mouse_hovered(&bbox);
 	t_draw_item			rect;
 
-	ctx->cursor = (t_vec2){.1, .1};
 	rect.type = DRAW_RECT_RADIUS;
 	rect.draw.rect_radius.radius = 0 * ctx->st_button.radius;
 	rect.draw.rect_radius.color = ctx->st_button.button_color;
-	if (pan_mouse_hovered(ctx->app, ctx->cursor, (t_vec2){ctx->cursor.x + size.x, ctx->cursor.y + size.y}))
+	if (hovered)
 	{
 		rect.draw.rect_radius.color = ctx->st_button.button_color_hover;
 		if (ui_mouse_pressed(ctx->app, MOUSE_LEFT))
 			ctx->active = ctx->id_stack[ctx->id_stack_depth];
 	}
-	if (ctx->active == ctx->id_stack[ctx->id_stack_depth])
+	if (pan_is_active())
 		rect.draw.rect_radius.color = ctx->st_button.button_color_active;
-	rect.draw.rect_radius.size = size;
+	rect.draw.rect_radius.size = bbox.size;
 	rect.draw.rect_radius.pos = ctx->cursor;
 
 	hud_draw(ctx->app, rect);
-	pan_drawable_draw(ctx->app, drawable, (t_vec2){
-		ctx->cursor.x + size.y / 2,
-		ctx->cursor.y + size.y / 2,
+	pan_drawable_draw(drawable, (t_vec2){
+		ctx->cursor.x + bbox.size.x / 2,
+		ctx->cursor.y + bbox.size.y / 2,
 	});
-	ctx->cursor.y += size.y;
-	return (false);
+	ctx->cursor.y += bbox.size.y;
+	return (ui_mouse_released(ctx->app, MOUSE_LEFT) && pan_is_active() && hovered);
 }
 
 bool
@@ -67,7 +68,7 @@ bool
 		.draw.text = {
 		.text = text,
 		.font = font,
-		.pos = ctx->cursor
+		.pos = {0.f, 0.f},
 	}};
 	const t_drawable	drawable = {
 		.items = &item,
@@ -75,6 +76,7 @@ bool
 	};
 	bool				val;
 
+	ctx->cursor = (t_vec2){.1f, .1f};
 	ctx->id_stack[ctx->id_stack_depth] = pan_id_str(text);
 	val = button_draw(&drawable);
 	return (val);

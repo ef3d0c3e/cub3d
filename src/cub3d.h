@@ -21,6 +21,7 @@
 # include <player/player.h>
 # include <entity/entity.h>
 # include <game/game.h>
+# include <render/render.h>
 
 /** @brief Initialization status */
 enum e_init_error

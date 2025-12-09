@@ -67,7 +67,7 @@ t_sprite
 	spr.background = font->background;
 	spr.line_size = font->texture->width;
 	spr.width = font->base_size.x;
-	spr.height = font->base_size.x;
+	spr.height = font->base_size.y;
 	spr.left = x * font->base_size.x;
 	spr.top = y * font->base_size.y;
 	return (spr);

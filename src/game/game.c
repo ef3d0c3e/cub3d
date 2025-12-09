@@ -66,6 +66,7 @@ void
 void
 	game_render(t_app *app)
 {
+	render_frame(app);
 	// Draw the 5x5 sprite
 	hud_draw(app, (t_draw_item){
 		.type = DRAW_SPRITE,
@@ -73,7 +74,7 @@ void
 			.sprite = app->game.minimap,
 			.color = 0xFFFFFF,
 			.scale = (t_vec2){10.f, 10.f},
-			.pos = {.5f, .1f},
+			.pos = {.5f, .5f},
 		}
 	});
 

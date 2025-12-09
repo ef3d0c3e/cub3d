@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse.c                                            :+:      :+:    :+:   */
+/*   bbox.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,26 +11,49 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-bool
-	pan_mouse_hovered(const t_bbox *bbox)
+t_bbox
+	pan_bbox(t_vec2 pos, t_vec2 size, int *padding)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
-	t_pos				pos;
-	t_pos				size;
 
-	pan_bbox_screen(bbox, &pos, &size);
-	if (ctx->app->event.mouse_pos.x < pos.x
-		|| ctx->app->event.mouse_pos.x > pos.x + size.x
-		|| ctx->app->event.mouse_pos.y < pos.y
-		|| ctx->app->event.mouse_pos.y > pos.y + size.y)
-		return (false);
-	return (true);
+	if (!padding)
+	{
+		return ((t_bbox){
+			pos,
+			size
+		});
+	}
+	return ((t_bbox){
+		pos,
+		(t_vec2){
+		size.x + (float)(padding[0] + padding[2])
+			/ (float)ctx->app->sizes.x,
+		size.y + (float)(padding[1] + padding[3])
+			/ (float)ctx->app->sizes.y,
+		}
+	});
 }
 
-bool
-	pan_is_active(void)
+t_vec2
+	pan_bbox_center(const t_bbox *bbox)
+{
+	return ((t_vec2){
+		bbox->pos.x + bbox->size.x / 2.f,
+		bbox->pos.y + bbox->size.y / 2.f,
+	});
+}
+
+void
+	pan_bbox_screen(const t_bbox *bbox, t_pos *screen_pos, t_pos *screen_size)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 
-	return (ctx->active == ctx->id_stack[ctx->id_stack_depth]);
+	*screen_pos = (t_pos){
+		(int)(bbox->pos.x * (float)ctx->app->sizes.x),
+		(int)(bbox->pos.y * (float)ctx->app->sizes.y),
+	};
+	*screen_size = (t_pos){
+		(int)(bbox->size.x * (float)ctx->app->sizes.x),
+		(int)(bbox->size.y * (float)ctx->app->sizes.y),
+	};
 }

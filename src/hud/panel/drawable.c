@@ -12,17 +12,18 @@
 #include <cub3d.h>
 
 t_vec2
-	pan_drawable_size(const t_app *app, const t_drawable *drawable)
+	pan_drawable_size(const t_drawable *drawable)
 {
-	t_vec2	size;
-	t_vec2	total;
-	size_t	i;
+	t_panel_ctx *const	ctx = pan_ctx(NULL);
+	t_vec2				size;
+	t_vec2				total;
+	size_t				i;
 
 	i = 0;
 	total = (t_vec2){0, 0};
 	while (i < drawable->nitems)
 	{
-		size = draw_item_size(app, &drawable->items[i]);
+		size = draw_item_size(ctx->app, &drawable->items[i]);
 		total = (t_vec2){maxf(size.x, total.x), maxf(size.y, total.y)};
 		++i;
 	}
@@ -30,14 +31,16 @@ t_vec2
 }
 
 void
-	pan_drawable_draw(t_app *app, const t_drawable *drawable, t_vec2 offset)
+	pan_drawable_draw(const t_drawable *drawable, t_vec2 offset)
 {
-	size_t	i;
+	t_panel_ctx *const	ctx = pan_ctx(NULL);
+	size_t				i;
 
 	i = 0;
 	while (i < drawable->nitems)
 	{
-		hud_draw(app, draw_item_offset(app, drawable->items[i], offset));
+		hud_draw(ctx->app,
+			draw_item_offset(ctx->app, drawable->items[i], offset));
 		++i;
 	}
 }

@@ -22,8 +22,9 @@ void
 	i = 0;
 	p.color = font->color;
 	p.scale = font->scale;
-	p.origin = (t_vec2){item->draw.text.pos.x - .5f * (float)font->base_size.x
-		* font->scale.x / (float)app->sizes.x, item->draw.text.pos.y};
+	p.origin = (t_vec2){item->draw.text.pos.x - .5f * (font_textsize(app, font,
+				item->draw.text.text).x - (float)font->base_size.x
+			/ (float)app->sizes.x), item->draw.text.pos.y};
 	while (item->draw.text.text[i])
 	{
 		sprite = font_get(font, item->draw.text.text[i]);
@@ -39,27 +40,27 @@ void
 {
 	const t_font	*font = &item->draw.text_shadow.font;
 	size_t			i;
-	t_draw_params	p1;
-	t_draw_params	p2;
+	t_draw_params	p[2];
 	t_sprite		sprite;
 
 	i = 0;
-	p1.color = font->color;
-	p1.scale = font->scale;
-	p1.origin = (t_vec2){item->draw.text.pos.x - .5f * (float)font->base_size.x
-		* font->scale.x / (float)app->sizes.x, item->draw.text.pos.y};
-	p2 = p1;
-	p2.color = item->draw.text_shadow.color_shadow;
-	p2.origin.x += .12f * (float)font->size.x / (float)app->sizes.x;
-	p2.origin.y += .12f * (float)font->size.y / (float)app->sizes.y;
+	p[0].color = font->color;
+	p[0].scale = font->scale;
+	p[0].origin = (t_vec2){item->draw.text.pos.x - .5f * (font_textsize(app,
+				font, item->draw.text.text).x - (float)font->base_size.x
+			/ (float)app->sizes.x), item->draw.text.pos.y};
+	p[1] = p[0];
+	p[1].color = item->draw.text_shadow.color_shadow;
+	p[1].origin.x += .12f * (float)font->size.x / (float)app->sizes.x;
+	p[1].origin.y += .12f * (float)font->size.y / (float)app->sizes.y;
 	while (item->draw.text_shadow.text[i])
 	{
 		sprite = font_get(font, item->draw.text_shadow.text[i++]);
-		hud_draw_sprite(app, &sprite, p2);
-		hud_draw_sprite(app, &sprite, p1);
-		p1.origin.x += (float)font->base_size.x * font->scale.x
+		hud_draw_sprite(app, &sprite, p[1]);
+		hud_draw_sprite(app, &sprite, p[0]);
+		p[0].origin.x += (float)font->base_size.x * font->scale.x
 			/ (float)app->sizes.x;
-		p2.origin.x += (float)font->base_size.x * font->scale.x
+		p[1].origin.x += (float)font->base_size.x * font->scale.x
 			/ (float)app->sizes.x;
 	}
 }

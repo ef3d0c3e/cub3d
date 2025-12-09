@@ -26,13 +26,71 @@ struct	s_app;
  */
 
 ////////////////////////////////////////////////////////////////////////////////
+// Bounding Boxes                                                             //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup BBoxPanel Bounding Boxes
+ * @ingroup Panel
+ * @{
+ */
+
+/** @brief A bounding box */
+typedef struct s_bbox
+{
+	/** @brief Top-Left corner position */
+	t_vec2	pos;
+	/** @brief Bounding box sizes */
+	t_vec2	size;
+}	t_bbox;
+
+/**
+ * @brief Create a bounding box
+ *
+ * @param pos BBox position
+ * @param size BBox size
+ * @param padding Optional pixel padding
+ * @return New bounding box
+ */
+t_bbox
+pan_bbox(t_vec2 pos, t_vec2 size, int *padding);
+/**
+ * @brief Compute the screen coordinates of a bounding box
+ *
+ * @param bbox Bounding box
+ * @param screen_pos Screen Top-Left coordinates
+ * @param screen_size Screen pixel sizes
+ */
+void
+pan_bbox_screen(const t_bbox *bbox, t_pos *screen_pos, t_pos *screen_size);
+/**
+ * @brief Get the center point of a bounding box
+ *
+ * @param bbox Bounding box
+ * @return The center of @p bbox
+ */
+t_vec2
+pan_bbox_center(const t_bbox *bbox);
+
+/** @} */
+
+////////////////////////////////////////////////////////////////////////////////
+// Widgets                                                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup WidgetsPanel Widgets
+ * @ingroup Panel
+ * @{
+ */
+
+////////////////////////////////////////////////////////////////////////////////
 // Button                                                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- *
  * @defgroup ButtonPanel Button
- * @ingroup Panel
+ * @ingroup WidgetsPanel
  * @{
  */
 
@@ -66,6 +124,8 @@ pan_button_style(void);
  */
 bool
 pan_button(const char *text);
+
+/** @} */
 
 /** @} */
 
@@ -164,37 +224,36 @@ typedef struct s_drawable
 /**
  * @brief Compute the size of a drawable
  *
- * @param app Application pointer
  * @param drawable Drawable
  * @return The size of @p drawable
  */
 t_vec2
-pan_drawable_size(const struct s_app *app, const t_drawable *drawable);
+pan_drawable_size(const t_drawable *drawable);
 /**
  * @brief Draw a list of @ref t_draw_item on screen
  *
- * @param app Application pointer
  * @param drawable The list of @ref t_draw_item
  * @param offset The offset to apply to each @ref t_draw_item
  */
 void
-pan_drawable_draw(struct s_app *app, const t_drawable *drawable, t_vec2 offset);
+pan_drawable_draw(const t_drawable *drawable, t_vec2 offset);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Panel Utils                                                                //
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief Check if the area between @p min and @p max are hovered by the mouse
+ * @brief Check if the area delimited by the bouding box is under the mouse
+ * cursor
  *
- * @param app Application pointer
- * @param bb_min Minimum point
- * @param bb_max Maximum point
- * @return `true` if the rectangle delimited by `(bb_min, bb_max)` is under the
+ * @param bbox Bounding box
+ * @return `true` if the rectangle delimited by @p bbox is under the
  * mouse cursor, `false` otherwise
  */
 bool
-pan_mouse_hovered(struct s_app *app, t_vec2 bb_min, t_vec2 bb_max);
+pan_mouse_hovered(const t_bbox *bbox);
+bool
+pan_is_active(void);
 
 /** @} */
 
