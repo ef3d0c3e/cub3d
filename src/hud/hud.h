@@ -102,7 +102,7 @@ font_new(const t_font *base, t_color color, float scale);
  * @brief Make a text @ref t_draw_item with a font
  *
  * @param font The font to use
- * @param Coordinates of the text
+ * @param pos Coordinates of the text
  * @param text Text to draw
  *
  * @returns A @ref t_draw_item for `text`
@@ -113,7 +113,7 @@ font_text(t_font font, t_vec2 pos, const char *text);
  * @brief Make a text @ref t_draw_item with a font with shadow
  *
  * @param font The font to use
- * @param Coordinates of the text
+ * @param pos Coordinates of the text
  * @param text Text to draw
  * @param color_shadow Shadow color
  *
