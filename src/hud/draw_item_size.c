@@ -20,8 +20,7 @@ static inline void
 	{
 		font = &item->draw.text.font;
 		size->x = (float)font->base_size.x * font->scale.x / (float)app->sizes
-			.x + item->draw.text.pos.x
-			* (float)ft_strlen(item->draw.text.text);
+			.x * (float)ft_strlen(item->draw.text.text) + item->draw.text.pos.x;
 		size->y = (float)font->base_size.y * font->scale.y
 			/ (float)app->sizes.y + item->draw.text.pos.y;
 	}
@@ -29,8 +28,8 @@ static inline void
 	{
 		font = &item->draw.text_shadow.font;
 		size->x = (float)font->base_size.x * font->scale.x / (float)app->sizes
-			.x + item->draw.text_shadow.pos.x
-			* (float)ft_strlen(item->draw.text_shadow.text);
+			.x * (float)ft_strlen(item->draw.text_shadow.text)
+			+ item->draw.text_shadow.pos.x;
 		size->y = (float)font->base_size.y * font->scale.y
 			/ (float)app->sizes.y + item->draw.text_shadow.pos.y;
 	}

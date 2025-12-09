@@ -48,7 +48,7 @@ void
 	t_vec2			tex;
 	int				font_id;
 
-	tex = (t_vec2){(.51f * (float)fonts[0].size.x / (float)app->sizes.x), 0};
+	tex = (t_vec2){(float)fonts[0].size.x / (float)app->sizes.x, 0};
 	nrow = 0;
 	while (items[nrow])
 		++nrow;

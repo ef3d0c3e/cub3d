@@ -72,3 +72,15 @@ t_sprite
 	spr.top = y * font->base_size.y;
 	return (spr);
 }
+
+t_vec2
+	font_textsize(const t_app *app, const t_font *font, const char *text)
+{
+	const size_t	len = ft_strlen(text);
+
+	return ((t_vec2){
+		(float)len * font->scale.x * (float)font->base_size.x
+		/ (float)app->sizes.x,
+		font->scale.y * (float)font->base_size.y / (float)app->sizes.y,
+	});
+}

@@ -167,6 +167,22 @@ pan_drawable_size(const struct s_app *app, const t_drawable *drawable);
 void
 pan_drawable_draw(struct s_app *app, const t_drawable *drawable, t_vec2 offset);
 
+////////////////////////////////////////////////////////////////////////////////
+// Panel Utils                                                                //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Check if the area between @p min and @p max are hovered by the mouse
+ *
+ * @param app Application pointer
+ * @param bb_min Minimum point
+ * @param bb_max Maximum point
+ * @return `true` if the rectangle delimited by `(bb_min, bb_max)` is under the
+ * mouse cursor, `false` otherwise
+ */
+bool
+pan_mouse_hovered(struct s_app *app, t_vec2 bb_min, t_vec2 bb_max);
+
 /** @} */
 
 #endif // PANEL_H

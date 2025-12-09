@@ -40,8 +40,8 @@ static void
 		if (usec < 0 && (--sec, 1))
 			usec += 1000000L;
 		rem -= (float)sec + 1e-6f * (float)usec;
+		app->frame_delta = app->map.props.frame_time;
 	}
-	app->frame_delta = app->map.props.frame_time;
 }
 
 /** @brief Frame draw function */

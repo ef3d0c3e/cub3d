@@ -295,6 +295,8 @@ typedef struct s_event
 	t_pos		mouse_pos;
 	/** @brief Mouse delta from last frame */
 	t_pos		mouse_delta;
+	/** @brief Lock mouse to screen's center */
+	bool		locked_mouse;
 }	t_event;
 
 /**

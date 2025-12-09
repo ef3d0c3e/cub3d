@@ -134,6 +134,16 @@ font_text_shadow(
  */
 t_sprite
 font_get(const t_font *font, int ch);
+/**
+ * @brief Get the size of text
+ *
+ * @param app Application pointer
+ * @param font Font
+ * @param text Text
+ * @return The size of @p test in @p font
+ */
+t_vec2
+font_textsize(const struct s_app *app, const t_font *font, const char *text);
 
 /** @brief Drawable primitives */
 enum e_draw_item

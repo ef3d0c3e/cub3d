@@ -73,7 +73,7 @@ int
 	};
 	app->event.mouse_delta = delta;
 	app->event.mouse_pos = (t_pos){x, y};
-	if (abs(delta.x) >= 4 || abs(delta.y) >= 4)
+	if (app->event.locked_mouse && (abs(delta.x) >= 4 || abs(delta.y) >= 4))
 	{
 		mlx_mouse_move(app->mlx_ptr, app->mlx_window,
 			app->sizes.x / 2, app->sizes.y / 2);

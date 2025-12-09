@@ -12,29 +12,21 @@
 #include <cub3d.h>
 
 bool
-	hud_mouse_hovered(t_app *app, const t_vec2 bbox[2])
+	pan_mouse_hovered(t_app *app, t_vec2 bb_min, t_vec2 bb_max)
 {
 	const t_pos	min = (t_pos){
-		(int)(bbox[0].x * (float)app->sizes.x),
-		(int)(bbox[0].y * (float)app->sizes.y),
+		(int)(bb_min.x * (float)app->sizes.x),
+		(int)(bb_min.y * (float)app->sizes.y),
 	};
 	const t_pos	max = (t_pos){
-		(int)(bbox[1].x * (float)app->sizes.x),
-		(int)(bbox[1].y * (float)app->sizes.y),
+		(int)(bb_max.x * (float)app->sizes.x),
+		(int)(bb_max.y * (float)app->sizes.y),
 	};
 
 	if (app->event.mouse_pos.x < min.x
-		|| app->event.mouse_pos.x > min.x
-		|| app->event.mouse_pos.y < max.y
+		|| app->event.mouse_pos.x > max.x
+		|| app->event.mouse_pos.y < min.y
 		|| app->event.mouse_pos.y > max.y)
-		return (false);
-	return (true);
-}
-
-bool
-	hud_mouse_active(t_app *app, const t_vec2 bbox[2])
-{
-	if (!hud_mouse_hovered(app, bbox))
 		return (false);
 	return (true);
 }

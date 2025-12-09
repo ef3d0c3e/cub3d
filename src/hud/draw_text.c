@@ -22,7 +22,8 @@ void
 	i = 0;
 	p.color = font->color;
 	p.scale = font->scale;
-	p.origin = item->draw.text.pos;
+	p.origin = (t_vec2){item->draw.text.pos.x - .5f * (float)font->base_size.x
+		* font->scale.x / (float)app->sizes.x, item->draw.text.pos.y};
 	while (item->draw.text.text[i])
 	{
 		sprite = font_get(font, item->draw.text.text[i]);
@@ -45,21 +46,21 @@ void
 	i = 0;
 	p1.color = font->color;
 	p1.scale = font->scale;
-	p1.origin = item->draw.text_shadow.pos;
+	p1.origin = (t_vec2){item->draw.text.pos.x - .5f * (float)font->base_size.x
+		* font->scale.x / (float)app->sizes.x, item->draw.text.pos.y};
 	p2 = p1;
 	p2.color = item->draw.text_shadow.color_shadow;
 	p2.origin.x += .12f * (float)font->size.x / (float)app->sizes.x;
 	p2.origin.y += .12f * (float)font->size.y / (float)app->sizes.y;
 	while (item->draw.text_shadow.text[i])
 	{
-		sprite = font_get(font, item->draw.text_shadow.text[i]);
+		sprite = font_get(font, item->draw.text_shadow.text[i++]);
 		hud_draw_sprite(app, &sprite, p2);
 		hud_draw_sprite(app, &sprite, p1);
 		p1.origin.x += (float)font->base_size.x * font->scale.x
 			/ (float)app->sizes.x;
 		p2.origin.x += (float)font->base_size.x * font->scale.x
 			/ (float)app->sizes.x;
-		++i;
 	}
 }
 

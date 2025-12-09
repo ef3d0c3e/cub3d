@@ -18,16 +18,22 @@ bool
 	const t_vec2		size = pan_drawable_size(ctx->app, drawable);
 	t_draw_item			rect;
 
+	ctx->cursor = (t_vec2){.1, .1};
 	rect.type = DRAW_RECT_RADIUS;
-	rect.draw.rect_radius.radius = ctx->st_button.radius;
-	rect.draw.rect_radius.color = ctx->st_button.button_color;
+	rect.draw.rect_radius.radius = 0 * ctx->st_button.radius;
+	if (pan_mouse_hovered(ctx->app, ctx->cursor, (t_vec2){ctx->cursor.x + size.x, ctx->cursor.y + size.y}))
+		rect.draw.rect_radius.color = ctx->st_button.button_color_hover;
+	else
+		rect.draw.rect_radius.color = ctx->st_button.button_color;
 	rect.draw.rect_radius.size = size;
 	rect.draw.rect_radius.pos = ctx->cursor;
-	rect.draw.rect_radius.pos.x += .1f;
-	rect.draw.rect_radius.pos.y += .1f;
 
 	hud_draw(ctx->app, rect);
-	//hud_drawable_draw(ctx->app, drawable, ctx->cursor);
+	pan_drawable_draw(ctx->app, drawable, (t_vec2){
+		ctx->cursor.x + size.y / 2,
+		ctx->cursor.y + size.y / 2,
+	});
+	ctx->cursor.y += size.y;
 	return (false);
 }
 
@@ -35,11 +41,12 @@ bool
 	pan_button(const char *text)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
+	const t_font		font = font_new(&ctx->font, 0x7f7fFF, 1.f);
 	const t_draw_item	item = {
 		.type = DRAW_TEXT,
 		.draw.text = {
 		.text = text,
-		.font = ctx->font,
+		.font = font,
 		.pos = ctx->cursor
 	}};
 	const t_drawable	drawable = {
@@ -55,8 +62,8 @@ t_hud_style_button
 {
 	static const t_hud_style_button	style = (t_hud_style_button){
 		.padding = {2, 4, 2, 4},
-		.radius = 4,
-		.button_color = 0xFF0000,
+		.radius = 16,
+		.button_color = 0x134CAA,
 		.button_color_hover = 0x0000FF,
 		.button_color_active = 0x00FF00,
 	};
