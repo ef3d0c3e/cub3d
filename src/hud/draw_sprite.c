@@ -79,5 +79,5 @@ void
 	p.color = item->draw.sprite.color;
 	p.scale = item->draw.sprite.scale;
 	p.origin = item->draw.sprite.pos;
-	hud_draw_sprite_bilinear(app, &item->draw.sprite.sprite, p);
+	hud_draw_sprite(app, &item->draw.sprite.sprite, p);
 }

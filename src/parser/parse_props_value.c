@@ -117,6 +117,7 @@ static bool
 						COL_GREEN, STYLE_BOLD}), "': Material is not a FLOOR",
 				(t_text_style){0, 0, 0})), false);
 	*line = *line + 1;
+	*mat_id = buf[0];
 	return (true);
 }
 

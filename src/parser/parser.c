@@ -87,6 +87,8 @@ static void
 			* (size_t)app->map.size_x * (size_t)app->map.size_y);
 	ft_memset(app->map.map, 0, sizeof(t_atlas_id)
 		* (size_t)app->map.size_x * (size_t)app->map.size_y);
+	parser->s_data.lines[app->map.player_spawn.y][app->map.player_spawn.x]
+		= app->map.props.player_spawn;
 	fill_map(parser, app);
 }
 
