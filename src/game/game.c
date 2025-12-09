@@ -90,7 +90,7 @@ void
 	hud_menu_move(items, &pos, move);
 	hud_menu(app, items, pos);
 
-	hud_button("Click me");
+	pan_button("Click me");
 }
 
 	/*

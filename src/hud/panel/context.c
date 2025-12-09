@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   drawable.c                                         :+:      :+:    :+:   */
+/*   context.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,33 +11,38 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-t_vec2
-	hud_drawable_size(const t_app *app, const t_drawable *drawable)
+void
+	pan_init(t_app *app)
 {
-	t_vec2	size;
-	t_vec2	total;
-	size_t	i;
+	t_panel_ctx	ctx;
 
-	i = 0;
-	total = (t_vec2){0, 0};
-	while (i < drawable->nitems)
-	{
-		size = draw_item_size(app, &drawable->items[i]);
-		total = (t_vec2){maxf(size.x, total.x), maxf(size.y, total.y)};
-		++i;
-	}
-	return (total);
+	ctx.font = app->hud.font;
+	ctx.scale = (t_vec2){app->hud.scale, app->hud.scale};
+	ctx.app = app;
+	ctx.cursor = (t_vec2){0, 0};
+	ft_memset(ctx.id_stack, 0, sizeof(t_pan_id) * PAN_ID_SIZE);
+	ctx.id_stack_depth = 0;
+	ctx.st_button = pan_button_style();
+	pan_ctx(&ctx);
+}
+
+inline t_panel_ctx
+	*pan_ctx(t_panel_ctx *ctx)
+{
+	static t_panel_ctx	g_ctx;
+
+	if (ctx)
+		g_ctx = *ctx;
+	return (&g_ctx);
 }
 
 void
-	hud_drawable_draw(t_app *app, const t_drawable *drawable, t_vec2 offset)
+	pan_context_reset(t_app *app)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < drawable->nitems)
-	{
-		hud_draw(app, draw_item_offset(app, drawable->items[i], offset));
-		++i;
-	}
+	pan_ctx(NULL)->font = app->hud.font;
+	pan_ctx(NULL)->scale = (t_vec2){app->hud.scale, app->hud.scale};
+	pan_ctx(NULL)->app = app;
+	pan_ctx(NULL)->cursor = (t_vec2){0, 0};
+	ft_memset(pan_ctx(NULL)->id_stack, 0, sizeof(t_pan_id) * PAN_ID_SIZE);
+	pan_ctx(NULL)->id_stack_depth = 0;
 }

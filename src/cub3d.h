@@ -16,6 +16,7 @@
 # include <assets/defs/defs.h>
 # include <map/map.h>
 # include <hud/hud.h>
+# include <hud/panel/panel.h>
 # include <ui/ui.h>
 # include <player/player.h>
 # include <entity/entity.h>

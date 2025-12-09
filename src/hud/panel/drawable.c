@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   context.c                                          :+:      :+:    :+:   */
+/*   drawable.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,24 +11,33 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-inline t_hud_ctx
-	*hud_context(t_hud_ctx *ctx)
+t_vec2
+	pan_drawable_size(const t_app *app, const t_drawable *drawable)
 {
-	static t_hud_ctx	g_ctx;
+	t_vec2	size;
+	t_vec2	total;
+	size_t	i;
 
-	if (ctx)
-		g_ctx = *ctx;
-	return (&g_ctx);
+	i = 0;
+	total = (t_vec2){0, 0};
+	while (i < drawable->nitems)
+	{
+		size = draw_item_size(app, &drawable->items[i]);
+		total = (t_vec2){maxf(size.x, total.x), maxf(size.y, total.y)};
+		++i;
+	}
+	return (total);
 }
 
 void
-	hud_context_reset(t_app *app)
+	pan_drawable_draw(t_app *app, const t_drawable *drawable, t_vec2 offset)
 {
-	t_hud_ctx	ctx;
+	size_t	i;
 
-	ctx.font = app->hud.font;
-	ctx.scale = (t_vec2){app->hud.scale, app->hud.scale};
-	ctx.app = app;
-	ctx.cursor = (t_vec2){0, 0};
-	hud_context(&ctx);
+	i = 0;
+	while (i < drawable->nitems)
+	{
+		hud_draw(app, draw_item_offset(app, drawable->items[i], offset));
+		++i;
+	}
 }

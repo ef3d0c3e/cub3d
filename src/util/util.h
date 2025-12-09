@@ -374,5 +374,15 @@ clampf(float value, float min, float max);
  */
 float
 maxf(float a, float b);
+/**
+ * @brief Computes the murmur3_32 hash of a buffer
+ *
+ * @param data Buffer to hash
+ * @param len Length of @p data
+ * @param seed Initial seed
+ * @return The hash of @p data against @p seed
+ */
+uint32_t
+murmumr3_32(const unsigned char *data, size_t len, uint32_t seed);
 
 #endif // UTIL_H
