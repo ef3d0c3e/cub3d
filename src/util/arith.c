@@ -30,3 +30,11 @@ inline float
 		return (max);
 	return (value);
 }
+
+inline float
+	maxf(float a, float b)
+{
+	if (a >= b)
+		return (a);
+	return (b);
+}

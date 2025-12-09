@@ -356,5 +356,14 @@ clamp(int value, int min, int max);
  */
 float
 clampf(float value, float min, float max);
+/**
+ * @brief Return the maximum of two floating point values
+ *
+ * @param a First value
+ * @param b Second value
+ * @return `a` if `a >= b`, otherwise `b`
+ */
+float
+maxf(float a, float b);
 
 #endif // UTIL_H

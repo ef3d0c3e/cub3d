@@ -142,6 +142,8 @@ enum e_draw_item
 	DRAW_TEXT,
 	/** @brief Text with shadow */
 	DRAW_TEXT_SHADOW,
+	/** @brief Sprite */
+	DRAW_SPRITE,
 };
 
 /** @brief Drawable primitive data */
@@ -173,6 +175,18 @@ struct s_draw_item
 			/** @brief Text shadow color */
 			t_color		color_shadow;
 		}	text_shadow;
+		/** @brief Drawable sprite */
+		struct s_draw_item_sprite
+		{
+			/** @brief Sprite to draw */
+			t_sprite	sprite;
+			/** @brief Sprite coordinates */
+			t_vec2		pos;
+			/** @brief Sprite X/Y scale */
+			t_vec2		scale;
+			/** @brief Sprite color */
+			t_color		color;
+		}	sprite;
 	}	draw;
 };
 
@@ -222,6 +236,14 @@ hud_draw_text(struct s_app *app, const t_draw_item *item);
  */
 void
 hud_draw_text_shadow(struct s_app *app, const t_draw_item *item);
+/**
+ * @brief Draw function for @ref DRAW_SPRITE
+ *
+ * @param app Application pointer
+ * @param item @ref DRAW_SPRITE to draw
+ */
+void
+hud_draw_sprite_item(struct s_app *app, const t_draw_item *item);
 
 /* --- Misc --- */
 

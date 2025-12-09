@@ -40,7 +40,7 @@ enum e_init_error
 
 typedef struct s_app
 {
-	/* -- Render data -- */
+	/* --- Render data --- */
 	/** @brief Window sizes */
 	t_pos				sizes;
 	/** @brief MLX instance pointer */
@@ -64,6 +64,7 @@ typedef struct s_app
 	/** @brief HUD */
 	t_hud				hud;
 
+	/* --- Game Data --- */
 	/** @brief The map */
 	t_map				map;
 	/** @brief Spawned entities */

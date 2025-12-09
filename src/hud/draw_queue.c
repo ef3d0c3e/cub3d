@@ -18,6 +18,7 @@ static inline void
 	static void (*const	drawers[])(t_app *app, const t_draw_item *item) = {
 	[DRAW_TEXT] = hud_draw_text,
 	[DRAW_TEXT_SHADOW] = hud_draw_text_shadow,
+	[DRAW_SPRITE] = hud_draw_sprite_item,
 	};
 
 	drawers[item->type](app, item);

@@ -18,7 +18,7 @@ t_atlas_id
 	size_t	i;
 
 	i = 0;
-	while (i < atlas->size)
+	while (texture.path && i < atlas->size)
 	{
 		if (!ft_strcmp(atlas->textures[i].path, texture.path))
 		{

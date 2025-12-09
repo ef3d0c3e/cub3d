@@ -53,6 +53,11 @@ game_setup(struct s_app *app);
 void
 game_cleanup(struct s_app *app);
 
+void
+game_input(struct s_app *app);
+void
+game_render(struct s_app *app);
+
 /** @} */
 
 #endif // GAME_H

@@ -48,42 +48,18 @@ static void
 static int
 	ui_update(t_app *app)
 {
-	ft_memset(app->framebuffer->data, 0, app->sizes.x * app->sizes.y * 4);
 	if (app->frame_delta == 0)
 		app->frame_delta = 1.f;
 	frame_time(app, true);
-	player_input(app);
-
-	const char **items[] = {
-		(const char *[]){"Foo", "bar", "quz", NULL},
-		(const char *[]){"test", "lorem", "ipsum", NULL},
-		(const char *[]){"dolor", "sit", NULL},
-		NULL
-	};
-	static t_pos pos;
-	t_pos move = (t_pos){1, 0};
-	move.y = ui_key_pressed(app, KEY_ARROW_RIGHT) - ui_key_pressed(app, KEY_ARROW_LEFT);
-	move.x = ui_key_pressed(app, KEY_ARROW_DOWN) - ui_key_pressed(app, KEY_ARROW_UP);
-	hud_menu_move(items, &pos, move);
-	hud_menu(app, items, pos);
-	/*
-	hud_draw(app, (t_draw_item){
-		.type = DRAW_TEXT_SHADOW,
-		.draw.text_shadow = {
-			.text = "Hello",
-			.scale = 2,
-			.color = 0xFF0000,
-			.pos = {.5, .5},
-			.color_shadow = 0x00FF00,
-		}
-	});
-	*/
+	ft_memset(app->framebuffer->data, 0,
+		(size_t)app->sizes.x * (size_t)app->sizes.y * sizeof(t_color));
+	game_input(app);
+	game_render(app);
 	hud_render(app);
 	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
 		app->framebuffer, 0, 0);
 	event_update(app);
 	frame_time(app, false);
-	
 	return (0);
 }
 

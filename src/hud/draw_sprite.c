@@ -28,8 +28,8 @@ void
 		uv.x = 0;
 		while ((float)uv.x < (float)spr->width * p.scale.x)
 		{
-			color = sprite_sample(spr, (float)uv.x / ((float)spr->width
-						* p.scale.x), (float)uv.y / ((float)spr->height
+			color = sprite_sample(spr, (float)uv.x / (((float)spr->width - 1.f)
+						* p.scale.x), (float)uv.y / (((float)spr->height - 1.f)
 						* p.scale.y));
 			screen = (t_pos){screen0.x + uv.x++, screen0.y + uv.y};
 			if (color == (t_color)COLOR_UNINIT || screen.x < 0 || screen.x
@@ -59,14 +59,25 @@ void
 		while ((float)uv.x < (float)spr->width * p.scale.x)
 		{
 			color = sprite_sample_bilinear(spr, (float)uv.x / ((float)spr->width
-						* p.scale.x), (float)uv.y / ((float)spr->height
-						* p.scale.y));
+						* p.scale.x - 1.f), (float)uv.y / ((float)spr->height
+						* p.scale.y - 1.f));
 			screen = (t_pos){screen0.x + uv.x++, screen0.y + uv.y};
-			if (color != (t_color)COLOR_UNINIT && screen.x >= 0 && screen.x
-				< app->sizes.x && screen.y >= 0 && screen.y < app->sizes.y)
+			if (color == (t_color)COLOR_UNINIT || screen.x < 0 || screen.x
+				>= app->sizes.x || screen.y < 0 || screen.y >= app->sizes.y)
 				continue ;
 			fb[screen.x + screen.y * app->sizes.x] = color_tint(color, p.color);
 		}
 		++uv.y;
 	}
+}
+
+void
+	hud_draw_sprite_item(t_app *app, const t_draw_item *item)
+{
+	t_draw_params	p;
+
+	p.color = item->draw.sprite.color;
+	p.scale = item->draw.sprite.scale;
+	p.origin = item->draw.sprite.pos;
+	hud_draw_sprite_bilinear(app, &item->draw.sprite.sprite, p);
 }
