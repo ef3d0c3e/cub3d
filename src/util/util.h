@@ -346,6 +346,15 @@ ft_strnlen(const char *str, size_t n);
  */
 int
 clamp(int value, int min, int max);
+
+/**
+ * @brief Absolute value
+ *
+ * @param x Value
+ * @return `x` if `x >= 0`, `-x` otherwise
+ */
+int
+absi(int x);
 /**
  * @brief Clamp a floating point value
  *

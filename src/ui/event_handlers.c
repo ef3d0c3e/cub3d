@@ -58,28 +58,26 @@ int
 int
 	ui_ev_mousemove(int x, int y, t_app *app)
 {
-	static int		v;
-	const t_vec2	last_pos = app->event.mouse_pos;
-	t_vec2			delta;
+	static int	v;
+	const t_pos	last_pos = app->event.mouse_pos;
+	t_pos		delta;
 
 	if (v)
 	{
 		v = 0;
 		return (0);
 	}
-	delta = (t_vec2){
-		(float)x - last_pos.x,
-		(float)y - last_pos.y,
+	delta = (t_pos){
+		x - last_pos.x,
+		y - last_pos.y,
 	};
 	app->event.mouse_delta = delta;
-	app->event.mouse_pos = (t_vec2){(float)x, (float)y};
-	if (fabsf(delta.x) >= 4 || fabsf(delta.y) >= 4)
+	app->event.mouse_pos = (t_pos){x, y};
+	if (abs(delta.x) >= 4 || abs(delta.y) >= 4)
 	{
 		mlx_mouse_move(app->mlx_ptr, app->mlx_window,
 			app->sizes.x / 2, app->sizes.y / 2);
-		app->event.mouse_pos = (t_vec2){
-			(float)app->sizes.x / 2.f, (float)app->sizes.y / 2.f
-		};
+		app->event.mouse_pos = (t_pos){app->sizes.x / 2, app->sizes.y / 2};
 		v = 1;
 	}
 	return (0);

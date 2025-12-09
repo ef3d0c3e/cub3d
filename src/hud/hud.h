@@ -144,6 +144,10 @@ enum e_draw_item
 	DRAW_TEXT_SHADOW,
 	/** @brief Sprite */
 	DRAW_SPRITE,
+	/** @brief Rectangle */
+	DRAW_RECT,
+	/** @brief Rounded rectangle */
+	DRAW_RECT_RADIUS,
 };
 
 /** @brief Drawable primitive data */
@@ -187,8 +191,50 @@ struct s_draw_item
 			/** @brief Sprite color */
 			t_color		color;
 		}	sprite;
+		/** @brief Drawable rectangle */
+		struct s_draw_item_rect
+		{
+			/** @brief Top-Left corner */
+			t_vec2		pos;
+			/** @brief X/Y sizes of the rectangle */
+			t_vec2		size;
+			/** @brief Interior color */
+			t_color		color;
+		}	rect;
+		/** @brief Drawable rounded rectangle */
+		struct s_draw_item_rect_radius
+		{
+			/** @brief Top-Left corner */
+			t_vec2		pos;
+			/** @brief X/Y sizes of the rectangle */
+			t_vec2		size;
+			/** @brief Border radius of the rectangle */
+			int			radius;
+			/** @brief Interior color */
+			t_color		color;
+		}	rect_radius;
 	}	draw;
 };
+
+/**
+ * @brief Get the size of a @ref t_draw_item
+ *
+ * @param app Application pointer
+ * @param item Item to get the size of
+ * @return The size of @p item in screen UV space
+ */
+t_vec2
+draw_item_size(const struct s_app *app, const t_draw_item *item);
+/**
+ * @brief Offset the position of a @ref t_draw_item
+ *
+ * @param app Application pointer
+ * @param item Item to offset
+ * @param offset Offeset (in screen-space UV) to apply to @p item
+ * @returns The offseted draw item
+ */
+t_draw_item
+draw_item_offset(const struct s_app *app, t_draw_item item, t_vec2 offset);
 
 /** @brief A queue holding all elements that need to be drawn */
 typedef struct s_draw_queue
@@ -244,6 +290,22 @@ hud_draw_text_shadow(struct s_app *app, const t_draw_item *item);
  */
 void
 hud_draw_sprite_item(struct s_app *app, const t_draw_item *item);
+/**
+ * @brief Draw function for @ref DRAW_RECT
+ *
+ * @param app Application pointer
+ * @param item @ref DRAW_RECT to draw
+ */
+void
+hud_draw_rect(struct s_app *app, const t_draw_item *item);
+/**
+ * @brief Draw function for @ref DRAW_RECT_RADIUS
+ *
+ * @param app Application pointer
+ * @param item @ref DRAW_RECT_RADIUS to draw
+ */
+void
+hud_draw_rect_radius(struct s_app *app, const t_draw_item *item);
 
 /* --- Misc --- */
 
@@ -267,6 +329,110 @@ hud_text(struct s_app *app, t_pos pos, const char *text, float s);
  */
 t_vec2
 hud_textsize(struct s_app *app, const char *text);
+
+/** @} */
+
+////////////////////////////////////////////////////////////////////////////////
+// HUD Context Drawing                                                        //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ * @defgroup ContextHUD HUD Context Drawing
+ * @ingroup HUD
+ * @{
+ */
+
+/**
+ *
+ * @defgroup ButtonContextHUD Button
+ * @ingroup ContextHUD
+ * @{
+ */
+
+/** @brief Button styling */
+typedef struct s_hud_style_button
+{
+	/** @brief Top, Right, Bottom, Left padding in pixels */
+	int		padding[4];
+	/** @brief Button rectangle border radius */
+	int		radius;
+	/** @brief Button color */
+	t_color	button_color;
+	/** @brief Hovered button color */
+	t_color	button_color_hover;
+	/** @brief Active button color */
+	t_color	button_color_active;
+}	t_hud_style_button;
+
+bool
+hud_button(const char *text);
+
+/** @} */
+
+/** @brief HUD draw context */
+typedef struct s_hud_ctx
+{
+	/** @brief Application */
+	struct s_app	*app;
+	/** @brief Current draw position */
+	t_vec2			cursor;
+	/** @brief Current scale */
+	t_vec2			scale;
+	/** @brief Current font */
+	t_font			font;
+
+	/** Button style */
+	t_hud_style_button	st_button;
+}	t_hud_ctx;
+
+/**
+ * @brief Get or set the global HUD context
+ *
+ * @param ctx If `NULL` does nothing, otherwise sets the global context to the
+ * value contained in @p ctx
+ * @return The global context
+ */
+t_hud_ctx
+*hud_context(t_hud_ctx *ctx);
+
+/**
+ * @brief Reset the context
+ *
+ * When the frame done drawing, this function is used to reset the state of the
+ * context for the next frame.
+ *
+ * @param app Application pointer
+ */
+void
+hud_context_reset(struct s_app *app);
+
+typedef struct s_drawable
+{
+	/** @brief Items */
+	const t_draw_item	*items;
+	/** @brief Number of items */
+	size_t				nitems;
+}	t_drawable;
+
+/**
+ * @brief Compute the size of a drawable
+ *
+ * @param app Application pointer
+ * @param drawable Drawable
+ * @return The size of @p drawable
+ */
+t_vec2
+hud_drawable_size(const struct s_app *app, const t_drawable *drawable);
+/**
+ * @brief Draw a list of @ref t_draw_item on screen
+ *
+ * @param app Application pointer
+ * @param drawable The list of @ref t_draw_item
+ * @param offset The offset to apply to each @ref t_draw_item
+ */
+void
+hud_drawable_draw(struct s_app *app, const t_drawable *drawable, t_vec2 offset);
 
 /** @} */
 

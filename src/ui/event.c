@@ -28,8 +28,8 @@ static int
 void
 	event_setup(t_app *app)
 {
-	app->event.mouse_pos = (t_vec2){0.f, 0.f};
-	app->event.mouse_delta = (t_vec2){0.f, 0.f};
+	app->event.mouse_pos = (t_pos){0, 0};
+	app->event.mouse_delta = (t_pos){0.f, 0.f};
 	app->event.events = rb_new(event_code_cmp, NULL, NULL);
 	mlx_hook(app->mlx_window, EVENT_MOUSEDOWN, MASK_BUTTON_PRESS,
 		ui_ev_mousedown, app);

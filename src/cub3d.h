@@ -55,6 +55,8 @@ typedef struct s_app
 	t_material_atlas	material_atlas;
 	/** @brief Last rame duration in seconds */
 	float				frame_delta;
+	/** @brief Current frame number */
+	unsigned long long	frame;
 
 	/* --- UI Data --- */
 	/** @brief Event data */

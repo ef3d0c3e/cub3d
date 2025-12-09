@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arith.c                                            :+:      :+:    :+:   */
+/*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,40 +9,32 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <util/util.h>
+#include <cub3d.h>
 
-inline int
-	clamp(int value, int min, int max)
+bool
+	hud_mouse_hovered(t_app *app, const t_vec2 bbox[2])
 {
-	if (value < min)
-		return (min);
-	else if (value > max)
-		return (max);
-	return (value);
+	const t_pos	min = (t_pos){
+		(int)(bbox[0].x * (float)app->sizes.x),
+		(int)(bbox[0].y * (float)app->sizes.y),
+	};
+	const t_pos	max = (t_pos){
+		(int)(bbox[1].x * (float)app->sizes.x),
+		(int)(bbox[1].y * (float)app->sizes.y),
+	};
+
+	if (app->event.mouse_pos.x < min.x
+		|| app->event.mouse_pos.x > min.x
+		|| app->event.mouse_pos.y < max.y
+		|| app->event.mouse_pos.y > max.y)
+		return (false);
+	return (true);
 }
 
-inline float
-	clampf(float value, float min, float max)
+bool
+	hud_mouse_active(t_app *app, const t_vec2 bbox[2])
 {
-	if (value < min)
-		return (min);
-	else if (value > max)
-		return (max);
-	return (value);
-}
-
-inline int
-	absi(int x)
-{
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
-inline float
-	maxf(float a, float b)
-{
-	if (a >= b)
-		return (a);
-	return (b);
+	if (!hud_mouse_hovered(app, bbox))
+		return (false);
+	return (true);
 }

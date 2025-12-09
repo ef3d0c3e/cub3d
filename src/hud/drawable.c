@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arith.c                                            :+:      :+:    :+:   */
+/*   drawable.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,40 +9,35 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <util/util.h>
+#include <cub3d.h>
 
-inline int
-	clamp(int value, int min, int max)
+t_vec2
+	hud_drawable_size(const t_app *app, const t_drawable *drawable)
 {
-	if (value < min)
-		return (min);
-	else if (value > max)
-		return (max);
-	return (value);
+	t_vec2	size;
+	t_vec2	total;
+	size_t	i;
+
+	i = 0;
+	total = (t_vec2){0, 0};
+	while (i < drawable->nitems)
+	{
+		size = draw_item_size(app, &drawable->items[i]);
+		total = (t_vec2){maxf(size.x, total.x), maxf(size.y, total.y)};
+		++i;
+	}
+	return (total);
 }
 
-inline float
-	clampf(float value, float min, float max)
+void
+	hud_drawable_draw(t_app *app, const t_drawable *drawable, t_vec2 offset)
 {
-	if (value < min)
-		return (min);
-	else if (value > max)
-		return (max);
-	return (value);
-}
+	size_t	i;
 
-inline int
-	absi(int x)
-{
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
-inline float
-	maxf(float a, float b)
-{
-	if (a >= b)
-		return (a);
-	return (b);
+	i = 0;
+	while (i < drawable->nitems)
+	{
+		hud_draw(app, draw_item_offset(app, drawable->items[i], offset));
+		++i;
+	}
 }

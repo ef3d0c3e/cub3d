@@ -50,9 +50,11 @@ static int
 {
 	if (app->frame_delta == 0)
 		app->frame_delta = 1.f;
+	++app->frame;
 	frame_time(app, true);
 	ft_memset(app->framebuffer->data, 0,
 		(size_t)app->sizes.x * (size_t)app->sizes.y * sizeof(t_color));
+	hud_context_reset(app);
 	game_input(app);
 	game_render(app);
 	hud_render(app);

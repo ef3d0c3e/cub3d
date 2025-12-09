@@ -292,9 +292,9 @@ typedef struct s_event
 	/** @brief Current events */
 	t_rbtree	events;
 	/** @brief Mouse pixel position */
-	t_vec2		mouse_pos;
+	t_pos		mouse_pos;
 	/** @brief Mouse delta from last frame */
-	t_vec2		mouse_delta;
+	t_pos		mouse_delta;
 }	t_event;
 
 /**

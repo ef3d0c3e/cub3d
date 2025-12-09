@@ -19,6 +19,8 @@ static inline void
 	[DRAW_TEXT] = hud_draw_text,
 	[DRAW_TEXT_SHADOW] = hud_draw_text_shadow,
 	[DRAW_SPRITE] = hud_draw_sprite_item,
+	[DRAW_RECT] = hud_draw_rect,
+	[DRAW_RECT_RADIUS] = hud_draw_rect_radius,
 	};
 
 	drawers[item->type](app, item);

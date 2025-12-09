@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arith.c                                            :+:      :+:    :+:   */
+/*   context.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,40 +9,26 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <util/util.h>
+#include <cub3d.h>
 
-inline int
-	clamp(int value, int min, int max)
+inline t_hud_ctx
+	*hud_context(t_hud_ctx *ctx)
 {
-	if (value < min)
-		return (min);
-	else if (value > max)
-		return (max);
-	return (value);
+	static t_hud_ctx	g_ctx;
+
+	if (ctx)
+		g_ctx = *ctx;
+	return (&g_ctx);
 }
 
-inline float
-	clampf(float value, float min, float max)
+void
+	hud_context_reset(t_app *app)
 {
-	if (value < min)
-		return (min);
-	else if (value > max)
-		return (max);
-	return (value);
-}
+	t_hud_ctx	ctx;
 
-inline int
-	absi(int x)
-{
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
-inline float
-	maxf(float a, float b)
-{
-	if (a >= b)
-		return (a);
-	return (b);
+	ctx.font = app->hud.font;
+	ctx.scale = (t_vec2){app->hud.scale, app->hud.scale};
+	ctx.app = app;
+	ctx.cursor = (t_vec2){0, 0};
+	hud_context(&ctx);
 }
