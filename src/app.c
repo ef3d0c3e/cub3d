@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-void
+bool
 	app_setup(t_app *app)
 {
 	ent_setup(app);
-	game_setup(app);
+	if (!game_setup(app))
+		return (false);
+	return (true);
 }
 
 void

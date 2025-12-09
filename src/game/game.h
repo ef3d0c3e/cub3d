@@ -42,8 +42,9 @@ typedef struct s_game
  * @brief Setup the game component
  *
  * @param app Application pointer
+ * @return `true` on success, `false` on errors
  */
-void
+bool
 game_setup(struct s_app *app);
 /**
  * @brief Cleanup the game component

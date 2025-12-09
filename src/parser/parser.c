@@ -130,6 +130,7 @@ void
 	free(parser->s_data.textures[1]);
 	free(parser->s_data.textures[2]);
 	free(parser->s_data.textures[3]);
+	free(parser->s_data.ents);
 	atlas_mat_free(&parser->s_data.mat_atlas);
 	atlas_tex_free(NULL, &parser->s_data.tex_atlas);
 	i = 0;

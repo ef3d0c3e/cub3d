@@ -20,6 +20,7 @@ static int
 	[INIT_ERR_MLX] = "Failed to initialize MLX\n",
 	[INIT_ERR_WINDOW] = "Failed to initialize Window\n",
 	[INIT_ERR_LOAD] = "Failed to load assets\n",
+	[INIT_ERR_INIT] = "Failed to load application\n",
 	[INIT_ERR_UI] = "Failed to setup UI\n",
 	};
 
@@ -36,6 +37,8 @@ static int
 		mlx_destroy_display(app->mlx_ptr);
 		free(app->mlx_ptr);
 	}
+	if (status >= INIT_ERR_INIT)
+		app_cleanup(app);
 	if (status != INIT_OK)
 		write(STDOUT_FILENO, msgs[status], ft_strlen(msgs[status]));
 	return (status != INIT_OK);
@@ -63,8 +66,8 @@ int
 		return (cleanup(&app, INIT_ERR_LOAD));
 	if (!ui_setup(&app))
 		return (cleanup(&app, INIT_ERR_UI));
-	app_setup(&app);
+	if (!app_setup(&app))
+		return (cleanup(&app, INIT_ERR_INIT));
 	mlx_loop(app.mlx_ptr);
-	app_cleanup(&app);
 	return (cleanup(&app, INIT_OK));
 }

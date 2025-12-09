@@ -12,14 +12,16 @@
 #include <cub3d.h>
 
 
-void
+bool
 	game_setup(t_app *app)
 {
 	t_texture tex;
 
 	tex.width = app->map.size_x;
 	tex.height = app->map.size_y;
-	tex.img = mlx_new_image(app->mlx_ptr, tex.width, tex.height); // 5x5 image
+	tex.img = mlx_new_image(app->mlx_ptr, tex.width, tex.height);
+	if (!tex.img)
+		return (false);
 	tex.path = NULL;
 	app->game.minimap = (t_sprite){
 		.texture = atlas_tex_get(&app->texture_atlas, atlas_tex_add(&app->texture_atlas, tex)),
@@ -47,6 +49,7 @@ void
 
 	}
 	player_setup(app);
+	return (true);
 }
 
 void

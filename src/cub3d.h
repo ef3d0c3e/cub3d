@@ -34,6 +34,8 @@ enum e_init_error
 	INIT_ERR_LOAD,
 	/** @brief Error during UI setup */
 	INIT_ERR_UI,
+	/** @brief Error during game init */
+	INIT_ERR_INIT,
 	/** @brief No error happened */
 	INIT_OK,
 };
@@ -78,7 +80,7 @@ typedef struct s_app
  *
  * @param app Setup the last required variables for the application
  */
-void
+bool
 app_setup(t_app *app);
 /**
  * @brief Cleanup the application
