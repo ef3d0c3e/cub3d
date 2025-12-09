@@ -94,7 +94,10 @@ void
 	sprintf(buf, "%f fps [%d]", 1.f / app->frame_delta, app->frame);
 	hud_text(app, (t_pos){32, 256}, buf, 0.4f);
 
-	pan_button("Test\001bb");
+	if (pan_button("Test\001bb"))
+	{
+		printf("Clicked\n");
+	}
 }
 
 	/*

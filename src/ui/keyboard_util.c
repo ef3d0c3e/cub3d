@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   event_util.c                                       :+:      :+:    :+:   */
+/*   keyboard_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -34,24 +34,6 @@ bool
 	ui_key_released(t_app *app, enum e_keycode code)
 {
 	const t_event_code	ev = encode_event_code(EV_TYPE_KEY, code);
-
-	return (rb_find(&app->event.events, (void *)ev)
-		== (void *)EV_STATUS_RELEASED);
-}
-
-bool
-	ui_mouse_held(t_app *app, enum e_keycode code)
-{
-	const t_event_code	ev = encode_event_code(EV_TYPE_MOUSE, code);
-
-	return (rb_find(&app->event.events, (void *)ev)
-		== (void *)EV_STATUS_HELD);
-}
-
-bool
-	ui_mouse_pressed(t_app *app, enum e_keycode code)
-{
-	const t_event_code	ev = encode_event_code(EV_TYPE_MOUSE, code);
 
 	return (rb_find(&app->event.events, (void *)ev)
 		== (void *)EV_STATUS_RELEASED);

@@ -11,8 +11,23 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-bool
-	hud_button_d(const t_drawable *drawable)
+t_hud_style_button
+	pan_button_style(void)
+{
+	static const t_hud_style_button	style = (t_hud_style_button){
+		.padding = {2, 4, 2, 4},
+		.radius = 16,
+		.button_color = 0x134CAA,
+		.button_color_hover = 0x0000FF,
+		.button_color_active = 0x00FF00,
+	};
+
+	
+	return (style);
+}
+
+static bool
+	button_draw(const t_drawable *drawable)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 	const t_vec2		size = pan_drawable_size(ctx->app, drawable);
@@ -21,10 +36,15 @@ bool
 	ctx->cursor = (t_vec2){.1, .1};
 	rect.type = DRAW_RECT_RADIUS;
 	rect.draw.rect_radius.radius = 0 * ctx->st_button.radius;
+	rect.draw.rect_radius.color = ctx->st_button.button_color;
 	if (pan_mouse_hovered(ctx->app, ctx->cursor, (t_vec2){ctx->cursor.x + size.x, ctx->cursor.y + size.y}))
+	{
 		rect.draw.rect_radius.color = ctx->st_button.button_color_hover;
-	else
-		rect.draw.rect_radius.color = ctx->st_button.button_color;
+		if (ui_mouse_pressed(ctx->app, MOUSE_LEFT))
+			ctx->active = ctx->id_stack[ctx->id_stack_depth];
+	}
+	if (ctx->active == ctx->id_stack[ctx->id_stack_depth])
+		rect.draw.rect_radius.color = ctx->st_button.button_color_active;
 	rect.draw.rect_radius.size = size;
 	rect.draw.rect_radius.pos = ctx->cursor;
 
@@ -53,20 +73,9 @@ bool
 		.items = &item,
 		.nitems = 1
 	};
+	bool				val;
 
-	return (hud_button_d(&drawable));
-}
-
-t_hud_style_button
-	pan_button_style(void)
-{
-	static const t_hud_style_button	style = (t_hud_style_button){
-		.padding = {2, 4, 2, 4},
-		.radius = 16,
-		.button_color = 0x134CAA,
-		.button_color_hover = 0x0000FF,
-		.button_color_active = 0x00FF00,
-	};
-
-	return (style);
+	ctx->id_stack[ctx->id_stack_depth] = pan_id_str(text);
+	val = button_draw(&drawable);
+	return (val);
 }

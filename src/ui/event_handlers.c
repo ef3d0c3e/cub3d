@@ -48,10 +48,14 @@ int
 	ui_ev_mousedown(enum e_mousecode code, int x, int y, t_app *app)
 {
 	const t_event_code	ev = encode_event_code(EV_TYPE_MOUSE, code);
+	const void			*status = rb_find(&app->event.events, (void *)ev);
 
 	(void)x;
 	(void)y;
-	rb_insert(&app->event.events, (void *)ev, (void *)EV_STATUS_HELD);
+	if (!status || status == (void *)EV_STATUS_INACTIVE)
+		rb_insert(&app->event.events, (void *)ev, (void *)EV_STATUS_HELD_FIRST);
+	else
+		rb_insert(&app->event.events, (void *)ev, (void *)EV_STATUS_HELD);
 	return (0);
 }
 

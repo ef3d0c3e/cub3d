@@ -254,7 +254,17 @@ ui_key_released(struct s_app *app, enum e_keycode code);
  * @return `true` if button @p code is being pressed, `false` otherwise
  */
 bool
-ui_mouse_held(struct s_app *app, enum e_keycode code);
+ui_mouse_held(struct s_app *app, enum e_mousecode code);
+/**
+ * @brief Check if a @ref e_mousecode is being held down for the first frame
+ *
+ * @param app Application pointer
+ * @param code Mouse button to check
+ * @return `true` if button @p code is being held down for the first time,
+ * `false` otherwise
+ */
+bool
+ui_mouse_pressed(struct s_app *app, enum e_mousecode code);
 /**
  * @brief Check if a @ref e_mousecode has been pressed (held then released)
  *
@@ -263,7 +273,7 @@ ui_mouse_held(struct s_app *app, enum e_keycode code);
  * @return `true` if button @p code has been pressed, `false` otherwise
  */
 bool
-ui_mouse_pressed(struct s_app *app, enum e_keycode code);
+ui_mouse_released(struct s_app *app, enum e_mousecode code);
 
 /**
  * @brief Encode an event code from an event type and a @ref e_keycode /

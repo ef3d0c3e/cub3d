@@ -51,8 +51,19 @@ typedef struct s_hud_style_button
 	t_color	button_color_active;
 }	t_hud_style_button;
 
+/**
+ * @brief Default style for buttons
+ *
+ * @return The default style for buttons
+ */
 t_hud_style_button
 pan_button_style(void);
+/**
+ * @brief Add a button to the UI
+ *
+ * @param text Button text
+ * @return `true` if the button was clicked, `false` otherwise
+ */
 bool
 pan_button(const char *text);
 
@@ -86,6 +97,8 @@ typedef struct s_panel_ctx
 	t_pan_id		id_stack[PAN_ID_SIZE];
 	/** @brief Depth in @ref id_stack */
 	size_t			id_stack_depth;
+	/** @brief Active widget ID */
+	t_pan_id		active;
 
 	/** Button style */
 	t_hud_style_button	st_button;
