@@ -50,7 +50,7 @@ bool
 	const bool			hovered = pan_mouse_hovered(&bbox);
 	int					color;
 	bool				status;
-	static char			b[64];
+	char				b[64];
 
 	ctx->id_stack[ctx->id_stack_depth] = pan_id_str(text);
 	color = hovered;
@@ -63,7 +63,7 @@ bool
 	if (hovered && ui_mouse_pressed(ctx->app, MOUSE_LEFT))
 		ctx->active = ctx->id_stack[ctx->id_stack_depth];
 	sprintf(b, "%d", *v);
-	pan_slider_draw(bbox, color, (float)(*v - p[0]) / (float)(p[1] - p[0]), b);
+	pan_slider_draw(bbox, color, (float)(*v - p[0]) / (float)(p[1] - p[0]), pan_slider_allocate(b));
 	pan_sameline();
 	pan_text(text);
 	return (status);

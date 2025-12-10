@@ -238,6 +238,15 @@ typedef struct s_pan_style_slider
 t_pan_style_slider
 pan_slider_style(void);
 /**
+ * @brief Allocate memory for sliders format string
+ *
+ * @param buf Buffer to put on the arena
+ * @return Buffer in the arena. If the arena is full, this will return a safe
+ * empty string
+ */
+char
+*pan_slider_allocate(const char buf[64]);
+/**
  * @brief Draw the slider main content
  *
  * @param bbox Slider bounding box
@@ -328,6 +337,8 @@ enum
 {
 	/** @brief Size of Panel's id stack */
 	PAN_ID_SIZE = 32,
+	/** @brief String arena size for sliders */
+	PAN_SLIDER_ARENA_SIZE = 128,
 };
 
 /** @brief HUD draw context */
@@ -369,6 +380,11 @@ typedef struct s_panel_ctx
 	t_pan_style_checkbox	st_checkbox;
 	/** @brief Slider style */
 	t_pan_style_slider		st_slider;
+
+	/** @brief Slider format string arena */
+	char					slider_arena[PAN_SLIDER_ARENA_SIZE][64];
+	/** @brief Offset in the slider arena */
+	size_t					slider_arena_offset;
 }	t_panel_ctx;
 
 /**

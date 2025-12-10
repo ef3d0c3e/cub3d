@@ -54,8 +54,11 @@ void
 	ctx->cursor = (t_vec2){0, 0};
 	ctx->next_cursor = (t_vec2){0, 0};
 	ctx->same_line = false;
+	ctx->slider_arena_offset = 0;
 	if (ui_mouse_released(ctx->app, MOUSE_LEFT))
 		ctx->active = 0;
 	ft_memset(ctx->id_stack, 1, sizeof(t_pan_id) * PAN_ID_SIZE);
 	ctx->id_stack_depth = 0;
+	ft_memset(ctx->layout_stack, 1, sizeof(t_pan_id) * PAN_ID_SIZE);
+	ctx->layout_stack_size = 0;
 }

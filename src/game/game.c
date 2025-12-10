@@ -102,6 +102,8 @@ void
 	}
 	static int vali = 7;
 	pan_slider_i("value", &vali, (const int [3]){-128, 128});
+	static int vali2 = 7;
+	pan_slider_i("yu", &vali2, (const int [3]){0, 10});
 	pan_next_columns();
 	if (pan_button("Hello"))
 	{
