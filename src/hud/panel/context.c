@@ -12,12 +12,14 @@
 #include <cub3d.h>
 
 void
-	pan_init(t_app *app)
+	pan_init(t_app *app, float line_size, const int padding[2])
 {
 	t_panel_ctx	ctx;
 
 	ft_memset(&ctx, 0, sizeof(ctx));
-	ctx.font = app->hud.font;
+	ctx.line_height = ((float)(app->hud.font.base_size.y + padding[0]
+				+ padding[1])) / (float)app->sizes.y;
+	ctx.font = font_new(&app->hud.font, 0xFFFFFF, ctx.line_height / line_size);
 	ctx.scale = (t_vec2){app->hud.scale, app->hud.scale};
 	ctx.app = app;
 	ctx.cursor = (t_vec2){0, 0};
@@ -42,7 +44,6 @@ void
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 
-	ctx->font = app->hud.font;
 	ctx->scale = (t_vec2){app->hud.scale, app->hud.scale};
 	ctx->app = app;
 	ctx->cursor = (t_vec2){0, 0};

@@ -129,6 +129,40 @@ pan_button(const char *text);
 /** @} */
 
 ////////////////////////////////////////////////////////////////////////////////
+// Layout                                                                     //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup LayoutPanel Layout
+ * @ingroup Panel
+ * @{
+ */
+
+enum e_panel_layout
+{
+	LAYOUT_VERTICAL,
+	LAYOUT_HORIZONTAL,
+	LAYOUT_COLUMNS,
+};
+
+typedef struct s_pan_layout
+{
+	/** @brief Layout type */
+	enum e_panel_layout	type;
+	/** @brief Available space */
+	t_bbox				rect;
+
+	/** @brief Number of vertical columns */
+	int					col_count;
+	/** @brief Current vertical columns */
+	int					col_id;
+	/** @brief Width of a column */
+	float				col_width;
+}	t_pan_layout;
+
+/** @} */
+
+////////////////////////////////////////////////////////////////////////////////
 // Panel Context                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -151,6 +185,8 @@ typedef struct s_panel_ctx
 	t_vec2				scale;
 	/** @brief Current font */
 	t_font				font;
+	/** @brief Height of a line (as a fraction of the vertical space) */
+	float				line_height;
 
 	/** @brief Stack of IDs */
 	t_pan_id			id_stack[PAN_ID_SIZE];
@@ -167,9 +203,11 @@ typedef struct s_panel_ctx
  * @brief Initialize Panel
  *
  * @param app Application pointer
+ * @param line_size Desired line height (as a fraction of the vertical space)
+ * @param padding Base top/bottom padding for text
  */
 void
-pan_init(struct s_app *app);
+pan_init(struct s_app *app, float line_size, const int padding[2]);
 /**
  * @brief Get or set the global HUD context
  *

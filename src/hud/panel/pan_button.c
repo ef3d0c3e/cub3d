@@ -50,16 +50,17 @@ static bool
 	rect.draw.rect_radius.border = ctx->st_button.colors[color * 2 + 1];
 	hud_draw(ctx->app, rect);
 	pan_drawable_draw(drawable, (t_vec2){ctx->cursor.x + bbox.size.x / 2,
-		ctx->cursor.y + bbox.size.y / 2,});
+		ctx->cursor.y + bbox.size.y / 2});
 	ctx->cursor.y += bbox.size.y;
-	return (ui_mouse_released(ctx->app, MOUSE_LEFT) && pan_is_active() && hovered);
+	return (ui_mouse_released(ctx->app, MOUSE_LEFT) && pan_is_active()
+		&& hovered);
 }
 
 bool
 	pan_button(const char *text)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
-	const t_font		font = font_new(&ctx->font, 0x7F7FFF, .4f);
+	const t_font		font = ctx->font;
 	const t_draw_item	item = {
 		.type = DRAW_TEXT,
 		.draw.text = {
