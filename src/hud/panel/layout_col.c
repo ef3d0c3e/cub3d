@@ -17,21 +17,15 @@ static inline t_bbox
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 	const t_pan_layout	*layout;
-	float				width;
 
 	if (ctx->layout_stack_size == 0)
 		return ((t_bbox){(t_vec2){0, 0}, (t_vec2){1, 1}});
 	layout = &ctx->layout_stack[ctx->layout_stack_size - 1];
 	if (layout->type == LAYOUT_COLUMNS)
-	{
-		width = layout->rect.size.x / (float)layout->col_count;
-		return ((t_bbox){
-			(t_vec2){layout->rect.pos.x + width * (float)layout->col_id,
-			layout->rect.pos.y
-		},
-		(t_vec2){width, layout->rect.size.y}
+		return ((t_bbox){(t_vec2){
+			layout->rect.pos.x + layout->rect.size.x, layout->rect.pos.y},
+			layout->rect.size
 		});
-	}
 	return (layout->rect);
 }
 
@@ -42,15 +36,13 @@ void
 	t_pan_layout		layout;
 
 	if (ctx->layout_stack_size == PAN_ID_SIZE || !n)
-	{
-		printf("Invalid pan_push_columns()\n");
-		return ;
-	}
+		exit((printf("Invalid pan_push_columns()\n"), 1));
 	ft_memset(&layout, 0, sizeof(layout));
 	pan_id_push(pan_id_str(id));
 	layout.col_count = n;
 	layout.col_id = 0;
 	layout.rect = available_space();
+	layout.rect.size.x /= (float)n;
 	layout.type = LAYOUT_COLUMNS;
 	ctx->layout_stack[ctx->layout_stack_size++] = layout;
 	pan_id_push(pan_id_int(0));
@@ -64,10 +56,7 @@ void
 
 	if (!ctx->layout_stack_size || layout->type != LAYOUT_COLUMNS
 		|| layout->col_id + 1 == layout->col_count)
-	{
-		printf("Invalid pan_next_columns()\n");
-		return ;
-	}
+		exit((printf("Invalid pan_next_columns()\n"), 1));
 	layout->vertical_space = maxf(layout->vertical_space,
 			pan_cursor().y - layout->rect.pos.y);
 	pan_id_pop();

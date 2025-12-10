@@ -119,6 +119,7 @@ void
 	{
 		printf("Checkbox clicked\n");
 	}
+	pan_text("foobar");
 	pan_pop_columns();
 	pan_button("Column layout");
 }
