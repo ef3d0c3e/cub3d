@@ -56,8 +56,8 @@ static void
 {
 	if (parser->s_data.ents_size == parser->s_data.ents_capacity)
 	{
-		parser->s_data.ents_capacity = parser->s_data.ents_capacity * 2
-			+ !parser->s_data.ents_capacity * 16;
+		parser->s_data.ents_capacity = parser->s_data.ents_capacity * 2ULL
+			+ !parser->s_data.ents_capacity * 16ULL;
 		parser->s_data.ents = xrealloc(parser->s_data.ents,
 				sizeof(ent) * parser->s_data.ents_size,
 				sizeof(ent) * parser->s_data.ents_capacity);

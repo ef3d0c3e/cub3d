@@ -45,7 +45,7 @@ char
 	buf[pos] = 0;
 	while (val)
 	{
-		buf[--pos] = (val % 10) + '0';
+		buf[--pos] = (char)((val % 10) + '0');
 		val /= 10;
 	}
 	return (buf);
@@ -72,7 +72,7 @@ char
 	buf[pos] = 0;
 	while (val)
 	{
-		buf[--pos] = (val % 10) + '0';
+		buf[--pos] = (char)((val % 10) + '0');
 		val /= 10;
 	}
 	return (buf);

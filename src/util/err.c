@@ -47,7 +47,7 @@ t_err_str
 		return (buf + hdr_size());
 	}
 	while (hdr->capacity <= hdr->size + len + 1)
-		hdr->capacity = hdr->capacity * 2 + !hdr->capacity * 16;
+		hdr->capacity = hdr->capacity * 2ULL + !hdr->capacity * 16ULL;
 	buf = xmalloc(hdr_size() + hdr->capacity);
 	*((struct s_err_str_hdr *)buf) = (struct s_err_str_hdr){hdr->size + len,
 		hdr->capacity, hdr->style};
@@ -73,7 +73,7 @@ t_err_str
 		return (buf + hdr_size());
 	}
 	while (hdr->capacity <= hdr->size + len + 1)
-		hdr->capacity = hdr->capacity * 2 + !hdr->capacity * 16;
+		hdr->capacity = hdr->capacity * 2ULL + !hdr->capacity * 16ULL;
 	buf = xmalloc(hdr_size() + hdr->capacity);
 	*((struct s_err_str_hdr *)buf) = (struct s_err_str_hdr){hdr->size + len,
 		hdr->capacity, hdr->style};

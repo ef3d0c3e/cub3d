@@ -63,8 +63,8 @@ bool
 
 	if (parser->s_data.lines_size == parser->s_data.lines_capacity)
 	{
-		parser->s_data.lines_capacity = parser->s_data.lines_capacity * 2
-			+ !parser->s_data.lines_size * 16;
+		parser->s_data.lines_capacity = parser->s_data.lines_capacity * 2ULL
+			+ !parser->s_data.lines_size * 16ULL;
 		parser->s_data.lines = xrealloc(parser->s_data.lines,
 				parser->s_data.lines_size * sizeof(char *),
 				parser->s_data.lines_capacity * sizeof(char *));

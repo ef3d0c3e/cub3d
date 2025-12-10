@@ -20,10 +20,7 @@ void
 		size = 1;
 	ptr = malloc(size);
 	if (!ptr)
-	{
-		asm("int $3");
 		exit(1);
-	}
 	return (ptr);
 }
 

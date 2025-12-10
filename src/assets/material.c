@@ -16,7 +16,7 @@ t_atlas_id
 {
 	if (atlas->size == atlas->capacity)
 	{
-		atlas->capacity = atlas->capacity * 2 + !atlas->capacity * 16;
+		atlas->capacity = atlas->capacity * 2ULL + !atlas->capacity * 16ULL;
 		atlas->materials = xrealloc(atlas->materials,
 				atlas->size * sizeof(material),
 				atlas->capacity * sizeof(material));
