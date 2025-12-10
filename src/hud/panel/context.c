@@ -15,11 +15,14 @@ void
 	pan_init(t_app *app, float line_size, const int padding[2])
 {
 	t_panel_ctx	ctx;
+	const float	pad = (float)(padding[0] + padding[1]) / (float)app->sizes.y;
 
 	ft_memset(&ctx, 0, sizeof(ctx));
-	ctx.line_height = ((float)(app->hud.font.base_size.y + padding[0]
-				+ padding[1])) / (float)app->sizes.y;
-	ctx.font = font_new(&app->hud.font, 0xFFFFFF, ctx.line_height / line_size);
+	ctx.line_height = line_size + pad;
+	ctx.padding[0] = padding[0];
+	ctx.padding[1] = padding[1];
+	ctx.font = font_new(&app->hud.font, 0xFFFFFF, (line_size - pad)
+			/ ((float)app->hud.font.base_size.y / (float)app->sizes.y));
 	ctx.scale = (t_vec2){app->hud.scale, app->hud.scale};
 	ctx.app = app;
 	ctx.cursor = (t_vec2){0, 0};

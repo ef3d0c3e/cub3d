@@ -49,12 +49,12 @@ typedef struct s_bbox
  *
  * @param pos BBox position
  * @param size BBox size
- * @param padding Optional pixel padding
+ * @param padding Optional pixel padding (Top, Right, Bottom, Left)
  * @param border Optional border size
  * @return New bounding box
  */
 t_bbox
-pan_bbox(t_vec2 pos, t_vec2 size, int *padding, int border);
+pan_bbox(t_vec2 pos, t_vec2 size, const int *padding, int border);
 /**
  * @brief Compute the screen coordinates of a bounding box
  *
@@ -126,6 +126,21 @@ pan_button(const char *text);
 
 /** @} */
 
+////////////////////////////////////////////////////////////////////////////////
+// Text                                                                       //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup TextPanel Text
+ * @ingroup WidgetsPanel
+ * @{
+ */
+
+void
+pan_text(const char *text);
+
+/** @} */
+
 /** @} */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,10 +178,22 @@ typedef struct s_pan_layout
 	float				vertical_space;
 }	t_pan_layout;
 
+/**
+ * @brief Start a column layout
+ *
+ * @param id Columns ID
+ * @param n Number of columns
+ */
 void
 pan_push_columns(const char *id, int n);
+/**
+ * @brief Move to the next column
+ */
 void
 pan_next_columns(void);
+/**
+ * @brief Stop the column layout
+ */
 void
 pan_pop_columns(void);
 
@@ -195,6 +222,8 @@ typedef struct s_panel_ctx
 	t_font				font;
 	/** @brief Height of a line (as a fraction of the vertical space) */
 	float				line_height;
+	/** @brief Top/Bottom padding */
+	int					padding[2];
 
 	/** @brief Stack of IDs */
 	t_pan_id			id_stack[PAN_ID_SIZE];

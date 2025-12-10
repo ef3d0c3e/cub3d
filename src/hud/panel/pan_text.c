@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hud.c                                              :+:      :+:    :+:   */
+/*   pan_button.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,25 +11,32 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-void
-	hud_init(t_app *app)
+t_bbox
+	bbox_text(const t_font *font, const char *text)
 {
-	float	sx;
-	float	sy;
+	t_panel_ctx *const	ctx = pan_ctx(NULL);
+	const t_vec2		size = font_textsize(ctx->app, font, text);
+	const t_bbox		bbox = pan_bbox(ctx->cursor, size, (const int [4]){
+			ctx->padding[0], 0, ctx->padding[1], 0}, 0);
 
-	sx = (float)app->sizes.x / 1024.f * .5f;
-	sy = (float)app->sizes.y / 1024.f * .5f;
-	if (sx <= sy)
-		app->hud.scale = sx;
-	else
-		app->hud.scale = sy;
-	app->hud.queue.items = xmalloc(sizeof(t_draw_item) * 256);
-	app->hud.queue.capacity = 256;
-	pan_init(app, .2f * app->hud.scale, (int[2]){6, 6});
+	return (bbox);
 }
 
 void
-	hud_free(t_app *app)
+	pan_text(const char *text)
 {
-	free(app->hud.queue.items);
+	t_panel_ctx *const	ctx = pan_ctx(NULL);
+	const t_font		font = ctx->font;
+	const t_bbox		bbox = bbox_text(&font, text);
+	const t_draw_item	item = {
+		.type = DRAW_TEXT,
+		.draw.text = {
+		.text = text,
+		.font = font,
+		.pos = pan_bbox_center(&bbox),
+	}};
+
+	ctx->id_stack[ctx->id_stack_depth] = pan_id_str(text);
+	hud_draw(ctx->app, item);
+	ctx->cursor.y += bbox.size.y;
 }
