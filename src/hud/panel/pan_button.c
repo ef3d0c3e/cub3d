@@ -14,7 +14,7 @@
 t_pan_style_button
 	pan_button_style(void)
 {
-	static const t_pan_style_button	style = (t_pan_style_button){
+	const t_pan_style_button	style = (t_pan_style_button){
 		.padding = {6, 12, 6, 12},
 		.radius = 3,
 		.colors = {
@@ -33,7 +33,7 @@ static bool
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 	const t_bbox		bbox = pan_bbox(pan_cursor(), pan_drawable_size(drawable
-				), ctx->st_button.padding, ctx->st_button.border_size);
+				), ctx->st_button.padding);
 	const bool			hovered = pan_mouse_hovered(&bbox);
 	t_draw_item			rect;
 	int					color;

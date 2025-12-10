@@ -17,6 +17,9 @@ static bool
 {
 	t_entity_type *const	type = ent_type_item();
 
+	(void)type;
+	(void)app;
+	// TODO
 	//atlas_tex_load(app->mlx_ptr, &app->texture_atlas,
 	//	"assets/items.xpm", &type->model.texture);
 	//if (!type->model.texture)
@@ -54,7 +57,7 @@ t_entity_type
 		.load_fn = item_load,
 		.create_fn = item_create,
 		.tick_fn = item_tick,
-		.hitbox_size = (t_vec2){.15f, .15f},
+		.hitbox_size = {.15f, .15f},
 	};
 
 	return (&data);

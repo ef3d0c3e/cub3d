@@ -12,7 +12,7 @@
 #include <cub3d.h>
 
 t_bbox
-	pan_bbox(t_vec2 pos, t_vec2 size, const int *padding, int border)
+	pan_bbox(t_vec2 pos, t_vec2 size, const int *padding)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 

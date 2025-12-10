@@ -59,7 +59,7 @@ t_entity_type
 		.load_fn = ghoul_load,
 		.create_fn = ghoul_create,
 		.tick_fn = ghoul_tick,
-		.hitbox_size = (t_vec2){.15f, .15f},
+		.hitbox_size = {.15f, .15f},
 	};
 
 	return (&data);

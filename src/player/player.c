@@ -22,7 +22,9 @@ void
 void
 	player_move(t_app *app, t_vec2 move)
 {
-
+	(void)app;
+	(void)move;
+	// TODO
 }
 
 

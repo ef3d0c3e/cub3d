@@ -55,6 +55,7 @@ bool
 void
 	game_cleanup(t_app *app)
 {
+	(void)app;
 }
 
 void
@@ -77,23 +78,6 @@ void
 			.pos = {.5f, .5f},
 		}
 	});
-
-	const char **items[] = {
-		(const char *[]){"Foo", "bar", "quz", NULL},
-		(const char *[]){"test", "lorem", "ipsum", NULL},
-		(const char *[]){"dolor", "sit", NULL},
-		NULL
-	};
-	static t_pos pos;
-	t_pos move = (t_pos){1, 0};
-	move.y = ui_key_pressed(app, KEY_ARROW_RIGHT) - ui_key_pressed(app, KEY_ARROW_LEFT);
-	move.x = ui_key_pressed(app, KEY_ARROW_DOWN) - ui_key_pressed(app, KEY_ARROW_UP);
-	hud_menu_move(items, &pos, move);
-	hud_menu(app, items, pos);
-
-	char buf[64];
-	sprintf(buf, "%f fps [%d]", 1.f / app->frame_delta, app->frame);
-	hud_text(app, (t_pos){32, 256}, buf, 0.4f);
 
 	pan_push_columns("COL1", 3);
 	if (pan_button("Test\001bb"))

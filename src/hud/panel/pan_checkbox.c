@@ -14,7 +14,7 @@
 t_pan_style_checkbox
 	pan_checkbox_style(void)
 {
-	static const t_pan_style_checkbox	style = (t_pan_style_checkbox){
+	const t_pan_style_checkbox	style = (t_pan_style_checkbox){
 		.rounding = 4,
 		.colors = {
 		0x2E2E2E, 0x3A3A3A,
@@ -37,7 +37,7 @@ static t_bbox
 	const int			pad = maxi(ctx->padding[0], ctx->padding[1]);
 
 	return (pan_bbox(pan_cursor(), text_size, (const int [4]){pad, pad, pad,
-			pad}, ctx->st_checkbox.border_size));
+			pad}));
 }
 
 static void

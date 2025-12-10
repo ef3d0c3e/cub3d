@@ -50,11 +50,10 @@ typedef struct s_bbox
  * @param pos BBox position
  * @param size BBox size
  * @param padding Optional pixel padding (Top, Right, Bottom, Left)
- * @param border Optional border size
  * @return New bounding box
  */
 t_bbox
-pan_bbox(t_vec2 pos, t_vec2 size, const int *padding, int border);
+pan_bbox(t_vec2 pos, t_vec2 size, const int *padding);
 /**
  * @brief Compute the screen coordinates of a bounding box
  *

@@ -9,10 +9,11 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <render/render.h>
+#include <cub3d.h>
 
 void
-	render_frame(struct s_app *app)
+	render_frame(t_app *app)
 {
+	(void)app;
 	// TODO
 }

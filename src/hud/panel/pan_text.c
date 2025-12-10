@@ -17,7 +17,7 @@ static inline t_bbox
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 	const t_vec2		size = font_textsize(ctx->app, font, text);
 	const t_bbox		bbox = pan_bbox(pan_cursor(), size, (const int [4]){
-			ctx->padding[0], 0, ctx->padding[1], 0}, 0);
+			ctx->padding[0], 0, ctx->padding[1], 0});
 
 	return (bbox);
 }

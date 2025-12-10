@@ -21,11 +21,11 @@ static t_bbox
 	text_size = font_textsize(ctx->app, &ctx->font, "a");
 	text_size.x *= (float)ctx->st_slider.base_width;
 	return (pan_bbox(pan_cursor(), text_size, (const int [4]){pad, pad, pad,
-			pad}, ctx->st_slider.border_size));
+			pad}));
 }
 
 static bool
-	slider_logic_i(const t_bbox *bbox, int *v, const int *p)
+	slider_logic_i(const t_bbox *bbox, int *v, const int p[2])
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 	const int			bounds[2] = {
@@ -43,7 +43,7 @@ static bool
 }
 
 bool
-	pan_slider_i(const char *text, int *v, const int *p)
+	pan_slider_i(const char *text, int *v, const int p[2])
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 	const t_bbox		bbox = bbox_slider();
@@ -70,7 +70,7 @@ bool
 }
 
 static bool
-	slider_logic_f(const t_bbox *bbox, float *v, const float *p)
+	slider_logic_f(const t_bbox *bbox, float *v, const float p[2])
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 	const int			bounds[2] = {
@@ -88,7 +88,7 @@ static bool
 }
 
 bool
-	pan_slider_f(const char *text, float *v, const float *p)
+	pan_slider_f(const char *text, float *v, const float p[2])
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 	const t_bbox		bbox = bbox_slider();

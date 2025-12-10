@@ -375,11 +375,6 @@ hud_init(struct s_app *app);
 void
 hud_free(struct s_app *app);
 
-void
-hud_menu_move(const char ***items, t_pos *selected, t_pos move);
-void
-hud_menu(struct s_app *app, const char ***items, t_pos selected);
-
 /** @} */
 
 #endif // HUD_H
