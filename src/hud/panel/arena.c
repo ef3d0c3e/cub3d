@@ -20,6 +20,6 @@ char
 		ft_memcpy(ctx->slider_arena[ctx->slider_arena_offset++], "", 2);
 	if (ctx->slider_arena_offset == PAN_SLIDER_ARENA_SIZE)
 		return (ctx->slider_arena[0]);
-	ft_memcpy(ctx->slider_arena[ctx->slider_arena_offset], buf, sizeof(buf));
+	ft_memcpy(ctx->slider_arena[ctx->slider_arena_offset], buf, 64);
 	return (ctx->slider_arena[ctx->slider_arena_offset++]);
 }
