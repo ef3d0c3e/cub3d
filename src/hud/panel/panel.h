@@ -132,6 +132,9 @@ pan_button(const char *text);
 // Layout                                                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
+/** @brief Internal ID for Panel */
+typedef unsigned int	t_pan_id;
+
 /**
  * @defgroup LayoutPanel Layout
  * @ingroup Panel
@@ -156,17 +159,22 @@ typedef struct s_pan_layout
 	int					col_count;
 	/** @brief Current vertical columns */
 	int					col_id;
-	/** @brief Width of a column */
-	float				col_width;
+	/** @brief Maximum used vertical space */
+	float				vertical_space;
 }	t_pan_layout;
+
+void
+pan_push_columns(const char *id, int n);
+void
+pan_next_columns(void);
+void
+pan_pop_columns(void);
 
 /** @} */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Panel Context                                                              //
 ////////////////////////////////////////////////////////////////////////////////
-
-typedef unsigned int	t_pan_id;
 
 enum
 {
@@ -194,6 +202,11 @@ typedef struct s_panel_ctx
 	size_t				id_stack_depth;
 	/** @brief Active widget ID */
 	t_pan_id			active;
+
+	/** @brief Stack of IDs */
+	t_pan_layout		layout_stack[PAN_ID_SIZE];
+	/** @brief Depth in @ref id_stack */
+	size_t				layout_stack_size;
 
 	/** Button style */
 	t_hud_style_button	st_button;
@@ -236,6 +249,14 @@ pan_context_reset(struct s_app *app);
  */
 t_pan_id
 pan_id_str(const char *id);
+/**
+ * @brief Compute the id for an integer
+ *
+ * @param id Integer to compute the ID of
+ * @return The id of the integer in the current context
+ */
+t_pan_id
+pan_id_int(int id);
 /**
  * @brief Push an ID in the context
  *

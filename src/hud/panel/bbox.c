@@ -21,10 +21,9 @@ t_bbox
 		return ((t_bbox){
 			pos,
 			(t_vec2){
-				size.x + 2.f * (float)border / (float)ctx->app->sizes.x,
-				size.y + 2.f * (float)border / (float)ctx->app->sizes.y,
-			}
-		});
+			size.x + 2.f * (float)border / (float)ctx->app->sizes.x,
+			size.y + 2.f * (float)border / (float)ctx->app->sizes.y,
+		}});
 	}
 	return ((t_bbox){
 		pos,

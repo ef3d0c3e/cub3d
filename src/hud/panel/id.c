@@ -20,6 +20,15 @@ t_pan_id
 	return (murmumr3_32((const void *)id, ft_strlen(id), seed));
 }
 
+t_pan_id
+	pan_id_int(const int id)
+{
+	t_panel_ctx *const	ctx = pan_ctx(NULL);
+	const t_pan_id		seed = ctx->id_stack[ctx->id_stack_depth];
+
+	return (murmumr3_32((const void *)&id, sizeof(id), seed));
+}
+
 void
 	pan_id_push(t_pan_id id)
 {

@@ -95,10 +95,24 @@ void
 	sprintf(buf, "%f fps [%d]", 1.f / app->frame_delta, app->frame);
 	hud_text(app, (t_pos){32, 256}, buf, 0.4f);
 
+	pan_push_columns("COL1", 3);
 	if (pan_button("Test\001bb"))
 	{
 		printf("Clicked\n");
 	}
+	pan_next_columns();
+	if (pan_button("Hello"))
+	{
+		printf("Clicked Hello\n");
+	}
+	pan_button("Column layout");
+	pan_next_columns();
+	if (pan_button("Hello"))
+	{
+		printf("Clicked Hello\n");
+	}
+	pan_pop_columns();
+	pan_button("Column layout");
 }
 
 	/*

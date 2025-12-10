@@ -18,13 +18,13 @@ t_hud_style_button
 		.padding = {6, 12, 6, 12},
 		.radius = 3,
 		.colors = {
-			0x2E2E2E, 0x3A3A3A,
-			0x404040, 0x505050,
-			0x1F1F1F, 0x3A3A3A
-		},
+		0x2E2E2E, 0x3A3A3A,
+		0x404040, 0x505050,
+		0x1F1F1F, 0x3A3A3A
+	},
 		.border_size = 1,
 	};
-	
+
 	return (style);
 }
 
