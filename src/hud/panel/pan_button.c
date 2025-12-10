@@ -20,8 +20,9 @@ t_hud_style_button
 		.button_color = 0x134CAA,
 		.button_color_hover = 0x0000FF,
 		.button_color_active = 0x00FF00,
+		.border_color = 0XFF1F1F,
+		.border_size = 2,
 	};
-
 	
 	return (style);
 }
@@ -30,30 +31,27 @@ static bool
 	button_draw(const t_drawable *drawable)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
-	const t_bbox		bbox = pan_bbox(ctx->cursor,
-			pan_drawable_size(drawable), ctx->st_button.padding);
+	const t_bbox		bbox = pan_bbox(ctx->cursor, pan_drawable_size(drawable
+				), ctx->st_button.padding, ctx->st_button.border_size);
 	const bool			hovered = pan_mouse_hovered(&bbox);
 	t_draw_item			rect;
 
 	rect.type = DRAW_RECT_RADIUS;
-	rect.draw.rect_radius.radius = 0 * ctx->st_button.radius;
-	rect.draw.rect_radius.color = ctx->st_button.button_color;
-	if (hovered)
-	{
-		rect.draw.rect_radius.color = ctx->st_button.button_color_hover;
-		if (ui_mouse_pressed(ctx->app, MOUSE_LEFT))
-			ctx->active = ctx->id_stack[ctx->id_stack_depth];
-	}
-	if (pan_is_active())
-		rect.draw.rect_radius.color = ctx->st_button.button_color_active;
+	rect.draw.rect_radius.radius = ctx->st_button.radius;
+	rect.draw.rect_radius.border_size = ctx->st_button.border_size;
+	rect.draw.rect_radius.border = ctx->st_button.border_color;
 	rect.draw.rect_radius.size = bbox.size;
 	rect.draw.rect_radius.pos = ctx->cursor;
-
+	rect.draw.rect_radius.color = ctx->st_button.button_color;
+	if (hovered)
+		rect.draw.rect_radius.color = ctx->st_button.button_color_hover;
+	if (hovered && ui_mouse_pressed(ctx->app, MOUSE_LEFT))
+		ctx->active = ctx->id_stack[ctx->id_stack_depth];
+	if (pan_is_active())
+		rect.draw.rect_radius.color = ctx->st_button.button_color_active;
 	hud_draw(ctx->app, rect);
-	pan_drawable_draw(drawable, (t_vec2){
-		ctx->cursor.x + bbox.size.x / 2,
-		ctx->cursor.y + bbox.size.y / 2,
-	});
+	pan_drawable_draw(drawable, (t_vec2){ctx->cursor.x + bbox.size.x / 2,
+		ctx->cursor.y + bbox.size.y / 2,});
 	ctx->cursor.y += bbox.size.y;
 	return (ui_mouse_released(ctx->app, MOUSE_LEFT) && pan_is_active() && hovered);
 }

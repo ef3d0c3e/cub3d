@@ -14,7 +14,7 @@
 
 # include <hud/hud.h>
 
-struct	s_app;
+struct					s_app;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Panel                                                                      //
@@ -50,10 +50,11 @@ typedef struct s_bbox
  * @param pos BBox position
  * @param size BBox size
  * @param padding Optional pixel padding
+ * @param border Optional border size
  * @return New bounding box
  */
 t_bbox
-pan_bbox(t_vec2 pos, t_vec2 size, int *padding);
+pan_bbox(t_vec2 pos, t_vec2 size, int *padding, int border);
 /**
  * @brief Compute the screen coordinates of a bounding box
  *
@@ -107,6 +108,10 @@ typedef struct s_hud_style_button
 	t_color	button_color_hover;
 	/** @brief Active button color */
 	t_color	button_color_active;
+	/** @brief Button border color */
+	t_color	border_color;
+	/** @brief Button border size */
+	int		border_size;
 }	t_hud_style_button;
 
 /**
@@ -133,7 +138,7 @@ pan_button(const char *text);
 // Panel Context                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 
-typedef	unsigned int	t_pan_id;
+typedef unsigned int	t_pan_id;
 
 enum
 {
@@ -145,20 +150,20 @@ enum
 typedef struct s_panel_ctx
 {
 	/** @brief Application */
-	struct s_app	*app;
+	struct s_app		*app;
 	/** @brief Current draw position */
-	t_vec2			cursor;
+	t_vec2				cursor;
 	/** @brief Current scale */
-	t_vec2			scale;
+	t_vec2				scale;
 	/** @brief Current font */
-	t_font			font;
+	t_font				font;
 
 	/** @brief Stack of IDs */
-	t_pan_id		id_stack[PAN_ID_SIZE];
+	t_pan_id			id_stack[PAN_ID_SIZE];
 	/** @brief Depth in @ref id_stack */
-	size_t			id_stack_depth;
+	size_t				id_stack_depth;
 	/** @brief Active widget ID */
-	t_pan_id		active;
+	t_pan_id			active;
 
 	/** Button style */
 	t_hud_style_button	st_button;

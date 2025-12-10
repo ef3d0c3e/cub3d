@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arith.c                                            :+:      :+:    :+:   */
+/*   float.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 #include <util/util.h>
 
-inline int
-	clamp(int value, int min, int max)
+inline float
+	clampf(float value, float min, float max)
 {
 	if (value < min)
 		return (min);
@@ -21,18 +21,10 @@ inline int
 	return (value);
 }
 
-inline int
-	absi(int x)
+inline float
+	maxf(float a, float b)
 {
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
-inline int
-	maxi(int x, int y)
-{
-	if (x >= y)
-		return (x);
-	return (y);
+	if (a >= b)
+		return (a);
+	return (b);
 }

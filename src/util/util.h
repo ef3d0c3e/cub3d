@@ -356,6 +356,15 @@ clamp(int value, int min, int max);
 int
 absi(int x);
 /**
+ * @brief Maximum of two integers
+ *
+ * @param x First integer
+ * @param y Second integer
+ * @return @p x if @p >= @p y, otherwise @p y
+ */
+int
+maxi(int x, int y);
+/**
  * @brief Clamp a floating point value
  *
  * @param value Value to clamp
