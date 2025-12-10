@@ -58,30 +58,24 @@ void
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
 	const t_bbox		inner = bbox_slider_pallet(&bbox, f);
 
-	hud_draw(ctx->app, (t_draw_item){
-		.type = DRAW_RECT_RADIUS,
+	hud_draw(ctx->app, (t_draw_item){.type = DRAW_RECT_RADIUS,
 		.draw.rect_radius = {
 		.radius = ctx->st_slider.rounding,
 		.border_size = ctx->st_slider.border_size,
 		.color = ctx->st_slider.colors[2 * color],
 		.border = ctx->st_slider.colors[2 * color + 1],
 		.pos = pan_cursor(),
-		.size = bbox.size,
-	}});
-	hud_draw(ctx->app, (t_draw_item){
-		.type = DRAW_RECT,
+		.size = bbox.size}});
+	hud_draw(ctx->app, (t_draw_item){.type = DRAW_RECT,
 		.draw.rect = {
 		.color = ctx->st_slider.slider,
 		.pos = inner.pos,
-		.size = inner.size,
-	}});
-	hud_draw(ctx->app, (t_draw_item){
-		.type = DRAW_TEXT,
+		.size = inner.size}});
+	hud_draw(ctx->app, (t_draw_item){.type = DRAW_TEXT,
 		.draw.text = {
 		.font = ctx->font,
 		.text = text,
-		.pos = pan_bbox_center(&bbox),
-	}});
+		.pos = pan_bbox_center(&bbox)}});
 	bbox.size.x += (float)ctx->st_checkbox.spacing / (float)ctx->app->sizes.x;
 	pan_cursor_advance(bbox.size);
 }

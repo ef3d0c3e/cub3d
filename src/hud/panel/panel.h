@@ -268,6 +268,18 @@ pan_slider_draw(t_bbox bbox, int color, float f, const char *text);
  */
 bool
 pan_slider_i(const char *text, int *val, const int params[2]);
+/**
+ * @brief Add a slider to the UI
+ *
+ * @param text Slider text
+ * @param val Slider value
+ * @param params:
+ *  - `0`: Min value
+ *  - `1`: Max value
+ * @return `true` when the slider is clicked
+ */
+bool
+pan_slider_f(const char *text, float *val, const float params[2]);
 
 /** @} */
 

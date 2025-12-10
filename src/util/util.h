@@ -307,6 +307,20 @@ void
 char
 *itoa_buf(char *buf, int x);
 /**
+ * @brief Format a floating point value into a string buffer
+ *
+ * This function performs very basic formatting, and is only expected to work
+ * for values in [-100, 100], with 3 digits of precision
+ *
+ * @param buf Buffer to format into
+ * @param x Floating point value to formey
+ * @param prec Number of decimals to format
+ *
+ * @returns @p buf
+ */
+char
+*ftoa_buf(char *buf, float x, int prec);
+/**
  * @brief Compare string `a` against string `b`
  *
  * @param a First string

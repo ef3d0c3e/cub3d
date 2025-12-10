@@ -11,34 +11,26 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
+void
+	vec_add(t_vec2 *a, t_vec2 b)
+{
+	a->x += b.x;
+	a->y += b.y;
+}
+
 inline t_draw_item
 	draw_item_offset(const t_app *app, t_draw_item item, t_vec2 offset)
 {
 	(void)app;
 	if (item.type == DRAW_TEXT)
-	{
-		item.draw.text.pos.x += offset.x;
-		item.draw.text.pos.y += offset.y;
-	}
+		vec_add(&item.draw.text.pos, offset);
 	else if (item.type == DRAW_TEXT_SHADOW)
-	{
-		item.draw.text_shadow.pos.x += offset.x;
-		item.draw.text_shadow.pos.y += offset.y;
-	}
+		vec_add(&item.draw.text_shadow.pos, offset);
 	else if (item.type == DRAW_SPRITE)
-	{
-		item.draw.sprite.pos.x += offset.x;
-		item.draw.sprite.pos.y += offset.y;
-	}
+		vec_add(&item.draw.sprite.pos, offset);
 	else if (item.type == DRAW_RECT)
-	{
-		item.draw.rect.pos.x += offset.x;
-		item.draw.rect.pos.y += offset.y;
-	}
+		vec_add(&item.draw.rect.pos, offset);
 	else if (item.type == DRAW_RECT_RADIUS)
-	{
-		item.draw.rect_radius.pos.x += offset.x;
-		item.draw.rect_radius.pos.y += offset.y;
-	}
+		vec_add(&item.draw.rect_radius.pos, offset);
 	return (item);
 }

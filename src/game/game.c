@@ -101,9 +101,11 @@ void
 		printf("Clicked\n");
 	}
 	static int vali = 7;
-	pan_slider_i("value", &vali, (const int [3]){-128, 128});
+	pan_slider_i("value", &vali, (const int [2]){-128, 128});
 	static int vali2 = 7;
-	pan_slider_i("yu", &vali2, (const int [3]){0, 10});
+	pan_slider_i("yu", &vali2, (const int [2]){0, 10});
+	static float valf = 0.5;
+	pan_slider_f("fff", &valf, (const float [2]){-1, 5});
 	pan_next_columns();
 	if (pan_button("Hello"))
 	{

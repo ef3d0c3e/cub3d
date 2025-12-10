@@ -41,7 +41,34 @@ char
 		buf[pos++] = '-';
 		val = -(unsigned int)x;
 	}
-	pos = base10_len(val);
+	pos += base10_len(val);
+	buf[pos] = 0;
+	while (val)
+	{
+		buf[--pos] = (val % 10) + '0';
+		val /= 10;
+	}
+	return (buf);
+}
+
+char
+	*ftoa_buf(char *buf, float x, int prec)
+{
+	size_t			pos;
+	unsigned int	val;
+	size_t			len;
+
+	if (x == 0)
+		return (ft_memcpy(buf, "0", 2));
+	pos = 0;
+	if (x < 0)
+		buf[pos++] = '-';
+	itoa_buf(buf + pos, absi((int)x));
+	val = (unsigned int)((x - floorf(x)) * pow(10, prec));
+	len = ft_strlen(buf);
+	pos += len + (size_t)prec + (x >= 0);
+	ft_memset(buf + len + 1, '0', (size_t)prec);
+	buf[len] = '.';
 	buf[pos] = 0;
 	while (val)
 	{
