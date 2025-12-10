@@ -29,6 +29,7 @@ void
 	ft_memset(ctx.id_stack, 1, sizeof(t_pan_id) * PAN_ID_SIZE);
 	ctx.id_stack_depth = 0;
 	ctx.st_button = pan_button_style();
+	ctx.st_checkbox = pan_checkbox_style();
 	pan_ctx(&ctx);
 }
 
@@ -50,6 +51,8 @@ void
 	ctx->scale = (t_vec2){app->hud.scale, app->hud.scale};
 	ctx->app = app;
 	ctx->cursor = (t_vec2){0, 0};
+	ctx->next_cursor = (t_vec2){0, 0};
+	ctx->same_line = false;
 	if (ui_mouse_released(ctx->app, MOUSE_LEFT))
 		ctx->active = 0;
 	ft_memset(ctx->id_stack, 1, sizeof(t_pan_id) * PAN_ID_SIZE);

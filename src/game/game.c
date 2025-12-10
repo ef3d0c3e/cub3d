@@ -107,14 +107,18 @@ void
 	}
 	pan_button("Column layout");
 	pan_button("After");
-	pan_button("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	pan_button("AAAAA");
 	pan_next_columns();
 	if (pan_button("Hello"))
 	{
 		printf("Clicked Hello\n");
 	}
 	pan_text("foobar");
-	pan_button("After");
+	static bool val;
+	if (pan_checkbox("Check", &val))
+	{
+		printf("Checkbox clicked\n");
+	}
 	pan_pop_columns();
 	pan_button("Column layout");
 }

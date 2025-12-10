@@ -69,12 +69,12 @@ void
 		return ;
 	}
 	layout->vertical_space = maxf(layout->vertical_space,
-			ctx->cursor.y - layout->rect.pos.y);
+			pan_cursor().y - layout->rect.pos.y);
 	pan_id_pop();
 	++layout->col_id;
 	pan_id_push(pan_id_int(layout->col_id));
 	layout->rect = available_space();
-	ctx->cursor = layout->rect.pos;
+	pan_cursor_set(layout->rect.pos);
 }
 
 void
@@ -90,12 +90,12 @@ void
 		return ;
 	}
 	layout->vertical_space = maxf(layout->vertical_space,
-			ctx->cursor.y - layout->rect.pos.y);
+			pan_cursor().y - layout->rect.pos.y);
 	pan_id_pop();
 	pan_id_pop();
 	--ctx->layout_stack_size;
-	ctx->cursor = (t_vec2){0, 0};
+	pan_cursor_set((t_vec2){0, 0});
 	if (ctx->layout_stack_size)
-		ctx->cursor = ctx->layout_stack[ctx->layout_stack_size - 1].rect.pos;
-	ctx->cursor.y += layout->vertical_space;
+		pan_cursor_set(ctx->layout_stack[ctx->layout_stack_size - 1].rect.pos);
+	pan_cursor_advance((t_vec2){0, layout->vertical_space});
 }

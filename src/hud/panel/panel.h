@@ -96,7 +96,7 @@ pan_bbox_center(const t_bbox *bbox);
  */
 
 /** @brief Button styling */
-typedef struct s_hud_style_button
+typedef struct s_pan_style_button
 {
 	/** @brief Top, Right, Bottom, Left padding in pixels */
 	int		padding[4];
@@ -106,14 +106,14 @@ typedef struct s_hud_style_button
 	t_color	colors[6];
 	/** @brief Button border size */
 	int		border_size;
-}	t_hud_style_button;
+}	t_pan_style_button;
 
 /**
  * @brief Default style for buttons
  *
  * @return The default style for buttons
  */
-t_hud_style_button
+t_pan_style_button
 pan_button_style(void);
 /**
  * @brief Add a button to the UI
@@ -136,8 +136,59 @@ pan_button(const char *text);
  * @{
  */
 
+/**
+ * @brief Text widget
+ *
+ * @param text Text content
+ */
 void
 pan_text(const char *text);
+/**
+ * @brief Text widget with color
+ *
+ * @param text Text content
+ * @param color Custom text color
+ */
+void
+pan_text_color(const char *text, t_color color);
+
+/** @} */
+
+////////////////////////////////////////////////////////////////////////////////
+// Checkbox                                                                   //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup CheckboxPanel Checkbox
+ * @ingroup WidgetsPanel
+ * @{
+ */
+
+/** @brief Checkbox styling */
+typedef struct s_pan_style_checkbox
+{
+	/** @brief Checkbox rounding */
+	int		rounding;
+	/** @brief Checkbox color/boder for Default/Hovered/Active */
+	t_color	colors[6];
+	/** @brief Checkbox mark color */
+	t_color	check_color;
+	/** @brief Checkbox border size */
+	int		border_size;
+	/** @brief Spacing between checkbox and content */
+	int		spacing;
+}	t_pan_style_checkbox;
+
+/**
+ * @brief Default style for checkboxes
+ *
+ * @return The default style for checkboxes
+ */
+t_pan_style_checkbox
+pan_checkbox_style(void);
+
+bool
+pan_checkbox(const char *text, bool *val);
 
 /** @} */
 
@@ -213,32 +264,39 @@ enum
 typedef struct s_panel_ctx
 {
 	/** @brief Application */
-	struct s_app		*app;
-	/** @brief Current draw position */
-	t_vec2				cursor;
+	struct s_app			*app;
 	/** @brief Current scale */
-	t_vec2				scale;
+	t_vec2					scale;
 	/** @brief Current font */
-	t_font				font;
+	t_font					font;
 	/** @brief Height of a line (as a fraction of the vertical space) */
-	float				line_height;
+	float					line_height;
 	/** @brief Top/Bottom padding */
-	int					padding[2];
+	int						padding[2];
+
+	/** @brief Current draw position */
+	t_vec2					cursor;
+	/** @brief Cursor to next line */
+	t_vec2					next_cursor;
+	/** @brief Set to `true` to draw on the same line */
+	bool					same_line;
 
 	/** @brief Stack of IDs */
-	t_pan_id			id_stack[PAN_ID_SIZE];
+	t_pan_id				id_stack[PAN_ID_SIZE];
 	/** @brief Depth in @ref id_stack */
-	size_t				id_stack_depth;
+	size_t					id_stack_depth;
 	/** @brief Active widget ID */
-	t_pan_id			active;
+	t_pan_id				active;
 
 	/** @brief Stack of IDs */
-	t_pan_layout		layout_stack[PAN_ID_SIZE];
+	t_pan_layout			layout_stack[PAN_ID_SIZE];
 	/** @brief Depth in @ref id_stack */
-	size_t				layout_stack_size;
+	size_t					layout_stack_size;
 
 	/** Button style */
-	t_hud_style_button	st_button;
+	t_pan_style_button		st_button;
+	/** Checkbox style */
+	t_pan_style_checkbox	st_checkbox;
 }	t_panel_ctx;
 
 /**
@@ -269,6 +327,14 @@ t_panel_ctx
  */
 void
 pan_context_reset(struct s_app *app);
+t_vec2
+pan_cursor(void);
+void
+pan_sameline(void);
+void
+pan_cursor_advance(t_vec2 off);
+void
+pan_cursor_set(t_vec2 pos);
 
 /**
  * @brief Compute the id for a string
