@@ -24,7 +24,7 @@ void
 	p.scale = font->scale;
 	p.origin = (t_vec2){item->draw.text.pos.x - .5f * (font_textsize(app, font,
 				item->draw.text.text).x - (float)font->base_size.x
-			/ (float)app->sizes.x), item->draw.text.pos.y};
+			/ (float)app->sizes.x * font->scale.x), item->draw.text.pos.y};
 	while (item->draw.text.text[i])
 	{
 		sprite = font_get(font, item->draw.text.text[i]);
@@ -48,7 +48,7 @@ void
 	p[0].scale = font->scale;
 	p[0].origin = (t_vec2){item->draw.text.pos.x - .5f * (font_textsize(app,
 				font, item->draw.text.text).x - (float)font->base_size.x
-			/ (float)app->sizes.x), item->draw.text.pos.y};
+			/ (float)app->sizes.x * font->scale.x), item->draw.text.pos.y};
 	p[1] = p[0];
 	p[1].color = item->draw.text_shadow.color_shadow;
 	p[1].origin.x += .12f * (float)font->size.x / (float)app->sizes.x;

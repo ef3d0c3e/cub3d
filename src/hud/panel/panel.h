@@ -102,14 +102,8 @@ typedef struct s_hud_style_button
 	int		padding[4];
 	/** @brief Button rectangle border radius */
 	int		radius;
-	/** @brief Button color */
-	t_color	button_color;
-	/** @brief Hovered button color */
-	t_color	button_color_hover;
-	/** @brief Active button color */
-	t_color	button_color_active;
-	/** @brief Button border color */
-	t_color	border_color;
+	/** @brief Button color/boder for Default/Hovered/Active */
+	t_color	colors[6];
 	/** @brief Button border size */
 	int		border_size;
 }	t_hud_style_button;

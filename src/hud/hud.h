@@ -222,9 +222,9 @@ struct s_draw_item
 			int			radius;
 			/** @brief Interior color */
 			t_color		color;
-			/** @brief Outline color */
+			/** @brief Border color */
 			t_color		border;
-			/** @brief Outline pixel size */
+			/** @brief Border pixel size */
 			int			border_size;
 		}	rect_radius;
 	}	draw;
