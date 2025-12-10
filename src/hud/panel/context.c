@@ -30,6 +30,7 @@ void
 	ctx.id_stack_depth = 0;
 	ctx.st_button = pan_button_style();
 	ctx.st_checkbox = pan_checkbox_style();
+	ctx.st_slider = pan_slider_style();
 	pan_ctx(&ctx);
 }
 

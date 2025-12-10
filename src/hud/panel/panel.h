@@ -186,9 +186,79 @@ typedef struct s_pan_style_checkbox
  */
 t_pan_style_checkbox
 pan_checkbox_style(void);
-
+/**
+ * @brief Add a checkbox to the UI
+ *
+ * @param text Checkbox text
+ * @param val Checkbox value
+ * @return `true` when the checkbox is clicked
+ */
 bool
 pan_checkbox(const char *text, bool *val);
+
+/** @} */
+
+////////////////////////////////////////////////////////////////////////////////
+// Slider                                                                   //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup SliderPanel Slider
+ * @ingroup WidgetsPanel
+ * @{
+ */
+
+/** @brief Slider styling */
+typedef struct s_pan_style_slider
+{
+	/** @brief Slider rounding */
+	int		rounding;
+	/** @brief Slider color/boder for Default/Hovered/Active */
+	t_color	colors[6];
+	/** @brief Slider pallet color */
+	t_color	slider;
+	/** @brief Slider border size */
+	int		border_size;
+	/** @brief Spacing between slider and content */
+	int		spacing;
+	/** @brief Base slider width, as a number of characters */
+	int		base_width;
+	/** @brief Slider pallet sizes (`x` as a fraction of the slider's width,
+	 * `y` as a fraction of the slider's height) */
+	t_vec2	slider_geom;
+	/** @brief Left/Right padding inside the slider */
+	int		padding[2];
+}	t_pan_style_slider;
+
+/**
+ * @brief Default style for sliders
+ *
+ * @return The default style for sliders
+ */
+t_pan_style_slider
+pan_slider_style(void);
+/**
+ * @brief Draw the slider main content
+ *
+ * @param bbox Slider bounding box
+ * @param color Slider color
+ * @param f Slider factor [0, 1]
+ * @param text Slider marker text
+ */
+void
+pan_slider_draw(t_bbox bbox, int color, float f, const char *text);
+/**
+ * @brief Add a slider to the UI
+ *
+ * @param text Slider text
+ * @param val Slider value
+ * @param params:
+ *  - `0`: Min value
+ *  - `1`: Max value
+ * @return `true` when the slider is clicked
+ */
+bool
+pan_slider_i(const char *text, int *val, const int params[2]);
 
 /** @} */
 
@@ -293,10 +363,12 @@ typedef struct s_panel_ctx
 	/** @brief Depth in @ref id_stack */
 	size_t					layout_stack_size;
 
-	/** Button style */
+	/** @brief Button style */
 	t_pan_style_button		st_button;
-	/** Checkbox style */
+	/** @brief Checkbox style */
 	t_pan_style_checkbox	st_checkbox;
+	/** @brief Slider style */
+	t_pan_style_slider		st_slider;
 }	t_panel_ctx;
 
 /**

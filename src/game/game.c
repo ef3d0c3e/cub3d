@@ -100,6 +100,8 @@ void
 	{
 		printf("Clicked\n");
 	}
+	static int vali = 7;
+	pan_slider_i("value", &vali, (const int [3]){-128, 128});
 	pan_next_columns();
 	if (pan_button("Hello"))
 	{
