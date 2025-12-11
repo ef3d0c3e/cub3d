@@ -17,8 +17,8 @@ void
 	float	sx;
 	float	sy;
 
-	sx = (float)app->sizes.x / 1024.f * .5f;
-	sy = (float)app->sizes.y / 1024.f * .5f;
+	sx = 1024.f / (float)app->sizes.x * .5f;
+	sy = 1024.f / (float)app->sizes.y * .5f;
 	if (sx <= sy)
 		app->hud.scale = sx;
 	else
