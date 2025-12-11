@@ -64,21 +64,49 @@ void
 	player_input(app);
 }
 
+// TODO: Apply view bobbing
+void
+	draw_viewmodel(t_app *app)
+{
+	
+	const t_weapon	*weapon = &app->assets.weapons[app->game.player.weapon];
+	float			f;
+	float			y;
+
+	static int u;
+	if (ui_key_pressed(app, KEY_F))
+		u = (u + 1) % 5;
+	if (app->game.player.weapon == WEAPON_NONE)
+		return ;
+	f = .65f * (float)app->sizes.x / (float)weapon->view_model.width;
+	y = 1.1f - (float)weapon->view_model.height * f * .5f / (float)app->sizes.y;
+	hud_draw(app, (t_draw_item){
+		.type = DRAW_SPRITE,
+		.draw.sprite = {
+			.sprite = sprite_sheet_get(&weapon->view_model, 0, u),
+			.color = 0xFFFFFF,
+			.scale = (t_vec2){f, f},
+			.pos = {.37f, y},
+		}
+	});
+}
+
 void
 	game_render(t_app *app)
 {
 	render_frame(app);
 	// Draw the 5x5 sprite
-	hud_draw(app, (t_draw_item){
-		.type = DRAW_SPRITE,
-		.draw.sprite = {
-			.sprite = app->game.minimap,
-			.color = 0xFFFFFF,
-			.scale = (t_vec2){10.f, 10.f},
-			.pos = {.5f, .5f},
-		}
-	});
-
+	//hud_draw(app, (t_draw_item){
+	//	.type = DRAW_SPRITE,
+	//	.draw.sprite = {
+	//		.sprite = app->game.minimap,
+	//		.color = 0xFFFFFF,
+	//		.scale = (t_vec2){10.f, 10.f},
+	//		.pos = {.5f, .5f},
+	//	}
+	//});
+	
+	draw_viewmodel(app);
 	pan_push_columns("COL1", 3);
 	if (pan_button("Test\001bb"))
 	{

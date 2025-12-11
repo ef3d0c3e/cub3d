@@ -80,6 +80,8 @@ enum e_weapon_id
 /** @brief A struct holding all assets */
 typedef struct s_assets
 {
+	/** @brief Texture for pickups */
+	const t_texture	*items;
 	/** @brief Sprites for all weapons */
 	t_weapon		weapons[WEAPON_NUM_];
 }	t_assets;
@@ -92,6 +94,42 @@ typedef struct s_assets
  */
 bool
 assets_load(struct s_app *app);
+/**
+ * @brief Asset loader for the map
+ *
+ * @param app Application
+ * @param assets Assets
+ * @return `true` on success, `false` on errors
+ */
+bool
+asset_loader_map(struct s_app *app, t_assets *assets);
+/**
+ * @brief Asset loader for the font
+ *
+ * @param app Application
+ * @param assets Assets
+ * @return `true` on success, `false` on errors
+ */
+bool
+asset_loader_font(struct s_app *app, t_assets *assets);
+/**
+ * @brief Asset loader for items
+ *
+ * @param app Application
+ * @param assets Assets
+ * @return `true` on success, `false` on errors
+ */
+bool
+asset_loader_items(struct s_app *app, t_assets *assets);
+/**
+ * @brief Asset loader for weapons
+ *
+ * @param app Application
+ * @param assets Assets
+ * @return `true` on success, `false` on errors
+ */
+bool
+asset_loader_weapons(struct s_app *app, t_assets *assets);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Internal                                                                   //
