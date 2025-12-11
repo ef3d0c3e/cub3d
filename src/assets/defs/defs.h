@@ -54,6 +54,8 @@ typedef struct s_weapon
 	int				ammo;
 	/** @brief Time taken by the shoto animation */
 	float			anim_shoot_time;
+	/** @brief Damage */
+	int				damage;
 }	t_weapon;
 
 /** @brief All available weapons */
@@ -66,6 +68,31 @@ enum e_weapon_id
 	/** @brief Number of weapons */
 	WEAPON_NUM_,
 };
+
+/** @} */
+
+////////////////////////////////////////////////////////////////////////////////
+// Projectile                                                                 //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup ProjectileAssets Projectile Assets
+ * @ingroup PredefinedAssets
+ * @{
+ */
+
+/** @brief Projectiles */
+typedef struct s_projectile
+{
+	/** @brief Projectile model */
+	t_sprite	model;
+	/** @brief Projectile position */
+	t_vec3		pos;
+	/** @brief Projectile velocikty */
+	t_vec3		vel;
+	/** @brief Projectile base speed, 0 = instant */
+	float		speed;
+}	t_projectile;
 
 /** @} */
 

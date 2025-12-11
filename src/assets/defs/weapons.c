@@ -28,13 +28,11 @@ static bool
 	weapon->view_model.sep_top = 1;
 	weapon->view_model.width = 233;
 	weapon->view_model.height = 162;
-	weapon->item_model.texture = assets->items;
-	weapon->item_model.background = 0x0FFFFF;
-	weapon->item_model.line_size = assets->items->width;
-	weapon->item_model.left = 64;
-	weapon->item_model.top = 15;
-	weapon->item_model.width = 63;
-	weapon->item_model.height = 12;
+	weapon->item_model = (t_sprite){.texture = assets->items,
+		.background = 0x0FFFFF,
+		.line_size = assets->items->width,
+		.left = 64, .top = 15,
+		.width = 63, .height = 12};
 	return (asset_size_check(weapon->view_model.texture, 306, 1582));
 }
 
