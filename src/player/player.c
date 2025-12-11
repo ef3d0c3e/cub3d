@@ -31,11 +31,22 @@ void
 void
 	player_input(t_app *app)
 {
+	t_player *const	player = &app->game.player;
+	const t_weapon	*weapon = &app->assets.weapons[player->weapon];
 	t_vec2	move;
 
 	move = (t_vec2){
 		ui_key_held(app, KEY_W) - ui_key_held(app, KEY_S),
 		ui_key_held(app, KEY_D) - ui_key_held(app, KEY_A)
 	};
+	if (ui_key_released(app, KEY_U) && player->weapon_anim == 0)
+	{
+		player->weapon_anim = weapon->anim_shoot_time;
+	}
+	if (player->weapon_anim != 0)
+	{
+		player->weapon_anim -= app->frame_delta;
+		player->weapon_anim = maxf(player->weapon_anim, 0);
+	}
 	player_move(app, move);
 }

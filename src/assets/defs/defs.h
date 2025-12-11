@@ -52,6 +52,8 @@ typedef struct s_weapon
 	t_sprite		item_model;
 	/** @brief Number of ammunitions */
 	int				ammo;
+	/** @brief Time taken by the shoto animation */
+	float			anim_shoot_time;
 }	t_weapon;
 
 /** @brief All available weapons */

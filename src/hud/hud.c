@@ -25,7 +25,7 @@ void
 		app->hud.scale = sy;
 	app->hud.queue.items = xmalloc(sizeof(t_draw_item) * 256);
 	app->hud.queue.capacity = 256;
-	pan_init(app, .2f * app->hud.scale, (int[2]){6, 6});
+	pan_init(app, .1f * app->hud.scale, (int[2]){6, 6});
 }
 
 void

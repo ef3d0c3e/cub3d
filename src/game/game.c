@@ -72,18 +72,21 @@ void
 	const t_weapon	*weapon = &app->assets.weapons[app->game.player.weapon];
 	float			f;
 	float			y;
+	int				anim;
 
-	static int u;
-	if (ui_key_pressed(app, KEY_F))
-		u = (u + 1) % 5;
 	if (app->game.player.weapon == WEAPON_NONE)
 		return ;
+	anim = 0;
+	if (app->game.player.weapon_anim != 0)
+		anim = 1 + (int)((float)(sprite_sheet_anim_count(&weapon->view_model)
+					- 2) *(weapon->anim_shoot_time
+					- app->game.player.weapon_anim) / weapon->anim_shoot_time);
 	f = .65f * (float)app->sizes.x / (float)weapon->view_model.width;
 	y = 1.1f - (float)weapon->view_model.height * f * .5f / (float)app->sizes.y;
 	hud_draw(app, (t_draw_item){
 		.type = DRAW_SPRITE,
 		.draw.sprite = {
-			.sprite = sprite_sheet_get(&weapon->view_model, 0, u),
+			.sprite = sprite_sheet_get(&weapon->view_model, 0, anim),
 			.color = 0xFFFFFF,
 			.scale = (t_vec2){f, f},
 			.pos = {.37f, y},
@@ -91,22 +94,52 @@ void
 	});
 }
 
+/** @brief Draw stats hud */
+static void
+	draw_hud(t_app *app)
+{
+	t_vec2		size;
+	static char	bufs[3][64];
+
+	ft_memcpy(bufs[0], "[ HP ", 5);
+	itoa_buf(bufs[0] + 5, 97);
+	ft_memcpy(bufs[0] + ft_strlen(bufs[0]), " ]", 2);
+	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[0]);
+	pan_cursor_set((t_vec2){0.f, 1 - size.y});
+	pan_text(bufs[0]);
+	ft_memcpy(bufs[1], "[ SCORE ", 8);
+	itoa_buf(bufs[1] + 8, 123456);
+	ft_memcpy(bufs[1] + ft_strlen(bufs[1]), " ]", 2);
+	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[1]);
+	pan_cursor_set((t_vec2){.5f - .5f * size.x, 1 - size.y});
+	pan_text(bufs[1]);
+	ft_memcpy(bufs[2], "[ AMMO ", 7);
+	itoa_buf(bufs[2] + 7, 12);
+	ft_memcpy(bufs[2] + ft_strlen(bufs[2]), " ]", 2);
+	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[2]);
+	pan_cursor_set((t_vec2){1.f - size.x, 1 - size.y});
+	pan_text(bufs[2]);
+	pan_cursor_set((t_vec2){0, 0});
+}
+
 void
 	game_render(t_app *app)
 {
 	render_frame(app);
 	// Draw the 5x5 sprite
-	//hud_draw(app, (t_draw_item){
-	//	.type = DRAW_SPRITE,
-	//	.draw.sprite = {
-	//		.sprite = app->game.minimap,
-	//		.color = 0xFFFFFF,
-	//		.scale = (t_vec2){10.f, 10.f},
-	//		.pos = {.5f, .5f},
-	//	}
-	//});
-	
+	hud_draw(app, (t_draw_item){
+		.type = DRAW_SPRITE,
+		.draw.sprite = {
+			.sprite = app->game.minimap,
+			.color = 0xFFFFFF,
+			.scale = (t_vec2){10.f, 10.f},
+			.pos = {.5f, .5f},
+		}
+	});
+
 	draw_viewmodel(app);
+	draw_hud(app);
+	
 	pan_push_columns("COL1", 3);
 	if (pan_button("Test\001bb"))
 	{
@@ -141,30 +174,3 @@ void
 	pan_pop_columns();
 	pan_button("Column layout");
 }
-
-	/*
-	const char **items[] = {
-		(const char *[]){"Foo", "bar", "quz", NULL},
-		(const char *[]){"test", "lorem", "ipsum", NULL},
-		(const char *[]){"dolor", "sit", NULL},
-		NULL
-	};
-	static t_pos pos;
-	t_pos move = (t_pos){1, 0};
-	move.y = ui_key_pressed(app, KEY_ARROW_RIGHT) - ui_key_pressed(app, KEY_ARROW_LEFT);
-	move.x = ui_key_pressed(app, KEY_ARROW_DOWN) - ui_key_pressed(app, KEY_ARROW_UP);
-	hud_menu_move(items, &pos, move);
-	hud_menu(app, items, pos);
-	*/
-	/*
-	hud_draw(app, (t_draw_item){
-		.type = DRAW_TEXT_SHADOW,
-		.draw.text_shadow = {
-			.text = "Hello",
-			.scale = 2,
-			.color = 0xFF0000,
-			.pos = {.5, .5},
-			.color_shadow = 0x00FF00,
-		}
-	});
-	*/

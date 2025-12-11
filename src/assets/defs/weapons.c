@@ -20,6 +20,7 @@ static bool
 		"assets/player_shotgun.xpm", &weapon->view_model.texture);
 	if (!weapon->view_model.texture)
 		return (false);
+	weapon->anim_shoot_time = .4f;
 	weapon->view_model.background = 0x0FFFFF;
 	weapon->view_model.off_left = 72;
 	weapon->view_model.off_top = 1;

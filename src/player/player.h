@@ -35,6 +35,8 @@ typedef struct s_player
 	t_weapon			weapons[WEAPON_NUM_];
 	/** @brief Current weapon */
 	enum e_weapon_id	weapon;
+	/** @brief Time left for the shooting animation */
+	float				weapon_anim;
 }	t_player;
 
 /**

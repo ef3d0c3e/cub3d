@@ -82,8 +82,8 @@ static bool
 	const float			prev = *v;
 
 	*v = clampf((float)p[0] + ((float)(pos - bounds[0])
-					/ (float)(bounds[1] - bounds[0]))
-				* ((float)p[1] - (float)p[0]), p[0], p[1]);
+				/ (float)(bounds[1] - bounds[0]))
+			* ((float)p[1] - (float)p[0]), p[0], p[1]);
 	return (*v != prev);
 }
 

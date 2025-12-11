@@ -291,6 +291,14 @@ sprite_sheet_get(const t_sprite_sheet *sheet, int x, int y);
  */
 t_color
 sprite_sheet_sample(const t_sprite_sheet *sheet, t_pos id, t_vec2 uv);
+/**
+ * @brief Count the number of animation sprites in a sheet
+ *
+ * @param sheet The sheet to count from
+ * @return Number of animation sprites in @p sheet
+ */
+int
+sprite_sheet_anim_count(const t_sprite_sheet *sheet);
 
 /** @} */
 
