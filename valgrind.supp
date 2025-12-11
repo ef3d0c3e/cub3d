@@ -1,9 +1,0 @@
-{
-   X11-writev-padding
-   Memcheck:Param
-   writev(vector[0])
-   fun:writev
-   fun:xcb_writev
-   fun:_XSend
-   fun:_XReadEvents
-}
