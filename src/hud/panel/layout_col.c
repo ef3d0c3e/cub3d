@@ -16,10 +16,11 @@ static inline t_bbox
 	available_space(void)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);
+	const t_vec2		cursor = pan_cursor();
 	const t_pan_layout	*layout;
 
 	if (ctx->layout_stack_size == 0)
-		return ((t_bbox){(t_vec2){0, 0}, (t_vec2){1, 1}});
+		return ((t_bbox){cursor, (t_vec2){1.f - cursor.x, 1.f - cursor.y}});
 	layout = &ctx->layout_stack[ctx->layout_stack_size - 1];
 	if (layout->type == LAYOUT_COLUMNS)
 		return ((t_bbox){(t_vec2){

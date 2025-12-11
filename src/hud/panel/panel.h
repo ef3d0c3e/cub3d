@@ -365,6 +365,8 @@ typedef struct s_panel_ctx
 	float					line_height;
 	/** @brief Top/Bottom padding */
 	int						padding[2];
+	/** @brief Base vertical margin */
+	float					margin;
 
 	/** @brief Current draw position */
 	t_vec2					cursor;
@@ -404,9 +406,10 @@ typedef struct s_panel_ctx
  * @param app Application pointer
  * @param line_size Desired line height (as a fraction of the vertical space)
  * @param padding Base top/bottom padding for text
+ * @param margin Base vertical margin
  */
 void
-pan_init(struct s_app *app, float line_size, const int padding[2]);
+pan_init(struct s_app *app, float line_size, const int padding[2], int margin);
 /**
  * @brief Get or set the global HUD context
  *
@@ -426,12 +429,37 @@ t_panel_ctx
  */
 void
 pan_context_reset(struct s_app *app);
+/**
+ * @brief Get the cursor position
+ *
+ * @return Cursor position
+ */
 t_vec2
 pan_cursor(void);
+/**
+ * @brief Draw the next content on the same line
+ */
 void
 pan_sameline(void);
+/**
+ * @brief Advance cursor by offset
+ *
+ * @param off Offset to advance
+ */
 void
 pan_cursor_advance(t_vec2 off);
+/**
+ * @brief Advance cursor by offset with vertical margin
+ *
+ * @param off Offset to advance
+ */
+void
+pan_cursor_advance_m(t_vec2 off);
+/**
+ * @brief Set the cursor position
+ *
+ * @param pos New cursor position
+ */
 void
 pan_cursor_set(t_vec2 pos);
 

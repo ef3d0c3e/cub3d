@@ -140,6 +140,7 @@ void
 	draw_viewmodel(app);
 	draw_hud(app);
 	
+	pan_text("Cub3D");
 	pan_push_columns("COL1", 3);
 	if (pan_button("Test\001bb"))
 	{

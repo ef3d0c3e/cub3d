@@ -38,7 +38,7 @@ void
 
 	ctx->id_stack[ctx->id_stack_depth] = pan_id_str(text);
 	hud_draw(ctx->app, item);
-	pan_cursor_advance(bbox.size);
+	pan_cursor_advance_m(bbox.size);
 }
 
 void
@@ -57,5 +57,5 @@ void
 
 	ctx->id_stack[ctx->id_stack_depth] = pan_id_str(text);
 	hud_draw(ctx->app, item);
-	pan_cursor_advance(bbox.size);
+	pan_cursor_advance_m(bbox.size);
 }

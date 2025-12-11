@@ -51,7 +51,7 @@ static bool
 	hud_draw(ctx->app, rect);
 	pan_drawable_draw(drawable, (t_vec2){pan_cursor().x + bbox.size.x / 2,
 		pan_cursor().y + bbox.size.y / 2});
-	pan_cursor_advance(bbox.size);
+	pan_cursor_advance_m(bbox.size);
 	return (ui_mouse_released(ctx->app, MOUSE_LEFT) && pan_is_active()
 		&& hovered);
 }

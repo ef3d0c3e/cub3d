@@ -44,6 +44,21 @@ void
 }
 
 void
+	pan_cursor_advance_m(t_vec2 off)
+{
+	t_panel_ctx *const	ctx = pan_ctx(NULL);
+
+	off.y += ctx->margin;
+	if (!ctx->same_line)
+	{
+		ctx->cursor = ctx->next_cursor;
+		ctx->next_cursor.y += off.y;
+	}
+	ctx->cursor.x += off.x;
+	ctx->same_line = false;
+}
+
+void
 	pan_cursor_set(t_vec2 pos)
 {
 	t_panel_ctx *const	ctx = pan_ctx(NULL);

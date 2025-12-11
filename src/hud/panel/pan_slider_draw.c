@@ -77,5 +77,5 @@ void
 		.text = text,
 		.pos = pan_bbox_center(&bbox)}});
 	bbox.size.x += (float)ctx->st_checkbox.spacing / (float)ctx->app->sizes.x;
-	pan_cursor_advance(bbox.size);
+	pan_cursor_advance_m(bbox.size);
 }
