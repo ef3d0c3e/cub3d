@@ -63,17 +63,22 @@ enum	e_keycode
 	KEY_Z,
 	KEY_RETURN = 0xff0d,
 	KEY_ESC = 0xff1b,
+	/* Arrows */
+	KEY_ARROW_LEFT = 0xff51,
+	KEY_ARROW_UP,
+	KEY_ARROW_RIGHT,
+	KEY_ARROW_DOWN,
+	/* Numpad */
 	KEY_KP_PLUS = 0xffab,
 	KEY_KP_MINUS = 0xffad,
+	/* F row */
+	KEY_F1 = 0xffbe,
+	KEY_F2 = 0xffbf,
+	KEY_F3 = 0xffc0,
 	KEY_SHIFT_LEFT = 0xffe1,
 	KEY_SHIFT_RIGHT = 0xffe2,
 	KEY_CTRL_LEFT = 0xffe3,
 	KEY_CTRL_RIGHT = 0xffe4,
-	/* Arrows */
-	KEY_ARROW_LEFT = 65361,
-	KEY_ARROW_UP,
-	KEY_ARROW_RIGHT,
-	KEY_ARROW_DOWN,
 };
 
 /** @brief Enum for mouse buttons */

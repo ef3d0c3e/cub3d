@@ -60,7 +60,7 @@ bool
 		asset_loader_font,
 		ent_load_assets,
 		asset_loader_items,
-		asset_loader_weapons,
+		asset_loader_weapon_shotgun,
 		NULL,
 	};
 	size_t						i;

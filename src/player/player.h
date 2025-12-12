@@ -17,24 +17,35 @@ struct	s_app;
 # include <util/util.h>
 # include <assets/defs/defs.h>
 
+/** @brief Data for the player's weapons */
+typedef struct s_player_weapondata
+{
+	/** @brief Set to `true` if the player possesses the weapon */
+	bool				has_weapon;
+	/** @brief Number of ammunitions */
+	int					ammo;
+}	t_player_weapondata;
+
 typedef struct s_player
 {
 	/** @brief Acceleration (m/s²) */
-	t_vec2		accel;
+	t_vec2				accel;
 	/** @brief Velocity (m/s) */
-	t_vec2		velocity;
+	t_vec2				velocity;
 	/** @brief Position (m) */
-	t_vec2		position;
+	t_vec2				position;
 	/** @brief View angles (yaw, pitch) */
-	t_vec2		angle;
+	t_vec2				angle;
 
 	/** @brief Player's health */
-	int			health;
+	int					health;
+	/** @brief Player's armor */
+	int					armor;
 
 	/** @brief Available weapons */
-	t_weapon			weapons[WEAPON_NUM_];
+	t_player_weapondata	weapons[WEAPON_NUM_];
 	/** @brief Current weapon */
-	enum e_weapon_id	weapon;
+	enum e_weapon_id	weapon_id;
 	/** @brief Time left for the shooting animation */
 	float				weapon_anim;
 }	t_player;

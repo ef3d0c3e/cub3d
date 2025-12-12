@@ -32,16 +32,18 @@ void
 	player_input(t_app *app)
 {
 	t_player *const	player = &app->game.player;
-	const t_weapon	*weapon = &app->assets.weapons[player->weapon];
+	const t_weapon	*weapon = &app->assets.weapons[player->weapon_id];
 	t_vec2	move;
 
 	move = (t_vec2){
 		ui_key_held(app, KEY_W) - ui_key_held(app, KEY_S),
 		ui_key_held(app, KEY_D) - ui_key_held(app, KEY_A)
 	};
-	if (ui_key_released(app, KEY_U) && player->weapon_anim == 0)
+	if (player->weapon_id != WEAPON_NONE && ui_key_released(app, KEY_U)
+		&& player->weapon_anim == 0 && player->weapons[player->weapon_id].ammo)
 	{
 		player->weapon_anim = weapon->anim_shoot_time;
+		--player->weapons[player->weapon_id].ammo;
 	}
 	if (player->weapon_anim != 0)
 	{

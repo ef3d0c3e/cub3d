@@ -58,6 +58,13 @@ void
 game_input(struct s_app *app);
 void
 game_render(struct s_app *app);
+/**
+ * @brief Show the game's debug menu
+ *
+ * @param app Application pointer
+ */
+void
+game_debug(struct s_app *app);
 
 /** @} */
 

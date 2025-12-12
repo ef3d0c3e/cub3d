@@ -16,13 +16,13 @@ t_pan_style_button
 {
 	const t_pan_style_button	style = (t_pan_style_button){
 		.padding = {6, 12, 6, 12},
-		.radius = 3,
+		.radius = 2,
 		.colors = {
 		0x2E2E2E, 0x3A3A3A,
 		0x404040, 0x505050,
 		0x1F1F1F, 0x3A3A3A
 	},
-		.border_size = 1,
+		.border_size = 2,
 	};
 
 	return (style);

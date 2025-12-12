@@ -50,12 +50,12 @@ typedef struct s_weapon
 	t_sprite_sheet	view_model;
 	/** @brief Weapon item model (on ground) */
 	t_sprite		item_model;
-	/** @brief Number of ammunitions */
-	int				ammo;
-	/** @brief Time taken by the shoto animation */
+	/** @brief Time taken by the shoot animation */
 	float			anim_shoot_time;
-	/** @brief Damage */
-	int				damage;
+	/** @brief Maximum ammunitions */
+	int				max_ammo;
+	/** @brief Shoot function callback */
+	void			(*shoot)(struct s_app *app);
 }	t_weapon;
 
 /** @brief All available weapons */
@@ -68,31 +68,6 @@ enum e_weapon_id
 	/** @brief Number of weapons */
 	WEAPON_NUM_,
 };
-
-/** @} */
-
-////////////////////////////////////////////////////////////////////////////////
-// Projectile                                                                 //
-////////////////////////////////////////////////////////////////////////////////
-
-/**
- * @defgroup ProjectileAssets Projectile Assets
- * @ingroup PredefinedAssets
- * @{
- */
-
-/** @brief Projectiles */
-typedef struct s_projectile
-{
-	/** @brief Projectile model */
-	t_sprite	model;
-	/** @brief Projectile position */
-	t_vec3		pos;
-	/** @brief Projectile velocikty */
-	t_vec3		vel;
-	/** @brief Projectile base speed, 0 = instant */
-	float		speed;
-}	t_projectile;
 
 /** @} */
 
@@ -151,14 +126,14 @@ asset_loader_font(struct s_app *app, t_assets *assets);
 bool
 asset_loader_items(struct s_app *app, t_assets *assets);
 /**
- * @brief Asset loader for weapons
+ * @brief Asset loader for the shotgun weapon
  *
- * @param app Application
+ * @param app Application pointer
  * @param assets Assets
  * @return `true` on success, `false` on errors
  */
 bool
-asset_loader_weapons(struct s_app *app, t_assets *assets);
+asset_loader_weapon_shotgun(struct s_app *app, t_assets *assets);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Internal                                                                   //

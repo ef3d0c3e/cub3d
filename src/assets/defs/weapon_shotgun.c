@@ -11,8 +11,15 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-static bool
-	loader_shotgun(t_app *app, t_assets *assets)
+static void
+	shoot(t_app *app)
+{
+	// TODO:
+	// Cast rays across a splatter
+}
+
+bool
+	asset_loader_weapon_shotgun(t_app *app, t_assets *assets)
 {
 	t_weapon *const	weapon = &assets->weapons[WEAPON_SHOTGUN];
 
@@ -21,6 +28,8 @@ static bool
 	if (!weapon->view_model.texture)
 		return (false);
 	weapon->anim_shoot_time = .5f;
+	weapon->max_ammo = 96;
+	weapon->shoot = shoot;
 	weapon->view_model.background = 0x0FFFFF;
 	weapon->view_model.off_left = 72;
 	weapon->view_model.off_top = 1;
@@ -34,12 +43,4 @@ static bool
 		.left = 64, .top = 15,
 		.width = 63, .height = 12};
 	return (asset_size_check(weapon->view_model.texture, 306, 1582));
-}
-
-bool
-	asset_loader_weapons(t_app *app, t_assets *assets)
-{
-	if (!loader_shotgun(app, assets))
-		return (false);
-	return (true);
 }

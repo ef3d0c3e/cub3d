@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-
 bool
 	game_setup(t_app *app)
 {
@@ -69,12 +68,12 @@ void
 	draw_viewmodel(t_app *app)
 {
 	
-	const t_weapon	*weapon = &app->assets.weapons[app->game.player.weapon];
+	const t_weapon	*weapon = &app->assets.weapons[app->game.player.weapon_id];
 	float			f;
 	float			y;
 	int				anim;
 
-	if (app->game.player.weapon == WEAPON_NONE)
+	if (app->game.player.weapon_id == WEAPON_NONE)
 		return ;
 	anim = 0;
 	if (app->game.player.weapon_anim != 0)
@@ -98,11 +97,12 @@ void
 static void
 	draw_hud(t_app *app)
 {
-	t_vec2		size;
-	static char	bufs[3][64];
+	const t_player	*player = &app->game.player;
+	t_vec2			size;
+	static char		bufs[3][64];
 
 	ft_memcpy(bufs[0], "[ HP ", 5);
-	itoa_buf(bufs[0] + 5, 97);
+	itoa_buf(bufs[0] + 5, player->health);
 	ft_memcpy(bufs[0] + ft_strlen(bufs[0]), " ]", 2);
 	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[0]);
 	pan_cursor_set((t_vec2){0.f, 1 - size.y});
@@ -114,7 +114,7 @@ static void
 	pan_cursor_set((t_vec2){.5f - .5f * size.x, 1 - size.y});
 	pan_text(bufs[1]);
 	ft_memcpy(bufs[2], "[ AMMO ", 7);
-	itoa_buf(bufs[2] + 7, 12);
+	itoa_buf(bufs[2] + 7, player->weapons[player->weapon_id].ammo);
 	ft_memcpy(bufs[2] + ft_strlen(bufs[2]), " ]", 2);
 	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[2]);
 	pan_cursor_set((t_vec2){1.f - size.x, 1 - size.y});
@@ -141,6 +141,7 @@ void
 	draw_hud(app);
 	
 	pan_text("Cub3D");
+	/*
 	pan_push_columns("COL1", 3);
 	if (pan_button("Test\001bb"))
 	{
@@ -174,4 +175,15 @@ void
 	pan_text("foobar");
 	pan_pop_columns();
 	pan_button("Column layout");
+
+	pan_push_columns("COL2", 5);
+	pan_next_columns();
+	pan_next_columns();
+	pan_text_color("Foo", 0x7F0000);
+	pan_next_columns();
+	pan_text_color("Bar", 0x007F00);
+	pan_next_columns();
+	pan_pop_columns();
+	*/
+	game_debug(app);
 }
