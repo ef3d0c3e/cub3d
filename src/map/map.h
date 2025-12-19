@@ -73,7 +73,7 @@ map_free(t_map *map);
  * @return The material at `(x, y)`, or `NULL` for empty spaces
  */
 t_material
-*map_get(struct s_app *app, int x, int y);
+*map_get(const struct s_app *app, int x, int y);
 
 /** @} */
 

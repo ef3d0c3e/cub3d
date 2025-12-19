@@ -14,16 +14,46 @@
 void
 	player_setup(t_app *app)
 {
+	const float fov = .5f;
+
 	app->game.player.health = 100;
 	app->game.player.angle.x = ((float)app->map.player_orientation / 2.f - 1.f)
 		* (float)M_PI;
+	app->game.player.position = (t_vec2){
+		(float)app->map.player_spawn.x + .5f,
+		(float)app->map.player_spawn.y + .5f,
+	};
+
+	app->game.player.dir = (t_vec2){sinf(app->game.player.angle.x), -cosf(app->game.player.angle.x)};
+	app->game.player.plane = (t_vec2){cosf(app->game.player.angle.x) * fov, sinf(app->game.player.angle.x) * fov};
+}
+
+static t_vec2
+	player_forward(const t_player *p, t_vec2 move)
+{
+	const float norm = sqrtf(powf(move.x, 2) + powf(move.y, 2));
+
+	if (norm == 0)
+		return ((t_vec2){0, 0});
+	const float move_x_norm = -move.y / norm;
+	const float move_y_norm = -move.x / norm;
+	return (t_vec2){
+		move_x_norm * cosf(p->angle.x) - move_y_norm * sinf(p->angle.x),
+		move_x_norm * sinf(p->angle.x) + move_y_norm * cosf(p->angle.x)
+	};
 }
 
 void
 	player_move(t_app *app, t_vec2 move)
 {
-	(void)app;
-	(void)move;
+	const t_vec2	fwd = player_forward(&app->game.player, move);
+	app->game.player.position.x -= .1f * fwd.x;
+	app->game.player.position.y += .1f * fwd.y;
+	app->game.player.angle.x += (ui_key_held(app, KEY_ARROW_RIGHT) - ui_key_held(app, KEY_ARROW_LEFT)) * .05f;
+
+	const float fov = .5f;
+	app->game.player.dir = (t_vec2){sinf(app->game.player.angle.x), -cosf(app->game.player.angle.x)};
+	app->game.player.plane = (t_vec2){cosf(app->game.player.angle.x) * fov, sinf(app->game.player.angle.x) * fov};
 	// TODO
 }
 

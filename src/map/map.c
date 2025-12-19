@@ -18,7 +18,7 @@ void
 }
 
 t_material
-	*map_get(t_app *app, int x, int y)
+	*map_get(const t_app *app, int x, int y)
 {
 	t_atlas_id	id;
 

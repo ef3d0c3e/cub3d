@@ -36,6 +36,10 @@ typedef struct s_player
 	t_vec2				position;
 	/** @brief View angles (yaw, pitch) */
 	t_vec2				angle;
+	/** @brief Player direction (X, Y) */
+	t_vec2				dir;
+	/** @brief Player plane (X, Y) */
+	t_vec2				plane;
 
 	/** @brief Player's health */
 	int					health;
