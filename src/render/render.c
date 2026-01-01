@@ -56,7 +56,7 @@ void
 	de = (int)((float)line_h / 2.f + (float)app->sizes.y / 2.f + app->game.player.angle.y);
 	if (de >= app->sizes.y)
 		de = app->sizes.y - 1;
-	render_ceiling(app, x, de);
+	render_ceiling(app, x, ds);
 	render_wall(app, x, r);
 	render_floor(app, x, de);
 	//idx = 0;
@@ -75,6 +75,7 @@ void
 	{
 		ray_init(&app->game.player, 2.f * ((float)x / (float)app->sizes.x) - 1.f, &r);
 		ray_cast(app, x, &r);
+		printf("%f\n", r.perp_dist);
 		render_slice(app, x, &r);
 	}
 }

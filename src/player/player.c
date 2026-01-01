@@ -14,7 +14,7 @@
 void
 	player_setup(t_app *app)
 {
-	const float fov = .5f;
+	const float fov = .66f;
 
 	app->game.player.health = 100;
 	app->game.player.angle.x = ((float)app->map.player_orientation / 2.f - 1.f)
@@ -51,7 +51,7 @@ void
 	app->game.player.position.y += .1f * fwd.y;
 	app->game.player.angle.x += (ui_key_held(app, KEY_ARROW_RIGHT) - ui_key_held(app, KEY_ARROW_LEFT)) * .05f;
 
-	const float fov = .5f;
+	const float fov = .66f;
 	app->game.player.dir = (t_vec2){sinf(app->game.player.angle.x), -cosf(app->game.player.angle.x)};
 	app->game.player.plane = (t_vec2){cosf(app->game.player.angle.x) * fov, sinf(app->game.player.angle.x) * fov};
 	// TODO

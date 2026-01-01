@@ -21,7 +21,7 @@ void
 	r->map_y = (int)p->position.y;
 	r->ray = (t_vec2){p->dir.x + p->plane.x * camera_x,
 		p->dir.y + p->plane.y * camera_x};
-	r->delta_dist = (t_vec2){1e30, 1e30};
+	r->delta_dist = (t_vec2){1e10, 1e10};
 	if (r->ray.x != 0)
 		r->delta_dist.x = fabsf(1.f / r->ray.x);
 	if (r->ray.y != 0)
@@ -47,7 +47,7 @@ void
 {
 	size_t	i;
 
-	ft_memset(r, 0, sizeof(t_ray));
+	ft_memset(r, 0, sizeof(*r));
 	r->map_x = (int)pos.x;
 	r->map_y = (int)pos.y;
 	r->ray = dir;
@@ -67,7 +67,7 @@ void
 	else
 		r->side_dist.y = ((float)r->map_y + 1.f - pos.y) * r->delta_dist.y;
 	i = 0;
-	while (i <= MAX_ENTITIES)
+	while (i < MAX_ENTITIES)
 		r->s_ent[i++].dist = 1e10;
 	r->ent_num = 0;
 }
@@ -90,6 +90,8 @@ static void
 			|| r->map_y < 0 || r->map_y >= app->map.size_y)
 			break ;
 		r->hit = map_get(app, r->map_x, r->map_y);
+		if (r->hit && r->hit->type == MAT_FLOOR)
+			r->hit = NULL;
 	}
 	r->perp_dist = 1e10;
 	if (!r->hit)
