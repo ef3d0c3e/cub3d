@@ -141,6 +141,11 @@ void
 	draw_hud(app);
 	
 	pan_text("Cub3D");
+	{
+		static char buf[256];
+		sprintf(buf, "vel (%f %f)", app->game.player.velocity.x, app->game.player.velocity.y);
+		pan_text(buf);
+	}
 	/*
 	pan_push_columns("COL1", 3);
 	if (pan_button("Test\001bb"))

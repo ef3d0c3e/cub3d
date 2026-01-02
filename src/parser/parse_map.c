@@ -16,7 +16,7 @@ static bool
 {
 	static const enum e_orientation	map[] = {
 	['N'] = ORI_NORTH,
-	['E'] = ORI_WEST,
+	['E'] = ORI_EAST,
 	['S'] = ORI_SOUTH,
 	['W'] = ORI_WEST,
 	};

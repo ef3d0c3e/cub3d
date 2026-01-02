@@ -28,6 +28,8 @@ typedef struct s_player_weapondata
 
 typedef struct s_player
 {
+	/** @brief Player field of view */
+	float				fov;
 	/** @brief Acceleration (m/s²) */
 	t_vec2				accel;
 	/** @brief Velocity (m/s) */
@@ -61,7 +63,20 @@ typedef struct s_player
  */
 void
 player_setup(struct s_app *app);
+/**
+ * @brief Process player inputs
+ *
+ * @param app Application pointer
+ */
 void
 player_input(struct s_app *app);
+/**
+ * @brief Update player movements
+ *
+ * @param app Application pointer
+ * @param move Movement from inputs
+ */
+void
+player_move(struct s_app *app, t_vec2 move);
 
 #endif // PLAYER_H

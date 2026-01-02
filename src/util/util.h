@@ -28,9 +28,9 @@
 // Definitions                                                                //
 ////////////////////////////////////////////////////////////////////////////////
 
-# ifndef M_PI
-#  define M_PI		3.14159265358979323846	/* pi */
-# endif // M_PI
+# ifndef C_PI
+#  define C_PI		3.14159265358979323846f	/* pi */
+# endif // C_PI
 
 /** @brief A 2D float vector */
 typedef struct s_vec2
@@ -409,6 +409,14 @@ clampf(float value, float min, float max);
  */
 float
 maxf(float a, float b);
+/**
+ * @brief Normalize an angle value
+ *
+ * @param angle Angle to normalize
+ * @param norm_pitch Set to `true` to normalize pitch, `false` to normalize yaw
+ */
+void
+normalize_angle(float *angle, bool norm_pitch);
 /**
  * @brief Computes the murmur3_32 hash of a buffer
  *
