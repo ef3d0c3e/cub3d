@@ -51,5 +51,7 @@ void
 		player->weapon_anim = maxf(player->weapon_anim, 0);
 	}
 	app->game.player.angle.x += (ui_key_held(app, KEY_ARROW_RIGHT) - ui_key_held(app, KEY_ARROW_LEFT)) * .05f;
+	if (app->event.mouse_grab)
+		app->game.player.angle.x += (float)app->event.mouse_delta.x * 0.005f;
 	player_move(app, move);
 }

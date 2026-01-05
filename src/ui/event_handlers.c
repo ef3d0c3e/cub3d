@@ -79,8 +79,6 @@ int
 	app->event.mouse_pos = (t_pos){x, y};
 	if (app->event.mouse_grab && (abs(delta.x) >= 4 || abs(delta.y) >= 4))
 	{
-		mlx_mouse_move(app->mlx_ptr, app->mlx_window,
-			app->sizes.x / 2, app->sizes.y / 2);
 		app->event.mouse_pos = (t_pos){app->sizes.x / 2, app->sizes.y / 2};
 		v = 1;
 	}

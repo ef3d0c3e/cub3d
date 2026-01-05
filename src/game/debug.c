@@ -21,6 +21,7 @@ void
 		show = !show;
 	if (!show)
 		return ;
+	app->event.mouse_grab = false;
 
 	pan_push_columns("DEBUG", 3);
 	if (pan_button("Ammo") && player->weapon_id != WEAPON_NONE)

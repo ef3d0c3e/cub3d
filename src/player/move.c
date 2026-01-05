@@ -15,49 +15,47 @@
 static void
 	player_collide(t_app *app, float dt)
 {
-	const float	R = 0.2f;
-	t_player *const		p = &app->game.player;
-	float		dx;
-	float		dy;
-	t_vec2		dir;
-	t_ray		ray;
+	t_player *const	p = &app->game.player;
+	float			dx;
+	float			dy;
+	t_vec2			dir;
+	t_ray			ray;
 
 	dx = p->velocity.x * dt;
 	if (dx != 0.0f)
 	{
-		dir = (t_vec2){(dx > 0) - (dx <= 0), 0.f};
+		dir = (t_vec2){(float)((dx > 0) - (dx <= 0)), 0.f};
 		ray_init_vec(p->position, dir, &ray);
 		ray_cast(app, 0, &ray);
-		if (ray.perp_dist < fabsf(dx) + R)
-			p->velocity.x = 0.0f;
+		p->velocity.x *= (ray.perp_dist >= fabsf(dx) + PLAYER_SIZE);
 	}
 	p->position.x += p->velocity.x * dt;
 	dy = p->velocity.y * dt;
 	if (dy != 0.0f)
 	{
-		dir = (t_vec2){0.f, (dy > 0) - (dy <= 0)};
+		dir = (t_vec2){0.f, (float)((dy > 0) - (dy <= 0))};
 		ray_init_vec(p->position, dir, &ray);
 		ray_cast(app, 0, &ray);
-		if (ray.perp_dist < fabsf(dy) + R)
-			p->velocity.y = 0.0f;
+		p->velocity.y *= (ray.perp_dist >= fabsf(dy) + PLAYER_SIZE);
 	}
 	p->position.y += p->velocity.y * dt;
 }
 
+/** @brief Compute the normalized player direction */
 static t_vec2
 	player_forward(const t_player *p, t_vec2 move)
 {
-	const float norm = sqrtf(powf(move.x, 2) + powf(move.y, 2));
+	const float	norm = sqrtf(powf(move.x, 2) + powf(move.y, 2));
 	float		move_norm[2];
 
 	if (norm == 0)
 		return ((t_vec2){0, 0});
 	move_norm[0] = move.y / norm;
 	move_norm[1] = move.x / norm;
-	return (t_vec2){
+	return ((t_vec2){
 		move_norm[0] * cosf(p->angle.x) + move_norm[1] * sinf(p->angle.x),
 		-move_norm[0] * sinf(p->angle.x) + move_norm[1] * cosf(p->angle.x)
-	};
+	});
 }
 
 void

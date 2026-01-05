@@ -44,6 +44,34 @@ static void
 	}
 }
 
+/** @brief Render and update cursor */
+static void
+	ui_cursor(t_app *app)
+{
+	const t_font	font = font_new(&app->hud.font, 0xFFFFFF, 0.7f);
+	static char		glyph[2];
+	t_vec2			pos;
+
+	glyph[0] = "\003\004"[!app->event.mouse_grab];
+	pos = (t_vec2){.5f, .5f};
+	if (app->event.mouse_grab)
+		mlx_mouse_move(app->mlx_ptr, app->mlx_window,
+			app->sizes.x / 2, app->sizes.y / 2);
+	else
+	{
+		pos.x = ((float)app->event.mouse_pos.x + .5f * (float)font.base_size.x * font.scale.x) / (float)app->sizes.x;
+		pos.y = ((float)app->event.mouse_pos.y + .5f * (float)font.base_size.y * font.scale.y) / (float)app->sizes.y;
+	}
+	hud_draw(app, (t_draw_item){
+		.type = DRAW_TEXT,
+		.draw.text = {
+		.text = glyph,
+		.font = font,
+		.pos = pos,
+	}});
+
+}
+
 /** @brief Frame draw function */
 static int
 	ui_update(t_app *app)
@@ -51,11 +79,13 @@ static int
 	if (app->frame_delta == 0)
 		app->frame_delta = 1.f;
 	++app->frame;
+	app->event.mouse_grab = true;
 	frame_time(app, true);
 	ft_memset(app->framebuffer->data, 0,
 		(size_t)app->sizes.x * (size_t)app->sizes.y * sizeof(t_color));
 	game_input(app);
 	game_render(app);
+	ui_cursor(app);
 	hud_render(app);
 	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
 		app->framebuffer, 0, 0);
@@ -72,6 +102,7 @@ bool
 	event_setup(app);
 	mlx_loop_hook(app->mlx_ptr, ui_update, app);
 	hud_init(app);
+	mlx_mouse_hide(app->mlx_ptr, app->mlx_window);
 	return (true);
 }
 

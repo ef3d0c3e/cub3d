@@ -17,6 +17,9 @@ struct	s_app;
 # include <util/util.h>
 # include <assets/defs/defs.h>
 
+/** @brief Player bounding box size */
+#define PLAYER_SIZE 0.3
+
 /** @brief Data for the player's weapons */
 typedef struct s_player_weapondata
 {

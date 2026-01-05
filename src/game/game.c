@@ -143,6 +143,11 @@ void
 	pan_text("Cub3D");
 	{
 		static char buf[256];
+		sprintf(buf, "FPS=%f", 1.f / app->frame_delta);
+		pan_text(buf);
+	}
+	{
+		static char buf[256];
 		sprintf(buf, "vel (%f %f)", app->game.player.velocity.x, app->game.player.velocity.y);
 		pan_text(buf);
 	}
