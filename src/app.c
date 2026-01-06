@@ -14,7 +14,6 @@
 bool
 	app_setup(t_app *app)
 {
-	ent_setup(app);
 	if (!game_setup(app))
 		return (false);
 	return (true);
@@ -24,5 +23,4 @@ void
 	app_cleanup(t_app *app)
 {
 	game_cleanup(app);
-	rb_free(&app->entities);
 }

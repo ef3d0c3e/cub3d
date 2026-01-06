@@ -46,6 +46,8 @@ struct s_parser_ent
 {
 	/** @brief Entity type */
 	const t_entity_type	*type;
+	/** @brief Entity ID */
+	enum e_ent_id		id;
 	/** @brief Init pos */
 	t_vec2				pos;
 	/** @brief Init angles */
@@ -414,6 +416,15 @@ parser_entities(struct s_parser *parser);
  */
 bool
 parser_map(struct s_parser *parser);
+
+/**
+ * @brief Build the map from parsed data
+ *
+ * @param parser Parser containing parsed data
+ * @param app Application pointer
+ */
+void
+parser_make_map(struct s_parser *parser, struct s_app *app);
 
 /** @} */
 

@@ -123,19 +123,19 @@ static void
 }
 
 void
-	game_render(t_app *app)
+	game_ui(t_app *app)
 {
 	render_frame(app);
 	// Draw the 5x5 sprite
-	hud_draw(app, (t_draw_item){
-		.type = DRAW_SPRITE,
-		.draw.sprite = {
-			.sprite = app->game.minimap,
-			.color = 0xFFFFFF,
-			.scale = (t_vec2){10.f, 10.f},
-			.pos = {.5f, .5f},
-		}
-	});
+	//hud_draw(app, (t_draw_item){
+	//	.type = DRAW_SPRITE,
+	//	.draw.sprite = {
+	//		.sprite = app->game.minimap,
+	//		.color = 0xFFFFFF,
+	//		.scale = (t_vec2){10.f, 10.f},
+	//		.pos = {.5f, .5f},
+	//	}
+	//});
 
 	draw_viewmodel(app);
 	draw_hud(app);

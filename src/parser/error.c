@@ -21,6 +21,7 @@ void
 	msg = err_style(err(err_style(err_style(0, " ERROR: ", (t_text_style){
 						COL_WHITE, COL_RED, STYLE_BOLD}), "\n", st_none),
 				errstr), "\n", st_none);
+	write(STDOUT_FILENO, "Error\n", 6);
 	write(STDOUT_FILENO, msg, ft_strlen(msg));
 	err_free(errstr);
 	err_free(msg);
@@ -45,6 +46,7 @@ void
 								st_num), ": ", st_none), errstr), "\n", st_none
 					), parser->line, (t_text_style){COL_MAGENTA, 0,
 				STYLE_ITALIC}), "", st_none);
+	write(STDOUT_FILENO, "Error\n", 6);
 	write(STDOUT_FILENO, msg, ft_strlen(msg));
 	err_free(errstr);
 	err_free(msg);
@@ -62,6 +64,7 @@ void
 							parser->file, (t_text_style){COL_CYAN, 0,
 							STYLE_UNDERLINE}), ": ", st_none), errstr), "\n",
 				st_none), "", st_none);
+	write(STDOUT_FILENO, "Error\n", 6);
 	write(STDOUT_FILENO, msg, ft_strlen(msg));
 	err_free(errstr);
 	err_free(msg);

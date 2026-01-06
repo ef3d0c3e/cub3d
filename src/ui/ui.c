@@ -79,12 +79,12 @@ static int
 	if (app->frame_delta == 0)
 		app->frame_delta = 1.f;
 	++app->frame;
-	app->event.mouse_grab = true;
 	frame_time(app, true);
 	ft_memset(app->framebuffer->data, 0,
 		(size_t)app->sizes.x * (size_t)app->sizes.y * sizeof(t_color));
 	game_input(app);
-	game_render(app);
+	app->event.mouse_grab = true;
+	game_ui(app);
 	ui_cursor(app);
 	hud_render(app);
 	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
@@ -109,6 +109,7 @@ bool
 void
 	ui_cleanup(t_app *app)
 {
+	mlx_mouse_show(app->mlx_ptr, app->mlx_window);
 	hud_free(app);
 	event_cleanup(app);
 	mlx_destroy_image(app->mlx_ptr, app->framebuffer);

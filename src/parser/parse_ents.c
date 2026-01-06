@@ -12,7 +12,7 @@
 #include <parser/parser.h>
 
 static const t_entity_type
-	*get_type(struct s_parser *parser, const char *line)
+	*get_type(struct s_parser *parser, const char *line, enum e_ent_id *idr)
 {
 	const t_entity_type	*type;
 	size_t				name_len;
@@ -26,7 +26,10 @@ static const t_entity_type
 	{
 		type = ent_get_type(id);
 		if (!ft_strncmp(line, type->name, name_len))
+		{
+			*idr = id;
 			return (type);
+		}
 		++id;
 	}
 	parser_error_loc(parser, err_style(err_style_n(err(0, "Failed to find entit"
@@ -81,7 +84,7 @@ static int
 	name_len = 0;
 	while (!ft_strchr(" \t\n", line[name_len]))
 		++name_len;
-	ent.type = get_type(parser, line);
+	ent.type = get_type(parser, line, &ent.id);
 	if (!ent.type)
 		return (-1);
 	if (!parser_expect_space(parser, &line, ent.type->name))

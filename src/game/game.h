@@ -57,7 +57,7 @@ game_cleanup(struct s_app *app);
 void
 game_input(struct s_app *app);
 void
-game_render(struct s_app *app);
+game_ui(struct s_app *app);
 /**
  * @brief Show the game's debug menu
  *

@@ -24,6 +24,8 @@ static int
 	[INIT_ERR_UI] = "Failed to setup UI\n",
 	};
 
+	if (status >= INIT_ERR_PARSE)
+		rb_free(&app->entities);
 	if (status >= INIT_ERR_UI)
 		ui_cleanup(app);
 	if (status >= INIT_ERR_MLX)

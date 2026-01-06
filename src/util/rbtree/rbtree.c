@@ -46,6 +46,7 @@ void
 {
 	free_node(tree, tree->root);
 	tree->root = NULL;
+	tree->size = 0;
 }
 
 static inline void

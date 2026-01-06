@@ -22,7 +22,6 @@ void
 	if (!show)
 		return ;
 	app->event.mouse_grab = false;
-
 	pan_push_columns("DEBUG", 3);
 	if (pan_button("Ammo") && player->weapon_id != WEAPON_NONE)
 		player->weapons[player->weapon_id].ammo
@@ -32,6 +31,8 @@ void
 	if (pan_button("Armor"))
 		player->armor = 100;
 	pan_next_columns();
+	static int score;
+	pan_slider_i("Score", &score, (const int[2]){0, 999999});
 	pan_next_columns();
 	pan_pop_columns();
 }

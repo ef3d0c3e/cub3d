@@ -66,21 +66,22 @@ int
 	const t_pos	last_pos = app->event.mouse_pos;
 	t_pos		delta;
 
-	if (v)
+	if (!v)
 	{
-		v = 0;
+		app->event.mouse_pos = (t_pos){app->sizes.x / 2, app->sizes.y / 2};
+		v = 1;
 		return (0);
 	}
 	delta = (t_pos){
 		x - last_pos.x,
 		y - last_pos.y,
 	};
-	app->event.mouse_delta = delta;
+	app->event.mouse_delta = (t_pos){0, 0};
 	app->event.mouse_pos = (t_pos){x, y};
-	if (app->event.mouse_grab && (abs(delta.x) >= 4 || abs(delta.y) >= 4))
+	if (v && app->event.mouse_grab)
 	{
 		app->event.mouse_pos = (t_pos){app->sizes.x / 2, app->sizes.y / 2};
-		v = 1;
+		app->event.mouse_delta = delta;
 	}
 	return (0);
 }
