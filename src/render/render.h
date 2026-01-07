@@ -60,8 +60,6 @@ typedef struct s_ray_ent
 	float				dist;
 	/** @brief Entity */
 	const t_entity		*ent;
-	/** @brief Entity type */
-	//const t_entity_type	*type;
 
 	/** @brief `1 / det(Transform Matrix)` */
 	float				inv_det;
@@ -72,6 +70,8 @@ typedef struct s_ray_ent
 	t_vec2				trans;
 	/** @brief Screen X center coordinate */
 	float				screen_x;
+	/** @brief Draw start X screen position (Unclamped) */
+	int					real_start_x;
 	/** @brief Draw start X screen position */
 	int					start_x;
 	/** @brief Draw end X screen position */

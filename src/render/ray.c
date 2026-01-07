@@ -14,8 +14,6 @@
 void
 	ray_init(const t_player *p, float camera_x, t_ray *r)
 {
-	size_t	i;
-
 	ft_memset(r, 0, sizeof(t_ray));
 	r->map_x = (int)p->position.x;
 	r->map_y = (int)p->position.y;
@@ -31,19 +29,19 @@ void
 	if (r->ray.x < 0)
 		r->side_dist.x = (p->position.x - (float)r->map_x) * r->delta_dist.x;
 	else
-		r->side_dist.x = ((float)r->map_x + 1.f - p->position.x) * r->delta_dist.x;
+		r->side_dist.x = ((float)r->map_x + 1.f - p->position.x)
+			* r->delta_dist.x;
 	if (r->ray.y < 0)
-		r->side_dist.y = (p->position.y - (float)r->map_y) * r->delta_dist.y;
+		r->side_dist.y = (p->position.y - (float)r->map_y)
+			* r->delta_dist.y;
 	else
-		r->side_dist.y = ((float)r->map_y + 1.f - p->position.y) * r->delta_dist.y;
-	i = 0;
+		r->side_dist.y = ((float)r->map_y + 1.f - p->position.y)
+			* r->delta_dist.y;
 }
 
 void
 	ray_init_vec(t_vec2 pos, t_vec2 dir, t_ray *r)
 {
-	size_t	i;
-
 	ft_memset(r, 0, sizeof(*r));
 	r->map_x = (int)pos.x;
 	r->map_y = (int)pos.y;
@@ -52,7 +50,7 @@ void
 	if (r->ray.x != 0)
 		r->delta_dist.x = fabsf(1.f / dir.x);
 	if (r->ray.y != 0)
-		r->delta_dist.y = fabsf(1.f / dir.y);;
+		r->delta_dist.y = fabsf(1.f / dir.y);
 	r->step_x = -(r->ray.x < 0) + (r->ray.x >= 0);
 	r->step_y = -(r->ray.y < 0) + (r->ray.y >= 0);
 	if (r->ray.x < 0)
@@ -63,7 +61,6 @@ void
 		r->side_dist.y = (pos.y - (float)r->map_y) * r->delta_dist.y;
 	else
 		r->side_dist.y = ((float)r->map_y + 1.f - pos.y) * r->delta_dist.y;
-	i = 0;
 }
 
 void

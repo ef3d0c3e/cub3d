@@ -11,19 +11,31 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-static void
-	ray_ent_y(const t_app *app, const t_entity *ent, t_ray_ent *e)
+static bool
+	cast_entity_2(const t_app *app, const t_entity *ent, t_ray_ent *e)
 {
 	const t_player	*p = &app->game.player;
+	int				i;
+	float			min;
 
+	e->real_start_x = e->start_x;
+	e->start_x = clamp(e->start_x, 0, app->sizes.x);
+	e->end_x = clamp(e->end_x, 0, app->sizes.x);
 	e->h = e->w;
 	e->start_y = (-e->h + app->sizes.y) / 2 + p->pitch;
-	e->start_y = clamp(e->start_y, 0, app->sizes.y - 1);
 	e->end_y = (e->h + app->sizes.y) / 2 + p->pitch;
-	e->end_y = clamp(e->end_y, 0, app->sizes.y - 1);
+	if (e->end_y < 0 || e->start_y >= app->sizes.y)
+		return (false);
+	e->start_y = clamp(e->start_y, 0, app->sizes.y);
+	e->end_y = clamp(e->end_y, 0, app->sizes.y);
 	e->flip = ent->data.flip;
 	e->sprite = sprite_sheet_get(&ent->type->model,
-		ent->data.anim_state.x, ent->data.anim_state.y);
+			ent->data.anim_state.x, ent->data.anim_state.y);
+	i = e->start_x;
+	min = 1e10;
+	while (i < e->end_x)
+		min = fminf(min, app->z_buffer[i++]);
+	return (e->dist < min);
 }
 
 /** @brief Cast for a single entity */
@@ -45,7 +57,7 @@ static void
 		return ;
 	e.inv_det = 1.f / e.inv_det;
 	e.trans.x = e.inv_det * (e.space.x * p->dir.y - e.space.y * p->dir.x);
-	e.trans.y = - e.inv_det * (e.space.x * p->plane.y - e.space.y * p->plane.x);
+	e.trans.y = -e.inv_det * (e.space.x * p->plane.y - e.space.y * p->plane.x);
 	if (e.trans.y < 1e-2)
 		return ;
 	e.w = absi((int)((float)app->sizes.y / e.trans.y));
@@ -55,7 +67,8 @@ static void
 	if (e.end_x < 0 || e.start_x >= app->sizes.x)
 		return ;
 	e.dist = e.trans.y;
-	ray_ent_y(app, ent, &e);
+	if (!cast_entity_2(app, ent, &e))
+		return ;
 	render->ents[render->num++] = e;
 }
 
@@ -99,4 +112,3 @@ void
 		.t = (char *)tmp,
 	});
 }
-

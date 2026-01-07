@@ -18,7 +18,6 @@ void
 
 	p->fov = .66f;
 	p->health = 100;
-	printf("ori = %d\n", app->map.player_orientation);
 	p->angle.x = ((float)app->map.player_orientation / 2.f) * C_PI;
 	normalize_angle(&p->angle.x, false);
 	p->position = (t_vec2){
