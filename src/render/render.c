@@ -59,9 +59,6 @@ void
 	render_ceiling(app, x, ds);
 	render_wall(app, x, r);
 	render_floor(app, x, de);
-	//idx = 0;
-	//while (idx < r->ent_num)
-	//	render_entity(app, x, r->s_ent[idx++].ent);
 }
 
 void
@@ -74,7 +71,9 @@ void
 	for (x = 0; x < app->sizes.x; ++x)
 	{
 		ray_init(&app->game.player, 2.f * ((float)x / (float)app->sizes.x) - 1.f, &r);
-		ray_cast(app, x, &r);
+		ray_cast(app, &r);
+		app->z_buffer[x] = r.perp_dist;
 		render_slice(app, x, &r);
 	}
+	render_entities(app);
 }

@@ -18,6 +18,7 @@ void
 
 	p->fov = .66f;
 	p->health = 100;
+	printf("ori = %d\n", app->map.player_orientation);
 	p->angle.x = ((float)app->map.player_orientation / 2.f) * C_PI;
 	normalize_angle(&p->angle.x, false);
 	p->position = (t_vec2){
@@ -52,6 +53,7 @@ void
 	}
 	app->game.player.angle.x += (ui_key_held(app, KEY_ARROW_RIGHT) - ui_key_held(app, KEY_ARROW_LEFT)) * .05f;
 	if (app->event.mouse_grab)
-		app->game.player.angle.x += (float)app->event.mouse_delta.x * 0.005f;
+		app->game.player.angle.x += (float)app->event.mouse_delta.x * 0.002f;
+	app->game.player.pitch = (int)(400.f * sinf(app->game.player.angle.y));
 	player_move(app, move);
 }

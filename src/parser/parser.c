@@ -53,13 +53,13 @@ bool
 	parser.s_data.colors[1] = (t_color)COLOR_UNINIT;
 	if (ft_strlen(file) < 4 || ft_strncmp(file + ft_strlen(file) - 4, ".cub",
 			4))
-		return (parser_error(err_style(err_style(err(0, "File '"),
+		return (parser_error(err_rst(err_style(err(0, "File '"),
 						parser.file, (t_text_style){COL_CYAN, 0, 0}), "' has an"
-				" incorrect extension.", (t_text_style){0, 0, 0})),
+				" incorrect extension.")),
 				parser_free(&parser), false);
 	parser.fd = open(parser.file, O_RDONLY);
 	if (parser.fd < 0)
-		return (parser_error(err(err_style(err(0, "Failed to open file '"),
+		return (parser_error(err_rst(err_style(err(0, "Failed to open file '"),
 						parser.file, (t_text_style){COL_CYAN, 0, 0}), "'.")),
 		parser_free(&parser), false);
 	if (!parse_line(&parser))

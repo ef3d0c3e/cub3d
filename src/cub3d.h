@@ -59,6 +59,8 @@ typedef struct s_app
 	float				frame_delta;
 	/** @brief Current frame number */
 	unsigned long long	frame;
+	/** @brief Z-Buffer */
+	float				*z_buffer;
 
 	/* --- UI Data --- */
 	/** @brief Event data */

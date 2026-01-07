@@ -108,3 +108,10 @@ t_err_str
 	else
 		return (err_n(err(errstr, buf), str, n));
 }
+
+t_err_str
+	err_rst(t_err_str errstr, const char *str)
+{
+	return err_style(errstr, str,
+		(t_text_style){COL_NONE, COL_NONE, STYLE_NONE});
+}

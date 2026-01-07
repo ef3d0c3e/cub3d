@@ -13,9 +13,11 @@
 # define RENDER_H
 
 # include <map/map.h>
+# include <entity/entity.h>
 
 struct	s_app;
 struct	s_player;
+struct	s_render_ent_data;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Render                                                                     //
@@ -25,8 +27,6 @@ struct	s_player;
  * @defgroup Render Render
  * @{
  */
-
-# define MAX_ENTITIES 16
 
 /** @brief Ray casting data */
 typedef struct s_ray
@@ -49,56 +49,80 @@ typedef struct s_ray
 	/* Hit wall */
 	t_material	*hit;
 	float		perp_dist;
-
-	/* -- Entity collisions -- */
-	struct
-	{
-		float	dist;
-		void	*ent;
-	}			s_ent[MAX_ENTITIES];
-	size_t		ent_num;
 }	t_ray;
 
-/** @brief Initializes a ray using screen width coordinate */
+# define MAX_ENTITIES 256
+
+/** @brief Data for raycasted entities */
+typedef struct s_ray_ent
+{
+	/** @brief Distance to player */
+	float				dist;
+	/** @brief Entity */
+	const t_entity		*ent;
+	/** @brief Entity type */
+	//const t_entity_type	*type;
+
+	/** @brief `1 / det(Transform Matrix)` */
+	float				inv_det;
+	/** @brief Position in player-local space */
+	/** @brief  Translate */
+	t_vec2				space;
+	/** @brief Scale */
+	t_vec2				trans;
+	/** @brief Screen X center coordinate */
+	float				screen_x;
+	/** @brief Draw start X screen position */
+	int					start_x;
+	/** @brief Draw end X screen position */
+	int					end_x;
+	/** @brief Draw start Y screen position */
+	int					start_y;
+	/** @brief Draw end Y screen position */
+	int					end_y;
+	/** @brief Width scale factor */
+	int					w;
+	/** @brief Height scale factor */
+	int					h;
+	/** @brief Entity sprite */
+	t_sprite			sprite;
+	/** @brief Render flipped sprite */
+	bool				flip;
+}	t_ray_ent;
+
+/** @brief Initialize a ray using screen width coordinate */
 void
 ray_init(const struct s_player *p, float camera_x, t_ray *r);
-/** @brief Initializes a ray using arbitrary vectors */
+/** @brief Initialize a ray using arbitrary vectors */
 void
 ray_init_vec(t_vec2 pos, t_vec2 dir, t_ray *r);
-/** @brief Casts a ray */
+/** @brief Cast a ray */
 void
-ray_cast(const struct s_app *app, int x, t_ray *r);
+ray_cast(const struct s_app *app, t_ray *r);
 /** @brief Ray algorithm for entities */
 void
-ray_cast_ent(const struct s_app *app, int x, t_ray *r);
+ray_cast_entities(struct s_app *app, struct s_render_ent_data *render);
 
-/** @brief Renders a frame */
+/** @brief Render a frame */
 void
 render_frame(struct s_app *app);
+/** @brief Render a wall */
 void
 render_wall(struct s_app *app, int x, const t_ray *ray);
+/** @brief Render entieies */
 void
-render_entity(struct s_app *app, int x, void *ent);
+render_entities(struct s_app *app);
 
 /******************************************************************************/
 /* Internals                                                                  */
 /******************************************************************************/
 
-struct s_ray_ent_data
-{
-	float	inv;
-	float	screen_x;
-	t_vec2	space;
-	t_vec2	trans;
-	int		w;
-	int		start_x;
-	int		end_x;
-};
-
 struct s_render_wall_data
 {
 	int				line_h;
+	/** @brief Draw top screen vertical position */
 	int				ds;
+	/** @briof Draw end screen vertical poosition */
 	int				de;
 
 	int				tex_id;
@@ -111,26 +135,20 @@ struct s_render_wall_data
 	const t_texture	*tex;
 };
 
+/** @brief Entity render data */
 struct s_render_ent_data
 {
-	float			inv_det;
-	t_vec2			space;
-	t_vec2			trans;
-	float			screen_x;
-	int				sprite_w;
-	int				start_x;
-	int				end_x;
-	int				start_y;
-	int				end_y;
-	int				line_h;
-	int				fx;
-	int				fy;
-	int				fw;
-	int				fh;
-	uint32_t		*pixels;
-	const t_sprite	*spr;
-	int				tx;
-	int				ty;
+	/** @brief Entities to render */
+	t_ray_ent	ents[MAX_ENTITIES];
+	/** @brief Number of entities to render */
+	size_t		num;
+};
+
+/** @brief Entity RBTree traversal data */
+struct s_ent_tr_data
+{
+	const struct s_app			*app;
+	struct s_render_ent_data	*render;
 };
 
 /** @} */

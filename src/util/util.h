@@ -255,13 +255,21 @@ err_style_n(t_err_str errstr,
 	size_t n,
 	t_text_style style);
 /**
+ * @brief Append a string to the error with default style
+ *
+ * @param errstr The base error message (can be NULL)
+ * @param str String to append to err
+ * @return The result of concatenation
+ */
+t_err_str
+err_rst(t_err_str errstr, const char *str);
+/**
  * @brief Free an error message
  *
  * @param err The error message to free
  */
 void
 err_free(t_err_str err);
-
 /**
  * @brief Get the header from a valid error string
  *
@@ -427,5 +435,36 @@ normalize_angle(float *angle, bool norm_pitch);
  */
 uint32_t
 murmumr3_32(const unsigned char *data, size_t len, uint32_t seed);
+/** @brief Data for qsort */
+struct s_qsort_param
+{
+	/** @brief Size of each soerted element */
+	size_t		s;
+	/** @brief Custom comparison function */
+	int			(*cmp)(const void *, const void *);
+	/** @brief Temporary buffer that must be able to hold a copy of the sorted
+	 * array */
+	char		*t;
+};
+/**
+ * @brief Sort a narray according to `qsort(3)`
+ *
+ * @param base Array start
+ * @param nmemb Number of elements in @p base
+ * @param p Custom parameters
+ */
+void
+ft_qsort_base(void *base, size_t nmemb, struct s_qsort_param p);
+/**
+ * @brief Sort a narray according to `qsort(3)`
+ *
+ * @param base Array start
+ * @param nmemb Number of elements in @p base
+ * @param size Size of each element: `sizeof(base[0])`
+ * @param cmp Comparison function
+ */
+void
+ft_qsort(void *base, size_t nmemb, size_t size,
+	int (*cmp)(const void *, const void *));
 
 #endif // UTIL_H

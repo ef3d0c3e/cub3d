@@ -12,18 +12,26 @@
 #include <parser/parser.h>
 #include <cub3d.h>
 
+static void
+	print_err(enum e_init_error status)
+{
+	static const char	*msgs[] = {
+	[INIT_ERR_PARSE] = "Parsing failed",
+	[INIT_ERR_MLX] = "Failed to initialize MLX",
+	[INIT_ERR_WINDOW] = "Failed to initialize Window",
+	[INIT_ERR_LOAD] = "Failed to load assets",
+	[INIT_ERR_INIT] = "Failed to load application",
+	[INIT_ERR_UI] = "Failed to setup UI",
+	};
+
+	write(STDOUT_FILENO, "\033[31m\033[40m", 10);
+	write(STDOUT_FILENO, msgs[status], ft_strlen(msgs[status]));
+	write(STDOUT_FILENO, "\033[0m\n", 5);
+}
+
 static int
 	cleanup(t_app *app, enum e_init_error status)
 {
-	static const char	*msgs[] = {
-	[INIT_ERR_PARSE] = "Parsing failed\n",
-	[INIT_ERR_MLX] = "Failed to initialize MLX\n",
-	[INIT_ERR_WINDOW] = "Failed to initialize Window\n",
-	[INIT_ERR_LOAD] = "Failed to load assets\n",
-	[INIT_ERR_INIT] = "Failed to load application\n",
-	[INIT_ERR_UI] = "Failed to setup UI\n",
-	};
-
 	if (status >= INIT_ERR_PARSE)
 		rb_free(&app->entities);
 	if (status >= INIT_ERR_UI)
@@ -42,7 +50,7 @@ static int
 	if (status >= INIT_ERR_INIT)
 		app_cleanup(app);
 	if (status != INIT_OK)
-		write(STDOUT_FILENO, msgs[status], ft_strlen(msgs[status]));
+		print_err(status);
 	return (status != INIT_OK);
 }
 

@@ -56,6 +56,7 @@ static void
 			.position = ent->pos,
 			.angles = ent->angles,
 			.anim_state = (t_pos){0, 0},
+			.flip = false,
 		});
 		++i;
 	}

@@ -148,7 +148,7 @@ void
 	}
 	{
 		static char buf[256];
-		sprintf(buf, "vel (%f %f)", app->game.player.velocity.x, app->game.player.velocity.y);
+		sprintf(buf, "pos (%f %f)", app->game.player.position.x, app->game.player.position.y);
 		pan_text(buf);
 	}
 	/*

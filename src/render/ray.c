@@ -37,9 +37,6 @@ void
 	else
 		r->side_dist.y = ((float)r->map_y + 1.f - p->position.y) * r->delta_dist.y;
 	i = 0;
-	while (i <= MAX_ENTITIES)
-		r->s_ent[i++].dist = 1e10;
-	r->ent_num = 0;
 }
 
 void
@@ -67,14 +64,10 @@ void
 	else
 		r->side_dist.y = ((float)r->map_y + 1.f - pos.y) * r->delta_dist.y;
 	i = 0;
-	while (i < MAX_ENTITIES)
-		r->s_ent[i++].dist = 1e10;
-	r->ent_num = 0;
 }
 
-/** @brief Ray algorithm for walls */
-static void
-	ray_dda(const t_app *app, t_ray *r)
+void
+	ray_cast(const t_app *app, t_ray *r)
 {
 	int	df;
 
@@ -100,11 +93,4 @@ static void
 		+ !!r->side * (r->side_dist.y - r->delta_dist.y);
 	if (r->perp_dist < 0.001f)
 		r->perp_dist = 0.001f;
-}
-
-void
-	ray_cast(const t_app *app, int x, t_ray *r)
-{
-	ray_dda(app, r);
-	//ray_cast_ent(app, x, r);
 }

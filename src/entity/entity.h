@@ -39,6 +39,8 @@ typedef struct s_entity_data
 	t_vec2	acceleration;
 	/** @brief Entity angles (yaw, pitch) */
 	t_vec2	angles;
+	/** @brief Render mirrored sprite */
+	bool	flip;
 }	t_entity_data;
 
 /** @brief Static data for each entity type */

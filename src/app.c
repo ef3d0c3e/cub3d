@@ -14,6 +14,7 @@
 bool
 	app_setup(t_app *app)
 {
+	app->z_buffer = xmalloc(sizeof(float) * (size_t)app->sizes.x);
 	if (!game_setup(app))
 		return (false);
 	return (true);
@@ -23,4 +24,5 @@ void
 	app_cleanup(t_app *app)
 {
 	game_cleanup(app);
+	free(app->z_buffer);
 }

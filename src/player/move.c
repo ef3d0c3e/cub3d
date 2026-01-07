@@ -26,7 +26,7 @@ static void
 	{
 		dir = (t_vec2){(float)((dx > 0) - (dx <= 0)), 0.f};
 		ray_init_vec(p->position, dir, &ray);
-		ray_cast(app, 0, &ray);
+		ray_cast(app, &ray);
 		p->velocity.x *= (ray.perp_dist >= fabsf(dx) + PLAYER_SIZE);
 	}
 	p->position.x += p->velocity.x * dt;
@@ -35,7 +35,7 @@ static void
 	{
 		dir = (t_vec2){0.f, (float)((dy > 0) - (dy <= 0))};
 		ray_init_vec(p->position, dir, &ray);
-		ray_cast(app, 0, &ray);
+		ray_cast(app, &ray);
 		p->velocity.y *= (ray.perp_dist >= fabsf(dy) + PLAYER_SIZE);
 	}
 	p->position.y += p->velocity.y * dt;
