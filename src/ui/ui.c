@@ -27,7 +27,6 @@ static void
 	gettimeofday(&t[1], NULL);
 	sec = t[1].tv_sec - t[0].tv_sec;
 	usec = t[1].tv_usec - t[0].tv_usec;
-	usec += 1000000L * (usec < 0) + (0 * --sec);
 	if (usec < 0 && (--sec, 1))
 		usec += 1000000L;
 	app->frame_delta = (float)sec + 1e-6f * (float)usec;
@@ -40,6 +39,7 @@ static void
 		if (usec < 0 && (--sec, 1))
 			usec += 1000000L;
 		rem -= (float)sec + 1e-6f * (float)usec;
+		t[0] = t[1];
 		app->frame_delta = app->map.props.frame_time;
 	}
 }
@@ -59,8 +59,10 @@ static void
 			app->sizes.x / 2, app->sizes.y / 2);
 	else
 	{
-		pos.x = ((float)app->event.mouse_pos.x + .5f * (float)font.base_size.x * font.scale.x) / (float)app->sizes.x;
-		pos.y = ((float)app->event.mouse_pos.y + .5f * (float)font.base_size.y * font.scale.y) / (float)app->sizes.y;
+		pos.x = ((float)app->event.mouse_pos.x + .5f * (float)font.base_size.x
+				* font.scale.x) / (float)app->sizes.x;
+		pos.y = ((float)app->event.mouse_pos.y + .5f * (float)font.base_size.y
+				* font.scale.y) / (float)app->sizes.y;
 	}
 	hud_draw(app, (t_draw_item){
 		.type = DRAW_TEXT,

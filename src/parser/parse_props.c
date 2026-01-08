@@ -16,7 +16,7 @@ static void
 	init_properties(struct s_parser *parser)
 {
 	parser->s_data.parsing_properties = true;
-	parser->s_data.properties.accelerate = 40.f;
+	parser->s_data.properties.accelerate = 15.f;
 	parser->s_data.properties.friction = 0.92f;
 	parser->s_data.properties.frame_time = 1.f / 60.f;
 	parser->s_data.properties.player_spawn = '0';

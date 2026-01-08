@@ -106,6 +106,9 @@ ray_cast_entities(struct s_app *app, struct s_render_ent_data *render);
 /** @brief Render a frame */
 void
 render_frame(struct s_app *app);
+/** @brief Render a single veritcal slice */
+void
+render_slice(struct s_app *app, int x, const t_ray *r);
 /** @brief Render a wall */
 void
 render_wall(struct s_app *app, int x, const t_ray *ray);

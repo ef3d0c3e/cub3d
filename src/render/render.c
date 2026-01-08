@@ -67,13 +67,14 @@ void
 	t_ray	r;
 	int		x;
 
-#pragma omp parallel for private(x, r) shared(app) schedule(static)
-	for (x = 0; x < app->sizes.x; ++x)
+	x = 0;
+	while (x <  app->sizes.x)
 	{
 		ray_init(&app->game.player, 2.f * ((float)x / (float)app->sizes.x) - 1.f, &r);
 		ray_cast(app, &r);
 		app->z_buffer[x] = r.perp_dist;
 		render_slice(app, x, &r);
+		++x;
 	}
 	render_entities(app);
 }
