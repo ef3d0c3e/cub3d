@@ -27,7 +27,7 @@ bool
 		"assets/player_shotgun.xpm", &weapon->view_model.texture);
 	if (!weapon->view_model.texture)
 		return (false);
-	weapon->anim_shoot_time = .5f;
+	weapon->anim_shoot_time = .8f;
 	weapon->max_ammo = 96;
 	weapon->shoot = shoot;
 	weapon->view_model.background = 0x0FFFFF;

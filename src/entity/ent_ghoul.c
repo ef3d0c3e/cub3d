@@ -53,7 +53,7 @@ static void
 			app->game.player.position);
 	const float					vel = 4.f + 10 * (ghoul->aggro_time > 0.f);
 
-	if (vec2_dist(ghoul->base.data.position, app->game.player.position) < 5
+	if (vec2_dist(ghoul->base.data.position, app->game.player.position) < 10
 		|| ghoul->aggro_time != 0.f)
 	{
 		ghoul->base.data.acceleration.x += dir.x * vel;
@@ -69,6 +69,9 @@ static void
 		}
 	}
 	ghoul->aggro_time = clampf(ghoul->aggro_time - app->frame_delta, 0, 1e10);
+		ghoul->base.data.anim_state.x = 0;
+	if (ghoul->aggro_time != 0.f)
+		ghoul->base.data.anim_state.x = 1 + ((int)(ghoul->aggro_time * 4) % 2);
 }
 
 static void
@@ -90,13 +93,9 @@ static void
 		ghoul->base.data.acceleration.y += accel.y * 10;
 		ghoul->base.data.color = 0xFF4F4F;
 		ghoul->hurt_time = 0.3f;
-		ghoul->aggro_time = 4.f;
+		ghoul->aggro_time = 7.f;
 		ghoul->base.data.anim_state.x += 1;
 	}
-	if (ghoul->health < 20)
-		ghoul->base.data.anim_state.x = 1;
-	if (ghoul->health < 10)
-		ghoul->base.data.anim_state.x = 2;
 	if (ghoul->health <= 0)
 		ghoul->base.data.delete = true;
 }
