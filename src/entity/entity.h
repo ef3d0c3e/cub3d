@@ -26,6 +26,26 @@ struct	s_assets;
 // Entity data                                                                //
 ////////////////////////////////////////////////////////////////////////////////
 
+/** @brief Types of Player -> Entity interactions */
+enum e_ent_interaction_kind
+{
+	/** @brief Player attacks entity */
+	ENTI_ATTACK,
+	/** @brief Player activates entity */
+	ENTI_ACTIVATE,
+};
+
+/** @brief Player -> Entity interaction data */
+typedef struct s_ent_interaction
+{
+	enum e_ent_interaction_kind	kind;
+	union
+	{
+		/** @brief Entity attack damage */
+		int	damage;
+	}	u_data;
+}	t_ent_interaction;
+
 /** @brief Contains data common to all entities */
 typedef struct s_entity_data
 {
@@ -41,6 +61,8 @@ typedef struct s_entity_data
 	t_vec2	angles;
 	/** @brief Render mirrored sprite */
 	bool	flip;
+	/** @brief Entity tint color */
+	t_color	color;
 }	t_entity_data;
 
 /** @brief Static data for each entity type */
@@ -78,6 +100,16 @@ typedef struct s_entity_type
 	void			(*tick_fn)(
 			struct s_app *app,
 			void *entity);
+	/**
+	 * @brief Function to interact with an entity instance
+	 * - `app`: Application pointer
+	 * - `entity`: Entity instance
+	 * - `interaction`: Interaction
+	 */
+	void			(*interact_fn)(
+			struct s_app *app,
+			void *entity,
+			struct s_ent_interaction interaction);
 }	t_entity_type;
 
 /** @brief Base data for all entities */
@@ -145,6 +177,10 @@ struct s_ent_ghoul
 {
 	/** @brief Base entity data */
 	t_entity			base;
+	/** @brief Ghoul health */
+	int					health;
+	/** @brief Ghoul damage time */
+	float				hurt_time;
 };
 
 /**
@@ -184,6 +220,13 @@ ent_setup(struct s_app *app);
  */
 void
 *ent_spawn(struct s_app *app, enum e_ent_id id, t_entity_data data);
+/**
+ * @brief Tick all entities
+ *
+ * @param app Application pointer
+ */
+void
+ent_update(struct s_app *app);
 
 /** @} */
 

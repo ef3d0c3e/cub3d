@@ -14,7 +14,7 @@
 static inline void
 	render_entity(
 	t_app *app,
-	const t_ray_ent *s,
+	const t_proj_ent *s,
 	int x,
 	int y)
 {
@@ -34,7 +34,8 @@ static inline void
 	color = sprite_sample(&s->sprite, (float)t.x / (float)s->sprite.width,
 			(float)t.y / (float)s->sprite.height);
 	if (color != (t_color)COLOR_UNINIT)
-		((t_color *)app->framebuffer->data)[x + y * app->sizes.x] = color;
+		((t_color *)app->framebuffer->data)[x + y * app->sizes.x]
+			= color_tint(color, s->ent->data.color);
 }
 
 void
@@ -42,11 +43,11 @@ void
 	t_app *app)
 {
 	struct s_render_ent_data	render;
-	const t_ray_ent				*ent;
+	const t_proj_ent			*ent;
 	size_t						i;
 	t_pos						t;
 
-	ray_cast_entities(app, &render);
+	project_entities(app, &render);
 	i = 0;
 	while (i < render.num)
 	{

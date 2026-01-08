@@ -39,6 +39,8 @@ static void
 	(void)cookie;
 	ent->base.type = ent_type_ghoul();
 	ent->base.data = data;
+	ent->health = 20;
+	ent->hurt_time = 0.f;
 	return (ent);
 }
 
@@ -47,8 +49,33 @@ static void
 {
 	struct s_ent_ghoul *const	ghoul = entity;
 
-	(void)app;
-	(void)ghoul;
+	if (ghoul->hurt_time != 0.f)
+	{
+		ghoul->hurt_time -= app->frame_delta;
+		if (ghoul->hurt_time <= 0.f)
+		{
+			ghoul->hurt_time = 0.f;
+			ghoul->base.data.color = 0xFFFFFF;
+		}
+	}
+}
+
+static void
+	ghoul_interact(
+	struct s_app *app,
+	void *entity,
+	struct s_ent_interaction interaction)
+{
+	struct s_ent_ghoul *const	ghoul = entity;
+
+	if (interaction.kind == ENTI_ATTACK)
+	{
+		ghoul->health -= interaction.u_data.damage;
+		ghoul->base.data.color = 0xFF4F4F;
+		ghoul->hurt_time = 0.3f;
+	}
+	if (ghoul->health <= 0)
+		rb_delete(&app->entities, ghoul);
 }
 
 t_entity_type
@@ -59,6 +86,7 @@ t_entity_type
 		.load_fn = ghoul_load,
 		.create_fn = ghoul_create,
 		.tick_fn = ghoul_tick,
+		.interact_fn = ghoul_interact,
 		.hitbox_size = {.15f, .15f},
 	};
 

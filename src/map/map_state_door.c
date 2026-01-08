@@ -40,7 +40,7 @@ static void
 static const t_map_state_base
 	*door_state(void)
 {
-	const static t_map_state_base	base = {
+	static const t_map_state_base	base = {
 		.update_fn = update,
 	};
 

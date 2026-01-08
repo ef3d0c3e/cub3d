@@ -54,13 +54,13 @@ typedef struct s_ray
 /** @brief Maximum number of entities that can be processed */
 # define MAX_ENTITIES 256
 
-/** @brief Data for raycasted entities */
-typedef struct s_ray_ent
+/** @brief Data for projected entities */
+typedef struct s_proj_ent
 {
 	/** @brief Distance to player */
 	float				dist;
 	/** @brief Entity */
-	const t_entity		*ent;
+	t_entity			*ent;
 
 	/** @brief `1 / det(Transform Matrix)` */
 	float				inv_det;
@@ -89,7 +89,7 @@ typedef struct s_ray_ent
 	t_sprite			sprite;
 	/** @brief Render flipped sprite */
 	bool				flip;
-}	t_ray_ent;
+}	t_proj_ent;
 
 /** @brief Initialize a ray using screen width coordinate */
 void
@@ -102,7 +102,7 @@ void
 ray_cast(struct s_app *app, t_ray *r);
 /** @brief Ray algorithm for entities */
 void
-ray_cast_entities(struct s_app *app, struct s_render_ent_data *render);
+project_entities(struct s_app *app, struct s_render_ent_data *render);
 
 /** @brief Render a frame */
 void
@@ -116,6 +116,9 @@ render_wall(struct s_app *app, int x, const t_ray *ray);
 /** @brief Render entieies */
 void
 render_entities(struct s_app *app);
+/** @brief Get the entity in front of the player */
+bool
+ray_entities(struct s_app *app, t_proj_ent *found);
 
 /******************************************************************************/
 /* Internals                                                                  */
@@ -142,7 +145,7 @@ struct s_render_wall_data
 struct s_render_ent_data
 {
 	/** @brief Entities to render */
-	t_ray_ent	ents[MAX_ENTITIES];
+	t_proj_ent	ents[MAX_ENTITIES];
 	/** @brief Number of entities to render */
 	size_t		num;
 };

@@ -154,4 +154,5 @@ void
 	}
 	game_interact(app);
 	game_debug(app);
+	ent_update(app);
 }

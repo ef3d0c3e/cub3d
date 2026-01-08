@@ -39,9 +39,10 @@ void
 		ui_key_held(app, KEY_W) - ui_key_held(app, KEY_S),
 		ui_key_held(app, KEY_D) - ui_key_held(app, KEY_A)
 	};
-	if (player->weapon_id != WEAPON_NONE && ui_key_released(app, KEY_U)
+	if (player->weapon_id != WEAPON_NONE && ui_mouse_pressed(app, MOUSE_LEFT)
 		&& player->weapon_anim == 0 && player->weapons[player->weapon_id].ammo)
 	{
+		game_shoot(app);
 		player->weapon_anim = weapon->anim_shoot_time;
 		--player->weapons[player->weapon_id].ammo;
 	}
@@ -53,6 +54,6 @@ void
 	app->game.player.angle.x += (ui_key_held(app, KEY_ARROW_RIGHT) - ui_key_held(app, KEY_ARROW_LEFT)) * .05f;
 	if (app->event.mouse_grab)
 		app->game.player.angle.x += (float)app->event.mouse_delta.x * 0.002f;
-	app->game.player.pitch = (int)(400.f * sinf(app->game.player.angle.y));
+	app->game.player.pitch = (int)(256.f * sinf(app->game.player.angle.y));
 	player_move(app, move);
 }
