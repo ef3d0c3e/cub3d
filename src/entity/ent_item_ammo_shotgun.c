@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ent_item.c                                         :+:      :+:    :+:   */
+/*   ent_item_ammo_shotgun.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,20 +11,21 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-// TODO..
 static bool
 	item_load(t_app *app)
 {
-	t_entity_type *const	type = ent_type_item();
+	t_entity_type *const	type = ent_type_item_ammo_shotgun();
 
-	(void)type;
-	(void)app;
-	// TODO
-	//atlas_tex_load(app->mlx_ptr, &app->texture_atlas,
-	//	"assets/items.xpm", &type->model.texture);
-	//if (!type->model.texture)
-	//	return (false);
-	//type->model.background = (t_color)0x000000;
+	ft_memset(&type->model, 0, sizeof(type->model));
+	atlas_tex_load(app->mlx_ptr, &app->texture_atlas,
+		"assets/items.xpm", &type->model.texture);
+	if (!type->model.texture)
+		return (false);
+	type->model.background = (t_color)0x00FFFF;
+	type->model.off_left = 40;
+	type->model.off_top = 66;
+	type->model.width = 15;
+	type->model.height = 7;
 	return (true);
 }
 
@@ -35,7 +36,7 @@ static void
 
 	(void)app;
 	(void)cookie;
-	ent->base.type = ent_type_item();
+	ent->base.type = ent_type_item_ammo_shotgun();
 	ent->base.data = data;
 	return (ent);
 }
@@ -44,21 +45,41 @@ static void
 	item_tick(struct s_app *app, void *entity)
 {
 	struct s_ent_item *const	item = entity;
+	t_player_weapondata *const	weapon = &app->game.player.weapons
+	[WEAPON_SHOTGUN];
+	const float					dist = vec2_dist(item->base.data.position,
+		app->game.player.position);
 
-	(void)app;
-	(void)item;
+	if (dist < .4f)
+	{
+		weapon->ammo = clamp(weapon->ammo + 12, 0,
+				app->assets.weapons[WEAPON_SHOTGUN].max_ammo);
+		item->base.data.delete = true;
+	}
+
+}
+
+static void
+	item_interact(
+	struct s_app *app,
+	void *entity,
+	struct s_ent_interaction interaction)
+{
+
 }
 
 t_entity_type
-	*ent_type_item(void)
+	*ent_type_item_ammo_shotgun(void)
 {
 	static t_entity_type	data = {
-		.name = "item",
+		.name = "item_ammo_shotgun",
 		.load_fn = item_load,
 		.create_fn = item_create,
 		.tick_fn = item_tick,
+		.interact_fn = item_interact,
 		.hitbox_size = {.15f, .15f},
 	};
 
 	return (&data);
 }
+

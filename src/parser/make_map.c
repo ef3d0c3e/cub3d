@@ -60,6 +60,7 @@ static void
 			.anim_state = (t_pos){0, 0},
 			.flip = false,
 			.color = 0xFFFFFF,
+			.delete = false,
 		});
 		++i;
 	}

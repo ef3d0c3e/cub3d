@@ -41,8 +41,12 @@ typedef struct s_ent_interaction
 	enum e_ent_interaction_kind	kind;
 	union
 	{
-		/** @brief Entity attack damage */
-		int	damage;
+		struct
+		{
+			/** @brief Entity attack damage */
+			int		damage;
+			float	knockback;
+		}	s_attack;
 	}	u_data;
 }	t_ent_interaction;
 
@@ -63,6 +67,8 @@ typedef struct s_entity_data
 	bool	flip;
 	/** @brief Entity tint color */
 	t_color	color;
+	/** @brief Flag to delete entity at the end of the current frame */
+	bool	delete;
 }	t_entity_data;
 
 /** @brief Static data for each entity type */
@@ -124,7 +130,7 @@ typedef struct s_entity
 /** @brief Entity types */
 enum e_ent_id
 {
-	ENT_ITEM,
+	ENT_ITEM_AMMO_SHOTGUN,
 	ENT_GHOUL,
 	ENT_NUM_,
 };
@@ -166,12 +172,12 @@ struct s_ent_item
 };
 
 /**
- * @brief Get the entity type for @ref ENT_ITEM
+ * @brief Get the tntity type for @ref ENT_ITEM_AMMO_SHOTGUN
  *
- * @return The entity type for @ref ENT_ITEM
+ * @return The entity type for @ref ENT_ITEM_AMMO_SHOTGUN
  */
 t_entity_type
-*ent_type_item(void);
+*ent_type_item_ammo_shotgun(void);
 
 struct s_ent_ghoul
 {
@@ -181,8 +187,9 @@ struct s_ent_ghoul
 	int					health;
 	/** @brief Ghoul damage time */
 	float				hurt_time;
+	/** @brief Ghoul forced aggression time */
+	float				aggro_time;
 };
-
 /**
  * @brief Get the entity type for @ref ENT_GHOUL
  *

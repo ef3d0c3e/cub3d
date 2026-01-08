@@ -39,8 +39,9 @@ static void
 	(void)cookie;
 	ent->base.type = ent_type_ghoul();
 	ent->base.data = data;
-	ent->health = 20;
+	ent->health = 100;
 	ent->hurt_time = 0.f;
+	ent->aggro_time = 0.f;
 	return (ent);
 }
 
@@ -48,7 +49,16 @@ static void
 	ghoul_tick(struct s_app *app, void *entity)
 {
 	struct s_ent_ghoul *const	ghoul = entity;
+	const t_vec2				dir = vec2_dir(ghoul->base.data.position,
+			app->game.player.position);
+	const float					vel = 4.f + 10 * (ghoul->aggro_time > 0.f);
 
+	if (vec2_dist(ghoul->base.data.position, app->game.player.position) < 5
+		|| ghoul->aggro_time != 0.f)
+	{
+		ghoul->base.data.acceleration.x += dir.x * vel;
+		ghoul->base.data.acceleration.y += dir.y * vel;
+	}
 	if (ghoul->hurt_time != 0.f)
 	{
 		ghoul->hurt_time -= app->frame_delta;
@@ -58,6 +68,7 @@ static void
 			ghoul->base.data.color = 0xFFFFFF;
 		}
 	}
+	ghoul->aggro_time = clampf(ghoul->aggro_time - app->frame_delta, 0, 1e10);
 }
 
 static void
@@ -67,15 +78,27 @@ static void
 	struct s_ent_interaction interaction)
 {
 	struct s_ent_ghoul *const	ghoul = entity;
+	t_vec2						accel;
 
 	if (interaction.kind == ENTI_ATTACK)
 	{
-		ghoul->health -= interaction.u_data.damage;
+		ghoul->health -= interaction.u_data.s_attack.damage;
+		accel = vec2_scale(vec2_dir(app->game.player.position,
+					ghoul->base.data.position),
+				interaction.u_data.s_attack.knockback);
+		ghoul->base.data.acceleration.x += accel.x * 10;
+		ghoul->base.data.acceleration.y += accel.y * 10;
 		ghoul->base.data.color = 0xFF4F4F;
 		ghoul->hurt_time = 0.3f;
+		ghoul->aggro_time = 4.f;
+		ghoul->base.data.anim_state.x += 1;
 	}
+	if (ghoul->health < 20)
+		ghoul->base.data.anim_state.x = 1;
+	if (ghoul->health < 10)
+		ghoul->base.data.anim_state.x = 2;
 	if (ghoul->health <= 0)
-		rb_delete(&app->entities, ghoul);
+		ghoul->base.data.delete = true;
 }
 
 t_entity_type
@@ -87,7 +110,7 @@ t_entity_type
 		.create_fn = ghoul_create,
 		.tick_fn = ghoul_tick,
 		.interact_fn = ghoul_interact,
-		.hitbox_size = {.15f, .15f},
+		.hitbox_size = {.5f, .5f},
 	};
 
 	return (&data);

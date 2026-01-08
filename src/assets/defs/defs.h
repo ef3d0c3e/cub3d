@@ -54,6 +54,10 @@ typedef struct s_weapon
 	float			anim_shoot_time;
 	/** @brief Maximum ammunitions */
 	int				max_ammo;
+	/** @brief Weapon base damage */
+	int				damage;
+	/** @brief Weapon base knockback */
+	float			knockback;
 	/** @brief Shoot function callback */
 	void			(*shoot)(struct s_app *app);
 }	t_weapon;

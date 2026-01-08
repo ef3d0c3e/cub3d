@@ -37,6 +37,8 @@ bool
 	weapon->view_model.sep_top = 1;
 	weapon->view_model.width = 233;
 	weapon->view_model.height = 162;
+	weapon->damage = 40;
+	weapon->knockback = 30;
 	weapon->item_model = (t_sprite){.texture = assets->items,
 		.background = 0x0FFFFF,
 		.line_size = assets->items->width,

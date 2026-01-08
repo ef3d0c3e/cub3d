@@ -39,6 +39,34 @@ typedef struct s_vec2
 	float	y;
 }	t_vec2;
 
+/**
+ * @brief Compute the distance between two vectors
+ *
+ * @param x First vector
+ * @param y Second vector
+ * @return The distance between @p x and @p y: `||x - y||`
+ */
+float
+vec2_dist(t_vec2 x, t_vec2 y);
+/**
+ * @brief Compute the direction between two vectors
+ *
+ * @param x First vector
+ * @param y Second vector
+ * @return The direction between @p from and @p to
+ */
+t_vec2
+vec2_dir(t_vec2 from, t_vec2 to);
+/**
+ * @brief Scale vector by a scalar
+ *
+ * @param v Vector to scale
+ * @param x Scalar
+ * @return `v * x`
+ */
+t_vec2
+vec2_scale(t_vec2 v, float x);
+
 /** @brief A 3D float vector */
 typedef struct s_vec3
 {

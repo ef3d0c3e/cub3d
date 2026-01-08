@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interact.c                                         :+:      :+:    :+:   */
+/*   vec2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,39 +9,30 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <cub3d.h>
+#include <util/util.h>
 
-void
-	game_interact(t_app *app)
+float
+	vec2_dist(t_vec2 x, t_vec2 y)
 {
-	t_ray	ray;
+	const float	dx = x.x - y.x;
+	const float	dy = x.y - y.y;
 
-	ray_init(&app->game.player, 0.f, &ray);
-	ray_cast(app, &ray);
-	if (ray.hit->type == MAT_DOOR && ray.perp_dist < 1)
-	{
-		action_text(app, "Press E to open");
-		if (ui_key_pressed(app, KEY_E))
-			map_state_door_interact(map_state_get(app, ray.map_x, ray.map_y),
-					app);
-	}
+	return (sqrtf(dx * dx + dy * dy));
 }
 
-void
-	game_shoot(t_app *app)
+t_vec2
+	vec2_dir(t_vec2 from, t_vec2 to)
 {
-	t_proj_ent		ent;
-	const t_weapon	*weapon = &app->assets.weapons[app->game.player.weapon_id];
+	const float		dist = vec2_dist(from, to);
 
-	if (ray_entities(app, &ent))
-	{
-		weapon->shoot(app);
-		ent.ent->type->interact_fn(app, ent.ent, (t_ent_interaction){
-			.kind = ENTI_ATTACK,
-			.u_data.s_attack = {
-				.damage = weapon->damage,
-				.knockback = weapon->knockback,
-			}
-		});
-	}
+	return ((t_vec2){
+		(to.x - from.x) / dist,
+		(to.y - from.y) / dist,
+	});
+}
+
+t_vec2
+	vec2_scale(t_vec2 v, float x)
+{
+	return ((t_vec2){v.x * x, v.y * x});
 }
