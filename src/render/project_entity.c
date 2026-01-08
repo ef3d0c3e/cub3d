@@ -40,7 +40,7 @@ static bool
 	i = e->start_x;
 	min = 1e10;
 	while (i < e->end_x)
-		min = fminf(min, app->z_buffer[i++]);
+		min = fmaxf(min, app->z_buffer[i++]);
 	return (e->dist < min);
 }
 

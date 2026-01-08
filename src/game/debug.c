@@ -59,6 +59,7 @@ void
 	if (pan_button("HP"))
 		player->health = 100;
 	pan_next_columns();
+	pan_checkbox("Minimap", &app->game.show_minimap);
 	pan_next_columns();
 	pan_pop_columns();
 	debug_ent(app);

@@ -36,6 +36,9 @@ typedef struct s_game
 
 	/** @brief The player */
 	t_player	player;
+
+	/** @brief Show the minimap */
+	bool		show_minimap;
 }	t_game;
 
 /**
@@ -79,6 +82,22 @@ game_shoot(struct s_app *app);
  */
 void
 game_debug(struct s_app *app);
+
+/**
+ * @brief Setup the minimap
+ *
+ * @param app Application pointer
+ * @return `true` on success, `false` on errors
+ */
+bool
+game_minimap_setup(struct s_app *app);
+/**
+ * @brief Render the minimap
+ *
+ * @param app Application pointer
+ */
+void
+game_minimap_render(struct s_app *app);
 
 /**
  * @brief Display action text

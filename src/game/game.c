@@ -14,40 +14,10 @@
 bool
 	game_setup(t_app *app)
 {
-	t_texture tex;
-
-	tex.width = app->map.size_x;
-	tex.height = app->map.size_y;
-	tex.img = mlx_new_image(app->mlx_ptr, tex.width, tex.height);
-	if (!tex.img)
+	if (!game_minimap_setup(app))
 		return (false);
-	tex.path = NULL;
-	app->game.minimap = (t_sprite){
-		.texture = atlas_tex_get(&app->texture_atlas, atlas_tex_add(&app->texture_atlas, tex)),
-		.background = 0x000000,
-		.width = tex.width,
-		.height = tex.height,
-		.left = 0,
-		.top = 0,
-		.line_size = tex.width
-	};
-	for (int y = 0; y < tex.height; ++y)
-	{
-		for (int x = 0; x < tex.width; ++x)
-		{
-			t_color col = 0x0000FF;
-			if (!map_get(app, x, y))
-				col = 0xFFFFFF;
-			else if (map_get(app, x, y)->type == MAT_CUBE)
-				col = 0xFF0000;
-			else if (map_get(app, x, y)->type == MAT_FLOOR)
-				col = 0x00FF00;
-			((t_color *)app->game.minimap.texture->img->data)[x + y * tex.width]
-				= col;
-		}
-
-	}
 	player_setup(app);
+	app->game.show_minimap = true;
 	return (true);
 }
 
@@ -125,33 +95,18 @@ static void
 void
 	game_ui(t_app *app)
 {
+	static char	fps[256] = "FPS ";
+
 	map_state_update(app);
 	render_frame(app);
-	// Draw the 5x5 sprite
-	//hud_draw(app, (t_draw_item){
-	//	.type = DRAW_SPRITE,
-	//	.draw.sprite = {
-	//		.sprite = app->game.minimap,
-	//		.color = 0xFFFFFF,
-	//		.scale = (t_vec2){10.f, 10.f},
-	//		.pos = {.5f, .5f},
-	//	}
-	//});
-
+	if (app->game.show_minimap)
+		game_minimap_render(app);
 	draw_viewmodel(app);
 	draw_hud(app);
-	
-	pan_text("Cub3D");
-	{
-		static char buf[256];
-		sprintf(buf, "FPS=%f", 1.f / app->frame_delta);
-		pan_text(buf);
-	}
-	{
-		static char buf[256];
-		sprintf(buf, "pos (%f %f)", app->game.player.position.x, app->game.player.position.y);
-		pan_text(buf);
-	}
+	pan_text("Cub3D ");
+	pan_sameline();
+	ftoa_buf(fps + 4, 1.f / app->frame_delta, 2);
+	pan_text(fps);
 	game_interact(app);
 	game_debug(app);
 	ent_update(app);
