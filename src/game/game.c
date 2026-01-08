@@ -30,7 +30,8 @@ void
 void
 	game_input(t_app *app)
 {
-	player_input(app);
+	if (app->event.mouse_grab)
+		player_input(app);
 }
 
 // TODO: Apply view bobbing
