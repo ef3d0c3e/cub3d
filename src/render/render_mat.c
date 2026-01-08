@@ -11,6 +11,28 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
+const t_texture
+	*get_texture(const t_app *app, const t_ray *r)
+{
+	t_atlas_id	id;
+
+	if (r->side == 0 && r->ray.x < 0)
+		id = ORI_WEST;
+	else if (r->side == 0)
+		id = ORI_EAST;
+	else if (r->ray.y < 0)
+		id = ORI_NORTH;
+	else
+		id = ORI_SOUTH;
+	if (r->hit->orientation != ORI_NONE)
+	{
+		id -= 1;
+		id += ((t_atlas_id)r->hit->orientation - 1);
+		id %= 4;
+	}
+	return (atlas_tex_get(&app->texture_atlas, r->hit->tex_ids[id]));
+}
+
 void
 	render_wall_init(
 	t_app *app,
@@ -21,21 +43,15 @@ void
 	s->line_h = (int)((float)app->sizes.y / r->perp_dist);
 	if (s->line_h > app->sizes.y * 4)
 		s->line_h = app->sizes.y * 4;
-	s->ds = (int)(-(float)s->line_h / 2.f + (float)app->sizes.y / 2.f + app->game.player.angle.y);
+	s->ds = (int)(-(float)s->line_h / 2.f + (float)app->sizes.y / 2.f
+			+ app->game.player.angle.y);
 	if (s->ds < 0)
 		s->ds = 0;
-	s->de = (int)((float)s->line_h / 2.f + (float)app->sizes.y / 2.f + app->game.player.angle.y);
+	s->de = (int)((float)s->line_h / 2.f + (float)app->sizes.y / 2.f
+			+ app->game.player.angle.y);
 	if (s->de >= app->sizes.y)
 		s->de = app->sizes.y - 1;
-	if (r->side == 0 && r->ray.x < 0)
-		s->tex_id = ORI_WEST;
-	else if (r->side == 0)
-		s->tex_id = ORI_EAST;
-	else if (r->ray.y < 0)
-		s->tex_id = ORI_NORTH;
-	else
-		s->tex_id = ORI_SOUTH;
-	s->tex = atlas_tex_get(&app->texture_atlas, r->hit->tex_ids[s->tex_id]);
+	s->tex = get_texture(app, r);
 	s->tw = s->tex->width;
 	s->th = s->tex->height;
 	if (r->side == 0)
@@ -52,14 +68,15 @@ void
 	int							d;
 
 	render_wall_init(app, r, &s);
-	s.wall_x -= floor(s.wall_x);
-	s.tx = s.wall_x * s.tw;
+	s.wall_x -= floorf(s.wall_x);
+	s.tx = (int)(s.wall_x * (float)s.tw);
 	if ((r->side == 0 && r->ray.x < 0) || (r->side == 1 && r->ray.y > 0))
 		s.tx = s.tw - s.tx - 1;
 	y = s.ds;
 	while (y <= s.de)
 	{
-		d = (y - app->game.player.angle.y) * 256 - app->sizes.y * 128 + s.line_h * 128;
+		d = (int)(((float)y - app->game.player.angle.y) * 256)
+			- app->sizes.y * 128 + s.line_h * 128;
 		s.ty = ((d * s.th) / s.line_h) / 256;
 		if (s.ty < 0)
 			s.ty = 0;

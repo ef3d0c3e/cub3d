@@ -63,8 +63,37 @@ void
 		r->side_dist.y = ((float)r->map_y + 1.f - pos.y) * r->delta_dist.y;
 }
 
+static void
+	ray_door(t_app *app, t_ray *r, const struct s_map_state_door *door)
+{
+	const t_pos				slide_axis = (t_pos[4]){{-1, 0}, {0, 1}, {1, 0},
+	{0, -1}}[r->hit->orientation];
+	const t_player			*player = &app->game.player;
+	t_vec2					exact;
+	float					door_coord;
+
+	if (r->side == 0)
+	{
+		exact.x = (float)(r->map_x + (r->step_x <= 0));
+		exact.y = player->position.y + (exact.x - player->position.x)
+			* r->ray.y / r->ray.x;
+	}
+	else
+	{
+		exact.y = (float)(r->map_y + (r->step_y <= 0));
+		exact.x = player->position.x + (exact.y - player->position.y)
+			* r->ray.x / r->ray.y;
+	}
+	door_coord = (slide_axis.y != 0) * (exact.y - (float)r->map_y)
+		+ (slide_axis.y == 0) * (exact.x - (float)r->map_x);
+	if ((slide_axis.x < 0 || slide_axis.y < 0) * (door_coord < door->open)
+		+ (slide_axis.x >= 0 && slide_axis.y >= 0)
+		* (door_coord > (1.f - door->open)))
+		r->hit = NULL;
+}
+
 void
-	ray_cast(const t_app *app, t_ray *r)
+	ray_cast(t_app *app, t_ray *r)
 {
 	int	df;
 
@@ -82,12 +111,13 @@ void
 		r->hit = map_get(app, r->map_x, r->map_y);
 		if (r->hit && r->hit->type == MAT_FLOOR)
 			r->hit = NULL;
+		if (r->hit && r->hit->type == MAT_DOOR)
+			ray_door(app, r, map_state_get(app, r->map_x, r->map_y));
 	}
 	r->perp_dist = 1e10;
 	if (!r->hit)
 		return ;
 	r->perp_dist = !r->side * (r->side_dist.x - r->delta_dist.x)
 		+ !!r->side * (r->side_dist.y - r->delta_dist.y);
-	if (r->perp_dist < 0.001f)
-		r->perp_dist = 0.001f;
+	r->perp_dist = clampf(r->perp_dist, 0.001f, 1e10);
 }

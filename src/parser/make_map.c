@@ -32,7 +32,7 @@ static void
 			app->map.map[pos.x + app->map.size_x * pos.y]
 				= atlas_mat_get_id(&app->material_atlas, id);
 			if (atlas_mat_get(&app->material_atlas, id)->type == MAT_DOOR)
-				map_data_set(app, pos.x, pos.y, map_data_door());
+				map_state_set(app, pos.x, pos.y, map_state_door());
 			++pos.x;
 		}
 		++pos.y;
@@ -86,7 +86,7 @@ void
 		* (size_t)app->map.size_x * (size_t)app->map.size_y);
 	parser->s_data.lines[app->map.player_spawn.y][app->map.player_spawn.x]
 		= app->map.props.player_spawn;
-	app->map.map_data = rb_new(map_data_cmp, NULL, free);
+	app->map.map_state = rb_new(map_state_cmp, NULL, free);
 	fill_map(parser, app);
 	map_setup_ent(parser, app);
 }

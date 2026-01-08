@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_data_door.c                                         :+:      :+:    :+:   */
+/*   map_state.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,12 +11,33 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-void
-	*map_data_door(void)
+int
+	map_state_cmp(const void *lhs, const void *rhs)
 {
-	struct s_map_data_door *data;
+	const uintptr_t	*a = lhs;
+	const uintptr_t	*b = rhs;
 
-	data = xmalloc(sizeof(struct s_map_data_door));
-	data->open = 0.f;
-	return (data);
+	if (a > b)
+		return (1);
+	if (a < b)
+		return (-1);
+	return (0);
+}
+
+void
+	*map_state_get(struct s_app *app, int x, int y)
+{
+	uintptr_t	key;
+
+	key = ((uintptr_t)(int32_t)x) | (((uintptr_t)(int32_t)y) << 32);
+	return (rb_find(&app->map.map_state, (void*)key));
+}
+
+void
+	map_state_set(struct s_app *app, int x, int y, void *state)
+{
+	uintptr_t	key;
+
+	key = (uintptr_t)(int32_t)x | (((uintptr_t)(int32_t)y) << 32);
+	rb_insert(&app->map.map_state, (void*)key, state);
 }

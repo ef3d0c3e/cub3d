@@ -54,7 +54,13 @@ typedef struct s_pos
 	int	y;
 }	t_pos;
 
-/** @brief Represent orientation (clockwise) */
+/** @brief Represent orientation (clockwise)
+ *          N (-Y)
+ *          |
+ * (-X) W --+-- E (+X)
+ *          |
+ *          S (+Y)
+ */
 enum e_orientation
 {
 	/** @brief No oritnation */

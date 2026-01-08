@@ -14,7 +14,7 @@
 void
 	map_free(t_map *map)
 {
-	rb_free(&map->map_data);
+	rb_free(&map->map_state);
 	free(map->map);
 }
 

@@ -59,10 +59,10 @@ static inline int
 	door_parser(struct s_parser *parser)
 {
 	static const char	*texs[] = {
+		"FR", "Front",
 		"TO", "Top",
+		"BA", "Back",
 		"BO", "Bottom",
-		"IN", "Inside",
-		"OU", "Outside",
 		NULL,
 	};
 	int					status;

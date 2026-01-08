@@ -51,6 +51,7 @@ typedef struct s_ray
 	float		perp_dist;
 }	t_ray;
 
+/** @brief Maximum number of entities that can be processed */
 # define MAX_ENTITIES 256
 
 /** @brief Data for raycasted entities */
@@ -98,7 +99,7 @@ void
 ray_init_vec(t_vec2 pos, t_vec2 dir, t_ray *r);
 /** @brief Cast a ray */
 void
-ray_cast(const struct s_app *app, t_ray *r);
+ray_cast(struct s_app *app, t_ray *r);
 /** @brief Ray algorithm for entities */
 void
 ray_cast_entities(struct s_app *app, struct s_render_ent_data *render);
@@ -128,7 +129,6 @@ struct s_render_wall_data
 	/** @briof Draw end screen vertical poosition */
 	int				de;
 
-	int				tex_id;
 	int				tw;
 	int				th;
 	int				tx;

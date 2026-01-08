@@ -71,7 +71,8 @@ bool
 			* (size_t)parser->s_data.map_height);
 	ft_memset(traversed, 0, sizeof(bool) * (size_t)parser->s_data.map_width
 		* (size_t)parser->s_data.map_height);
-	traverse_dfs(parser, traversed, parser->s_data.player_spawn);
+	if (!traverse_dfs(parser, traversed, parser->s_data.player_spawn))
+		return (free(traversed), false);
 	free(traversed);
 	return (true);
 }

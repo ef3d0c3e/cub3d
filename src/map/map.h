@@ -48,7 +48,7 @@ typedef struct s_map
 	/** @brief The map content */
 	t_atlas_id			*map;
 	/** @brief Data for each tile */
-	t_rbtree			map_data;
+	t_rbtree			map_state;
 
 	/** @brief The player's spawn point */
 	t_pos				player_spawn;
@@ -78,50 +78,69 @@ t_material
 *map_get(const struct s_app *app, int x, int y);
 
 /**
- * @defgroup MapData Map Data
+ * @defgroup MapState Map State
  * @ingroup Map
  * @{
  */
 
-/** @brief Door data */
-struct s_map_data_door
+/** @brief Base data for map state */
+typedef struct s_map_state_base
 {
+	/** @brief Function to update the map */
+	void	(*update_fn)(void *this, struct s_app *app);
+}	t_map_state_base;
+
+/** @brief Door state */
+struct s_map_state_door
+{
+	/** @brief Base data for dynamic dispatch */
+	const t_map_state_base	*base;
 	/** @brief Open stage: `0` -> closed, `1` -> fully open */
-	float	open;
+	float					open;
+	/** @brief Door direction: `0` -> static, `1` -> opening, `-1` -> closing */
+	int						direction;
 };
-/** @brief Create a default @ref s_map_data_door */
+/** @brief Create a default @ref s_map_state_door */
 void
-*map_data_door(void);
+*map_state_door(void);
 
 /**
- * @brief Map data key comparison function
+ * @brief Update states for the entire map
+ * This function must be called every frame to tick map states
+ *
+ * @param app Application pointer
+ */
+void
+map_state_update(struct s_app *app);
+/**
+ * @brief Map state key comparison function
  *
  * @param lhs Left hand side
  * @param rhs Right hand side
  * @return `lhs <=> rhs`
  */
 int
-map_data_cmp(const void *lhs, const void *rhs);
+map_state_cmp(const void *lhs, const void *rhs);
 /**
- * @brief Get tile data from the map
+ * @brief Get tile state from the map
  *
  * @param app Application pointer
  * @param x X coordinate
  * @param y Y coordinate
- * @return Map data at `(x, y)`, or NULL
+ * @return Map state at `(x, y)`, or `NULL`
  */
 void
-*map_data_get(struct s_app *app, int x, int y);
+*map_state_get(struct s_app *app, int x, int y);
 /**
  * @brief Set tile data for the map
  *
  * @param app Application pointer
  * @param x X coordinate
  * @param y Y coordinate
- * @param data Data to set
+ * @param state State to set
  */
 void
-map_data_set(struct s_app *app, int x, int y, void *data);
+map_state_set(struct s_app *app, int x, int y, void *state);
 
 /** @} */
 

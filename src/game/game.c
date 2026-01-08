@@ -125,7 +125,8 @@ static void
 void
 	game_ui(t_app *app)
 {
-	render_frame_bonus(app);
+	map_state_update(app);
+	render_frame(app);
 	// Draw the 5x5 sprite
 	//hud_draw(app, (t_draw_item){
 	//	.type = DRAW_SPRITE,
