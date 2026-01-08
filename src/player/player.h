@@ -50,8 +50,6 @@ typedef struct s_player
 
 	/** @brief Player's health */
 	int					health;
-	/** @brief Player's armor */
-	int					armor;
 
 	/** @brief Available weapons */
 	t_player_weapondata	weapons[WEAPON_NUM_];
