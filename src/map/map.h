@@ -99,10 +99,19 @@ struct s_map_state_door
 	float					open;
 	/** @brief Door direction: `0` -> static, `1` -> opening, `-1` -> closing */
 	int						direction;
+	/** @brief Frame when the door should star closing */
+	size_t					close_time;
 };
 /** @brief Create a default @ref s_map_state_door */
 void
 *map_state_door(void);
+/**
+ * @brief Interact with the door
+ *
+ * @param this Door
+ */
+void
+map_state_door_interact(void *this, struct s_app *app);
 
 /**
  * @brief Update states for the entire map

@@ -152,49 +152,6 @@ void
 		sprintf(buf, "pos (%f %f)", app->game.player.position.x, app->game.player.position.y);
 		pan_text(buf);
 	}
-	/*
-	pan_push_columns("COL1", 3);
-	if (pan_button("Test\001bb"))
-	{
-		printf("Clicked\n");
-	}
-	static int vali = 7;
-	pan_slider_i("value", &vali, (const int [2]){-128, 128});
-	static int vali2 = 7;
-	pan_slider_i("yu", &vali2, (const int [2]){0, 10});
-	static float valf = 0.5;
-	pan_slider_f("fff", &valf, (const float [2]){-1, 5});
-	pan_next_columns();
-	if (pan_button("Hello"))
-	{
-		printf("Clicked Hello\n");
-	}
-	pan_button("Column layout");
-	pan_button("After");
-	pan_button("AAAAA");
-	pan_next_columns();
-	if (pan_button("Hello"))
-	{
-		printf("Clicked Hello\n");
-	}
-	pan_text("foobar");
-	static bool val;
-	if (pan_checkbox("Check", &val))
-	{
-		printf("Checkbox clicked\n");
-	}
-	pan_text("foobar");
-	pan_pop_columns();
-	pan_button("Column layout");
-
-	pan_push_columns("COL2", 5);
-	pan_next_columns();
-	pan_next_columns();
-	pan_text_color("Foo", 0x7F0000);
-	pan_next_columns();
-	pan_text_color("Bar", 0x007F00);
-	pan_next_columns();
-	pan_pop_columns();
-	*/
+	game_interact(app);
 	game_debug(app);
 }

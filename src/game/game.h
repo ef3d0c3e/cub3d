@@ -59,12 +59,28 @@ game_input(struct s_app *app);
 void
 game_ui(struct s_app *app);
 /**
+ * @brief Process environment interactions
+ *
+ * @param app Application pointer
+ */
+void
+game_interact(struct s_app *app);
+/**
  * @brief Show the game's debug menu
  *
  * @param app Application pointer
  */
 void
 game_debug(struct s_app *app);
+
+/**
+ * @brief Display action text
+ *
+ * @param app Application pointer
+ * @param text Text to display
+ */
+void
+action_text(struct s_app *app, const char *text);
 
 /** @} */
 
