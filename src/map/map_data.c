@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   map_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,23 +11,33 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-void
-	map_free(t_map *map)
+int
+	map_data_cmp(const void *lhs, const void *rhs)
 {
-	rb_free(&map->map_data);
-	free(map->map);
+	const uintptr_t	*a = lhs;
+	const uintptr_t	*b = rhs;
+
+	if (*a > *b)
+		return (1);
+	if (*a < *b)
+		return (-1);
+	return (0);
 }
 
-t_material
-	*map_get(const t_app *app, int x, int y)
+void
+	*map_data_get(struct s_app *app, int x, int y)
 {
-	t_atlas_id	id;
+	uintptr_t	key;
 
-	if (x < 0 || y < 0
-		|| x >= app->map.size_x || y >= app->map.size_y)
-		return (NULL);
-	id = app->map.map[x + y * app->map.size_x];
-	if (id == 0 || id == (t_atlas_id)ATLAS_INVALID)
-		return (NULL);
-	return (&app->material_atlas.materials[id]);
+	key = (uintptr_t)(int32_t)x | (((uintptr_t)(int32_t)y) << 32);
+	return (rb_find(&app->map.map_data, &key));
+}
+
+void
+	map_data_set(struct s_app *app, int x, int y, void *data)
+{
+	uintptr_t	key;
+
+	key = (uintptr_t)(int32_t)x | (((uintptr_t)(int32_t)y) << 32);
+	rb_insert(&app->map.map_data, &key, data);
 }

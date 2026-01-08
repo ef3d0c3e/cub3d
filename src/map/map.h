@@ -47,6 +47,8 @@ typedef struct s_map
 	int					size_y;
 	/** @brief The map content */
 	t_atlas_id			*map;
+	/** @brief Data for each tile */
+	t_rbtree			map_data;
 
 	/** @brief The player's spawn point */
 	t_pos				player_spawn;
@@ -74,6 +76,54 @@ map_free(t_map *map);
  */
 t_material
 *map_get(const struct s_app *app, int x, int y);
+
+/**
+ * @defgroup MapData Map Data
+ * @ingroup Map
+ * @{
+ */
+
+/** @brief Door data */
+struct s_map_data_door
+{
+	/** @brief Open stage: `0` -> closed, `1` -> fully open */
+	float	open;
+};
+/** @brief Create a default @ref s_map_data_door */
+void
+*map_data_door(void);
+
+/**
+ * @brief Map data key comparison function
+ *
+ * @param lhs Left hand side
+ * @param rhs Right hand side
+ * @return `lhs <=> rhs`
+ */
+int
+map_data_cmp(const void *lhs, const void *rhs);
+/**
+ * @brief Get tile data from the map
+ *
+ * @param app Application pointer
+ * @param x X coordinate
+ * @param y Y coordinate
+ * @return Map data at `(x, y)`, or NULL
+ */
+void
+*map_data_get(struct s_app *app, int x, int y);
+/**
+ * @brief Set tile data for the map
+ *
+ * @param app Application pointer
+ * @param x X coordinate
+ * @param y Y coordinate
+ * @param data Data to set
+ */
+void
+map_data_set(struct s_app *app, int x, int y, void *data);
+
+/** @} */
 
 /** @} */
 

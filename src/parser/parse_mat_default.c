@@ -55,6 +55,28 @@ static inline int
 	return (status);
 }
 
+static inline int
+	door_parser(struct s_parser *parser)
+{
+	static const char	*texs[] = {
+		"TO", "Top",
+		"BO", "Bottom",
+		"IN", "Inside",
+		"OU", "Outside",
+		NULL,
+	};
+	int					status;
+	t_material			mat;
+
+	ft_memset(&mat, 0, sizeof(mat));
+	mat.orientation = ORI_NORTH;
+	mat.type = MAT_DOOR;
+	status = parse_material(parser, "DOOR", texs, &mat);
+	if (status == 1)
+		atlas_mat_add(&parser->s_data.mat_atlas, mat);
+	return (status);
+}
+
 int
 	parse_mat_default(struct s_parser *parser)
 {
@@ -63,5 +85,7 @@ int
 	status = cube_parser(parser);
 	if (status == 0)
 		status = floor_parser(parser);
+	if (status == 0)
+		status = door_parser(parser);
 	return (status);
 }
