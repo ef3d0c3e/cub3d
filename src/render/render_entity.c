@@ -18,8 +18,8 @@ static inline void
 	int x,
 	int y)
 {
-	const int		d_pix = (y - app->game.player.pitch) * 256
-		- app->sizes.y * 128 + s->h * 128;
+	const int		d_pix = (y - app->game.player.pitch
+			- s->vmove_y) * 256 - app->sizes.y * 128 + s->h * 128;
 	t_color			color;
 	t_pos			t;
 
@@ -47,7 +47,7 @@ void
 	size_t						i;
 	t_pos						t;
 
-	project_entities(app, &render);
+	project_entities(app, &render, NULL);
 	i = 0;
 	while (i < render.num)
 	{

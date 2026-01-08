@@ -81,6 +81,11 @@ typedef struct s_entity_type
 	/** @brief Entity hitbox size */
 	t_vec2			hitbox_size;
 
+	/** @brief Entity (X, Y) offset */
+	t_vec2			offset;
+	/** @brief Entity (X, Y) scale */
+	t_vec2			scale;
+
 	/**
 	 * @brief Function to create an instance of the entity:
 	 * - `app`: Application pointer

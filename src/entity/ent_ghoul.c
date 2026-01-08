@@ -106,6 +106,8 @@ t_entity_type
 {
 	static t_entity_type	data = {
 		.name = "ghoul",
+		.offset = {0, 0},
+		.scale = {1.f, 1.f},
 		.load_fn = ghoul_load,
 		.create_fn = ghoul_create,
 		.tick_fn = ghoul_tick,

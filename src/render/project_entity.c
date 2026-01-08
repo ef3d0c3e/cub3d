@@ -12,18 +12,24 @@
 #include <cub3d.h>
 
 static bool
-	cast_entity_2(const t_app *app, const t_entity *ent, t_proj_ent *e)
+	cast_entity_2(
+	const t_app *app,
+	const t_entity *ent,
+	t_proj_ent *e,
+	int scale)
 {
 	const t_player	*p = &app->game.player;
 	int				i;
 	float			min;
 
-	e->real_start_x = e->start_x;
-	e->start_x = clamp(e->start_x, 0, app->sizes.x);
+	e->dist = e->trans.y;
+	e->start_x = clamp(e->real_start_x, 0, app->sizes.x);
+	e->vmove_y = (int)((float)ent->type->offset.y / e->trans.y);
 	e->end_x = clamp(e->end_x, 0, app->sizes.x);
-	e->h = e->w;
-	e->start_y = (-e->h + app->sizes.y) / 2 + p->pitch;
-	e->end_y = (e->h + app->sizes.y) / 2 + p->pitch;
+	e->w = (int)((float)scale * ent->type->scale.x);
+	e->h = (int)((float)scale * ent->type->scale.y);
+	e->start_y = (-e->h + app->sizes.y) / 2 + p->pitch + e->vmove_y;
+	e->end_y = (e->h + app->sizes.y) / 2 + p->pitch + e->vmove_y;
 	if (e->end_y < 0 || e->start_y >= app->sizes.y)
 		return (false);
 	e->start_y = clamp(e->start_y, 0, app->sizes.y);
@@ -43,10 +49,11 @@ static void
 	cast_entity(
 	const t_app *app,
 	struct s_render_ent_data *render,
-	const t_entity *ent)
+	t_entity *ent)
 {
 	const t_player	*p = &app->game.player;
 	t_proj_ent		e;
+	int				scale;
 
 	e.ent = ent;
 	e.space.x = ent->data.position.x - p->position.x;
@@ -60,14 +67,13 @@ static void
 	e.trans.y = -e.inv_det * (e.space.x * p->plane.y - e.space.y * p->plane.x);
 	if (e.trans.y < 1e-2)
 		return ;
-	e.w = absi((int)((float)app->sizes.y / e.trans.y));
-	e.screen_x = ((float)app->sizes.x / 2.f) * (1.f + e.trans.x / e.trans.y);
-	e.start_x = (int)(e.screen_x - (float)e.w / 2.f);
-	e.end_x = (int)ceilf(e.screen_x + (float)e.w / 2.f);
-	if (e.end_x < 0 || e.start_x >= app->sizes.x)
-		return ;
-	e.dist = e.trans.y;
-	if (!cast_entity_2(app, ent, &e))
+	scale = absi((int)((float)app->sizes.y / e.trans.y));
+	e.screen_x = ((float)app->sizes.x / 2.f) * (1.f + e.trans.x / e.trans.y)
+		+ ent->type->offset.x * (float)scale;
+	e.real_start_x = (int)(e.screen_x - (float)scale / 2.f);
+	e.end_x = (int)ceilf(e.screen_x + (float)scale / 2.f);
+	if (e.end_x < 0 || e.real_start_x >= app->sizes.x
+		|| !cast_entity_2(app, ent, &e, scale))
 		return ;
 	render->ents[render->num++] = e;
 }
@@ -77,12 +83,15 @@ static void
 	entity_traverse(size_t depth, t_rbnode *node, void *cookie)
 {
 	struct s_ent_tr_data *const	data = cookie;
+	const char					*name = ((t_entity *)node->key)->type->name;
 
 	(void)depth;
-	cast_entity(data->app, data->render, (const t_entity *)node->key);
+	if (!data->exclude
+		|| ft_strncmp(data->exclude, name, ft_strlen(data->exclude)))
+		cast_entity(data->app, data->render, node->key);
 }
 
-/** @brief Compare function to sort entities front to back */
+/** @brief Compare function to sort entities back to front */
 static int
 	ent_cmp(const void *lhs, const void *rhs)
 {
@@ -97,7 +106,10 @@ static int
 }
 
 void
-	project_entities(t_app *app, struct s_render_ent_data *render)
+	project_entities(
+	t_app *app,
+	struct s_render_ent_data *render,
+	const char *exclude)
 {
 	struct s_ent_tr_data	data;
 	t_proj_ent				tmp[MAX_ENTITIES];
@@ -105,6 +117,7 @@ void
 	render->num = 0;
 	data.app = app;
 	data.render = render;
+	data.exclude = exclude;
 	rb_apply(&app->entities, entity_traverse, &data);
 	ft_qsort_base(render->ents, render->num, (struct s_qsort_param){
 		.s = sizeof(t_proj_ent),

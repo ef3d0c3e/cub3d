@@ -422,8 +422,8 @@ t_panel_ctx
 /**
  * @brief Reset the context
  *
- * When the frame done drawing, this function is used to reset the state of the
- * context for the next frame.
+ * When the frame is done drawing, this function is used to reset the state of
+ * the context for the next frame.
  *
  * @param app Application pointer
  */

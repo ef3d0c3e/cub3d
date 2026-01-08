@@ -89,6 +89,8 @@ typedef struct s_proj_ent
 	t_sprite			sprite;
 	/** @brief Render flipped sprite */
 	bool				flip;
+	/** @brief Vertical offset */
+	int					vmove_y;
 }	t_proj_ent;
 
 /** @brief Initialize a ray using screen width coordinate */
@@ -102,7 +104,10 @@ void
 ray_cast(struct s_app *app, t_ray *r);
 /** @brief Ray algorithm for entities */
 void
-project_entities(struct s_app *app, struct s_render_ent_data *render);
+project_entities(
+	struct s_app *app,
+	struct s_render_ent_data *render,
+	const char *exclude);
 
 /** @brief Render a frame */
 void
@@ -153,8 +158,12 @@ struct s_render_ent_data
 /** @brief Entity RBTree traversal data */
 struct s_ent_tr_data
 {
+	/** @brief Application pointer */
 	const struct s_app			*app;
+	/** @brief Entity render data */
 	struct s_render_ent_data	*render;
+	/** @brief Exclusion filter */
+	const char	*exclude;
 };
 
 /** @} */

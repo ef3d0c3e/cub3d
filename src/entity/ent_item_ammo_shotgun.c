@@ -24,7 +24,7 @@ static bool
 	type->model.background = (t_color)0x00FFFF;
 	type->model.off_left = 40;
 	type->model.off_top = 66;
-	type->model.width = 15;
+	type->model.width = 14;
 	type->model.height = 7;
 	return (true);
 }
@@ -65,7 +65,9 @@ static void
 	void *entity,
 	struct s_ent_interaction interaction)
 {
-
+	(void)app;
+	(void)entity;
+	(void)interaction;
 }
 
 t_entity_type
@@ -73,6 +75,8 @@ t_entity_type
 {
 	static t_entity_type	data = {
 		.name = "item_ammo_shotgun",
+		.offset = {.31f, 450.f},
+		.scale = {0.4f, 0.2f},
 		.load_fn = item_load,
 		.create_fn = item_create,
 		.tick_fn = item_tick,

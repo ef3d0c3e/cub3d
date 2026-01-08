@@ -11,6 +11,25 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
+static void
+	debug_ent(void)
+{
+	static int				id;
+	t_entity_type *const	ent = (t_entity_type *)ent_get_type((enum e_ent_id)id);
+	static char				buf[256] = "Entity: ";
+
+	pan_text(" \x7f Entity Debug");
+	ft_memcpy(buf + 8, ent->name, ft_strlen(ent->name) + 1);
+	pan_slider_i(buf, &id, (int[2]){0, ENT_NUM_ - 1});
+	pan_push_columns("DEBUG_ENT", 2);
+	pan_slider_f("X Offset", &ent->offset.x, (float[2]){-1, 1});
+	pan_slider_f("Y Offset", &ent->offset.y, (float[2]){-500, 500});
+	pan_next_columns();
+	pan_slider_f("X Scale", &ent->scale.x, (float[2]){0.05f, 1});
+	pan_slider_f("Y Scale", &ent->scale.y, (float[2]){0.05f, 1});
+	pan_pop_columns();
+}
+
 void
 	game_debug(t_app *app)
 {
@@ -35,4 +54,5 @@ void
 	pan_slider_i("Score", &score, (const int[2]){0, 999999});
 	pan_next_columns();
 	pan_pop_columns();
+	debug_ent();
 }

@@ -19,7 +19,7 @@ bool
 	size_t						i;
 	t_pos						t;
 
-	project_entities(app, &render);
+	project_entities(app, &render, "item");
 	if (!render.num)
 		return false;
 	i = render.num - 1;
