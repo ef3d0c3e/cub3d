@@ -48,3 +48,15 @@ __attribute__((always_inline)) inline t_color
 	c[2] = (uint8_t)((((x >> 16) & 0xFF) * ((y >> 16) & 0xFF) + 128) >> 8);
 	return ((t_color)c[0] | ((t_color)c[1] << 8) | ((t_color)c[2] << 16));
 }
+
+__attribute__((always_inline)) inline t_color
+	color_add(t_color x, t_color y)
+{
+	const uint8_t	r[2] = {x & 0xFF, y & 0xFF};
+	const uint8_t	g[2] = {(x >> 8) & 0xFF, (y >> 8) & 0xFF};
+	const uint8_t	b[2] = {(x >> 16) & 0xFF, (y >> 16) & 0xFF};
+
+	return ((t_color)(clamp(r[0] + r[1], 0, 255)
+		+ (clamp(g[0] + g[1], 0, 255) << 8)
+		+ (clamp(b[0] + b[1], 0, 255) << 16)));
+}

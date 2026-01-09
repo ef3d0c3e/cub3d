@@ -52,27 +52,23 @@ static void
 {
 	const t_player	*player = &app->game.player;
 	t_vec2			size;
-	static char		bufs[3][64];
+	static char		bufs[2][64];
 
 	ft_memcpy(bufs[0], "[ HP ", 5);
 	itoa_buf(bufs[0] + 5, player->health);
 	ft_memcpy(bufs[0] + ft_strlen(bufs[0]), " ]", 2);
 	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[0]);
-	pan_cursor_set((t_vec2){0.f, 1 - size.y});
+	pan_cursor_set((t_vec2){0.f, .99f - size.y});
 	pan_text(bufs[0]);
-	ft_memcpy(bufs[1], "[ SCORE ", 8);
-	itoa_buf(bufs[1] + 8, 123456);
-	ft_memcpy(bufs[1] + ft_strlen(bufs[1]), " ]", 2);
-	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[1]);
-	pan_cursor_set((t_vec2){.5f - .5f * size.x, 1 - size.y});
-	pan_text(bufs[1]);
-	ft_memcpy(bufs[2], "[ AMMO ", 8);
 	if (player->weapon_id != WEAPON_NONE)
-		itoa_buf(bufs[2] + 7, player->weapons[player->weapon_id].ammo);
-	ft_memcpy(bufs[2] + ft_strlen(bufs[2]), " ]", 3);
-	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[2]);
-	pan_cursor_set((t_vec2){1.f - size.x, 1 - size.y});
-	pan_text(bufs[2]);
+	{
+		ft_memcpy(bufs[1], "[ AMMO ", 8);
+		itoa_buf(bufs[1] + 7, player->weapons[player->weapon_id].ammo);
+		ft_memcpy(bufs[1] + ft_strlen(bufs[1]), " ]", 3);
+		size = font_textsize(app, &pan_ctx(NULL)->font, bufs[1]);
+		pan_cursor_set((t_vec2){1.f - size.x, .99f - size.y});
+		pan_text(bufs[1]);
+	}
 	pan_cursor_set((t_vec2){0, 0});
 }
 

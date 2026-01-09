@@ -153,6 +153,15 @@ color_lerp(t_color x, t_color y, float f);
  */
 t_color
 color_tint(t_color x, t_color y);
+/**
+ * @brief Add two colors together
+ *
+ * @param x First color
+ * @param y Second color
+ * @return The result of `x + y` (clamped)
+ */
+t_color
+color_add(t_color x, t_color y);
 
 enum
 {
