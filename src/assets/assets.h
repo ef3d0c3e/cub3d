@@ -135,8 +135,12 @@ typedef struct s_material_prop
 {
 	/** @brief Emissive material (not affected by shading) */
 	uint8_t		emission;
+	/** @brief Fade color */
+	t_color		fade_color;
 	/** @brief Reflectivity of the material */
 	uint8_t		reflectivity;
+	/** @brief Default reflected color */
+	t_color		reflect_color;
 }	t_material_prop;
 
 /** @brief A material */

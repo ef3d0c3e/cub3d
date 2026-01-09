@@ -141,6 +141,8 @@ struct s_render_wall_data
 	t_color			*pix;
 	/** @brief Wall shade */
 	float			shade;
+	/** @brief Material properties */
+	const t_material_prop	*props;
 	/** @brief Wall texture */
 	const t_texture	*tex;
 };

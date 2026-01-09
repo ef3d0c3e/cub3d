@@ -11,8 +11,11 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-static __attribute__((always_inline)) inline const t_texture
-	*get_texture(const t_app *app, const t_ray *r)
+static __attribute__((always_inline)) inline void
+	*get_texture(
+	const t_app *app,
+	const t_ray *r,
+	struct s_render_wall_data *render)
 {
 	t_atlas_id	id;
 
@@ -34,7 +37,8 @@ static __attribute__((always_inline)) inline const t_texture
 		id += ((t_atlas_id)r->hit->orientation - 1);
 		id %= 4;
 	}
-	return (atlas_tex_get(&app->texture_atlas, r->hit->tex_ids[id]));
+	render->tex = atlas_tex_get(&app->texture_atlas, r->hit->tex_ids[id]);
+	render->props = &r->hit->props[id];
 }
 
 static __attribute__((always_inline)) inline void
@@ -50,14 +54,14 @@ static __attribute__((always_inline)) inline void
 	if (s->line_h > app->sizes.y * 4)
 		s->line_h = app->sizes.y * 4;
 	s->ds = (int)(-(float)s->line_h / 2.f + (float)app->sizes.y / 2.f
-			+ app->game.player.angle.y);
+			+ (float)app->game.player.pitch);
 	if (s->ds < 0)
 		s->ds = 0;
 	s->de = (int)((float)s->line_h / 2.f + (float)app->sizes.y / 2.f
-			+ app->game.player.angle.y);
+			+ (float)app->game.player.pitch);
 	if (s->de >= app->sizes.y)
 		s->de = app->sizes.y - 1;
-	s->tex = get_texture(app, r);
+	get_texture(app, r, s);
 	if (r->side == 0)
 		s->wall_x = app->game.player.position.y + r->perp_dist * r->ray.y;
 	else
@@ -70,6 +74,7 @@ static __attribute__((always_inline)) inline void
 					-1.f / vec2_dist(r->ray, (t_vec2){0, 0}))), 0.f, 1.f);
 }
 
+/** @brief Wall fragment shader */
 static __attribute__((always_inline)) inline t_color
 	sample(struct s_render_wall_data *s)
 {
@@ -77,7 +82,8 @@ static __attribute__((always_inline)) inline t_color
 
 	color = *(t_color *)(s->tex->img->data + s->ty * s->tex->img->size_line
 			+ s->tx * (s->tex->img->bpp / 8));
-	return (color_lerp(color, 0x000000, s->shade / 2));
+	return (color_lerp8(color, s->props->fade_color,
+			(uint8_t)((255 - s->props->emission) * s->shade / 2)));
 }
 
 void
@@ -95,13 +101,9 @@ void
 	y = s.ds;
 	while (y <= s.de)
 	{
-		d = (int)(((float)y - app->game.player.angle.y) * 256)
+		d = (int)(((float)y - (float)app->game.player.pitch) * 256)
 			- app->sizes.y * 128 + s.line_h * 128;
-		s.ty = ((d * s.tex->height) / s.line_h) / 256;
-		if (s.ty < 0)
-			s.ty = 0;
-		else if (s.ty >= s.tex->height)
-			s.ty = s.tex->height - 1;
+		s.ty = clamp(((d * s.tex->height) / s.line_h) / 256, 0, s.tex->height);
 		s.pix[x + y * (int)app->sizes.x] = sample(&s);
 		++y;
 	}

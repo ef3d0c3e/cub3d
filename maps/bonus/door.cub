@@ -8,8 +8,8 @@ C 153,204,255
 
 MAT DOOR D S FR=textures/wolfenstein/eagle.xpm BA=textures/wolfenstein/purple_stone.xpm BO=textures/wolfenstein/grey_stone.xpm TO=textures/wolfenstein/grey_stone.xpm
 MAT CUBE # NO=textures/own/concrete_1.xpm EA=textures/own/concrete_1.xpm SO=textures/own/concrete_1.xpm WE=textures/own/concrete_1.xpm
-MAT FLOOR _ BO=textures/own/tile_checkboard.xpm:reflectivity=255 TO=textures/own/tile.xpm
-MAT FLOOR ^ BO=textures/own/tile_checkboard.xpm:reflectivity=255 TO=textures/own/tile.xpm:emission=255
+MAT FLOOR _ BO=textures/own/tile_checkboard.xpm:reflectivity=155 TO=textures/own/tile.xpm
+MAT FLOOR ^ BO=textures/own/tile_checkboard.xpm:reflectivity=155 TO=textures/own/tile.xpm:emission=255
 
 MAT DOOR 2 N FR=textures/wolfenstein/eagle.xpm BA=textures/wolfenstein/purple_stone.xpm BO=textures/wolfenstein/grey_stone.xpm TO=textures/wolfenstein/grey_stone.xpm
 MAT DOOR 3 S FR=textures/wolfenstein/eagle.xpm BA=textures/wolfenstein/purple_stone.xpm BO=textures/wolfenstein/grey_stone.xpm TO=textures/wolfenstein/grey_stone.xpm
