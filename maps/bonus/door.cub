@@ -7,22 +7,26 @@ F 164,169,20
 C 153,204,255
 
 MAT DOOR D S FR=textures/wolfenstein/eagle.xpm BA=textures/wolfenstein/purple_stone.xpm BO=textures/wolfenstein/grey_stone.xpm TO=textures/wolfenstein/grey_stone.xpm
+MAT CUBE # NO=textures/own/concrete_1.xpm EA=textures/own/concrete_1.xpm SO=textures/own/concrete_1.xpm WE=textures/own/concrete_1.xpm
+MAT FLOOR _ BO=textures/own/tile_checkboard.xpm TO=textures/own/stripes_ns.xpm
+
+PROP player_spawn _
 
 ENT ghoul (1.5, 4.5)
 ENT ghoul (2.5, 4.5)
-ENT item_ammo_shotgun (5.5, 4.5)
-ENT item_ammo_shotgun (10.5, 4.5)
+ENT item_ammo_chaingun (5.5, 4.5)
+ENT item_chaingun (10.5, 4.5)
 
-1111111
-1000001
-11111D111111111111111
-100000000000000000001
-110000000000000000001
-100000000000000000001
-111011111111111000111
-  101       100000001
-  101       1000N0001
-  1011111111100000001
-  1011000000000000001
-  1000000000000000001
-  1111111111111111111
+#######
+#_____#
+#####D###############
+#___________________#
+##___________W______#
+#___________________#
+###_###########___###
+  #_#       #_______#
+  #_#       #_______#
+  #_#########_______#
+  #_##______________#
+  #_________________#
+  ###################

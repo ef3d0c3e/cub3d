@@ -24,8 +24,7 @@ void
 		(float)app->map.player_spawn.x + .5f,
 		(float)app->map.player_spawn.y + .5f,
 	};
-	p->weapons[WEAPON_NONE].has_weapon = true;
-	p->weapons[WEAPON_SHOTGUN].has_weapon = true;
+	p->weapon_id = WEAPON_NONE;
 	p->dir = (t_vec2){sinf(p->angle.x), cosf(p->angle.x)};
 	p->plane = (t_vec2){p->dir.y * p->fov, p->dir.x * p->fov};
 }
@@ -41,7 +40,7 @@ static void
 		if (id == WEAPON_NONE)
 			id = WEAPON_NUM_;
 		id -= 1;
-		if (app->game.player.weapons[id].has_weapon)
+		if (app->game.player.weapons[id].has_weapon || id == WEAPON_NONE)
 			break ;
 	}
 	while (direction == 1)
@@ -49,7 +48,7 @@ static void
 		id += 1;
 		if (id == WEAPON_NUM_)
 			id = WEAPON_NONE;
-		if (app->game.player.weapons[id].has_weapon)
+		if (app->game.player.weapons[id].has_weapon || id == WEAPON_NONE)
 			break ;
 	}
 	app->game.player.weapon_id = id;

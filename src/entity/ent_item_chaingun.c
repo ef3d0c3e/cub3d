@@ -53,6 +53,8 @@ static void
 	if (dist < .4f)
 	{
 		weapon->has_weapon = true;
+		if (app->game.player.weapon_id == WEAPON_NONE)
+			app->game.player.weapon_id = WEAPON_CHAINGUN;
 		weapon->ammo = clamp(weapon->ammo + 50, 0,
 				app->assets.weapons[WEAPON_CHAINGUN].max_ammo);
 		item->base.data.delete = true;

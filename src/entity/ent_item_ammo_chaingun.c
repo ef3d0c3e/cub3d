@@ -45,14 +45,16 @@ static void
 	item_tick(struct s_app *app, void *entity)
 {
 	struct s_ent_item *const	item = entity;
-	t_player_weapondata *const	weapon = &app->game.player.weapons
+	const t_weapon				*weapon = &app->assets.weapons[WEAPON_CHAINGUN];
+	t_player_weapondata *const	data = &app->game.player.weapons
 	[WEAPON_CHAINGUN];
+
 	const float					dist = vec2_dist(item->base.data.position,
 		app->game.player.position);
 
-	if (dist < .4f)
+	if (dist < .4f && data->ammo < weapon->max_ammo)
 	{
-		weapon->ammo = clamp(weapon->ammo + 50, 0,
+		data->ammo = clamp(data->ammo + 100, 0,
 				app->assets.weapons[WEAPON_CHAINGUN].max_ammo);
 		item->base.data.delete = true;
 	}
