@@ -12,7 +12,7 @@
 #include <cub3d.h>
 
 static void
-	render_ceiling(t_app *app, int x, int start_y, t_ray *r)
+	render_ceiling(t_app *app, int x, int start_y, const t_ray *r)
 {
 	int				y;
 	int				p;
@@ -41,7 +41,7 @@ static void
 }
 
 static void
-	render_floor(t_app *app, int x, int end_y, t_ray *r)
+	render_floor(t_app *app, int x, int end_y, const t_ray *r)
 {
 	int				y;
 	int				p;
@@ -99,16 +99,14 @@ void
 	int		x;
 
 	x = 0;
-	//while (x <  app->sizes.x)
-#pragma omp parallel for private(x, r) shared(app) schedule(dynamic)
-	for (x = 0; x < app->sizes.x; ++x)
+	while (x <  app->sizes.x)
 	{
 		ray_init(&app->game.player,
 				2.f * ((float)x / (float)app->sizes.x) - 1.f, &r);
 		ray_cast(app, &r);
 		app->z_buffer[x] = r.perp_dist;
 		render_slice(app, x, &r);
-		//++x;
+		++x;
 	}
 	render_entities(app);
 }

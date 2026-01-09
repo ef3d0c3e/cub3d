@@ -62,6 +62,30 @@ const t_texture
 	return (&atlas->textures[tex_id]);
 }
 
+/** @brief Check if texture is already loaded to prevent double-loading */
+static inline t_atlas_id
+	already_loaded(
+	t_texture_atlas *atlas,
+	const char *path,
+	const t_texture **out)
+{
+	t_atlas_id	id;
+
+	id = 0;
+	while (id < atlas->size)
+	{
+		if (atlas->textures[id].path && !ft_strcmp(atlas->textures[id].path,
+				path))
+		{
+			if (out)
+				*out = &atlas->textures[id];
+			return (id);
+		}
+		++id;
+	}
+	return ((t_atlas_id)ATLAS_INVALID);
+}
+
 t_atlas_id
 	atlas_tex_load(
 	void *mlx_ptr,
@@ -75,20 +99,20 @@ t_atlas_id
 
 	if (out)
 		*out = NULL;
+	id = already_loaded(atlas, path, out);
+	if (id != (t_atlas_id)ATLAS_INVALID)
+		return (id);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		return (assets_error(path, err(0, " File does not exist")),
+		return (assets_error(path, err(0, " Cannot open file")),
 			(t_atlas_id)ATLAS_INVALID);
 	close(fd);
 	ft_memset(&tex, 0, sizeof(tex));
 	tex.path = ft_strdup(path);
 	tex.img = mlx_xpm_file_to_image(mlx_ptr, tex.path, &tex.width, &tex.height);
 	if (!tex.img)
-	{
-		assets_error(tex.path, err(0, " `mlx_xpm_file_to_image` failed"));
-		free(tex.path);
-		return ((t_atlas_id)ATLAS_INVALID);
-	}
+		return (assets_error(tex.path, err(0, " `mlx_xpm_file_to_image` failed"
+				)), free(tex.path), (t_atlas_id)ATLAS_INVALID);
 	id = atlas_tex_add(atlas, tex);
 	if (out)
 		*out = &atlas->textures[id];

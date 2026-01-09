@@ -137,12 +137,14 @@ struct s_render_wall_data
 	/** @briof Draw end screen vertical poosition */
 	int				de;
 
-	int				tw;
-	int				th;
 	int				tx;
 	int				ty;
 	float			wall_x;
-	uint32_t		*pix;
+	/** @brief Framebuffer */
+	t_color			*pix;
+	/** @brief Wall shade */
+	float			shade;
+	/** @brief Wall texture */
 	const t_texture	*tex;
 };
 

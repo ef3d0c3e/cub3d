@@ -11,16 +11,16 @@
 /* ************************************************************************** */
 #include <util/util.h>
 
-float
-	vec2_dist(t_vec2 x, t_vec2 y)
+inline float
+	vec2_dist(t_vec2 a, t_vec2 b)
 {
-	const float	dx = x.x - y.x;
-	const float	dy = x.y - y.y;
+	const float	dx = a.x - b.x;
+	const float	dy = a.y - b.y;
 
 	return (sqrtf(dx * dx + dy * dy));
 }
 
-t_vec2
+inline t_vec2
 	vec2_dir(t_vec2 from, t_vec2 to)
 {
 	const float		dist = vec2_dist(from, to);
@@ -31,8 +31,14 @@ t_vec2
 	});
 }
 
-t_vec2
+inline t_vec2
 	vec2_scale(t_vec2 v, float x)
 {
 	return ((t_vec2){v.x * x, v.y * x});
+}
+
+inline float
+	vec2_dot(t_vec2 a, t_vec2 b)
+{
+	return (a.x * b.x + a.y * b.y);
 }

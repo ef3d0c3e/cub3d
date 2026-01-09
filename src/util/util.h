@@ -42,12 +42,12 @@ typedef struct s_vec2
 /**
  * @brief Compute the distance between two vectors
  *
- * @param x First vector
- * @param y Second vector
+ * @param a First vector
+ * @param b Second vector
  * @return The distance between @p x and @p y: `||x - y||`
  */
 float
-vec2_dist(t_vec2 x, t_vec2 y);
+vec2_dist(t_vec2 a, t_vec2 b);
 /**
  * @brief Compute the direction between two vectors
  *
@@ -66,6 +66,15 @@ vec2_dir(t_vec2 from, t_vec2 to);
  */
 t_vec2
 vec2_scale(t_vec2 v, float x);
+/**
+ * @brief Compute the dot product between two vectors
+ *
+ * @param a First vector
+ * @param b Second vector
+ * @return The dot product between @p a and @p b: `a . b`
+ */
+float
+vec2_dot(t_vec2 a, t_vec2 b);
 
 /** @brief A 3D float vector */
 typedef struct s_vec3
