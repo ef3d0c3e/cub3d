@@ -41,6 +41,7 @@ void
 		ui_ev_keydown, app);
 	mlx_hook(app->mlx_window, EVENT_KEYUP, MASK_KEY_RELEASE,
 		ui_ev_keyup, app);
+	
 	//mlx_hook(app->window, EVENT_EXPOSE, MASK_ExposureMask, ev_expose, app);
 	mlx_hook(app->mlx_window, EVENT_DESTROY, MASK_NONE,
 		mlx_loop_end, app->mlx_ptr);

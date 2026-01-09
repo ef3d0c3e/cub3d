@@ -38,30 +38,12 @@ void
 void
 	draw_viewmodel(t_app *app)
 {
-	
 	const t_weapon	*weapon = &app->assets.weapons[app->game.player.weapon_id];
-	float			f;
-	float			y;
-	int				anim;
 
 	if (app->game.player.weapon_id == WEAPON_NONE)
 		return ;
-	anim = 0;
-	if (app->game.player.weapon_anim != 0)
-		anim = 1 + (int)((float)(sprite_sheet_anim_count(&weapon->view_model)
-					- 2) *(weapon->anim_shoot_time
-					- app->game.player.weapon_anim) / weapon->anim_shoot_time);
-	f = .65f * (float)app->sizes.x / (float)weapon->view_model.width;
-	y = 1.1f - (float)weapon->view_model.height * f * .5f / (float)app->sizes.y;
-	hud_draw(app, (t_draw_item){
-		.type = DRAW_SPRITE,
-		.draw.sprite = {
-			.sprite = sprite_sheet_get(&weapon->view_model, 0, anim),
-			.color = 0xFFFFFF,
-			.scale = (t_vec2){f, f},
-			.pos = {.37f, y},
-		}
-	});
+	weapon->draw(app, weapon,
+		&app->game.player.weapons[app->game.player.weapon_id]);
 }
 
 /** @brief Draw stats hud */
@@ -84,9 +66,10 @@ static void
 	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[1]);
 	pan_cursor_set((t_vec2){.5f - .5f * size.x, 1 - size.y});
 	pan_text(bufs[1]);
-	ft_memcpy(bufs[2], "[ AMMO ", 7);
-	itoa_buf(bufs[2] + 7, player->weapons[player->weapon_id].ammo);
-	ft_memcpy(bufs[2] + ft_strlen(bufs[2]), " ]", 2);
+	ft_memcpy(bufs[2], "[ AMMO ", 8);
+	if (player->weapon_id != WEAPON_NONE)
+		itoa_buf(bufs[2] + 7, player->weapons[player->weapon_id].ammo);
+	ft_memcpy(bufs[2] + ft_strlen(bufs[2]), " ]", 3);
 	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[2]);
 	pan_cursor_set((t_vec2){1.f - size.x, 1 - size.y});
 	pan_text(bufs[2]);
@@ -99,7 +82,7 @@ void
 	static char	fps[256] = "FPS ";
 
 	map_state_update(app);
-	render_frame(app);
+	render_frame_bonus(app);
 	if (app->game.show_minimap)
 		game_minimap_render(app);
 	draw_viewmodel(app);

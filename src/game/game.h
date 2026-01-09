@@ -69,13 +69,6 @@ game_ui(struct s_app *app);
 void
 game_interact(struct s_app *app);
 /**
- * @brief Process a shoot event from the player
- *
- * @param app Application pointer
- */
-void
-game_shoot(struct s_app *app);
-/**
  * @brief Show the game's debug menu
  *
  * @param app Application pointer

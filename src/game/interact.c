@@ -26,22 +26,3 @@ void
 					app);
 	}
 }
-
-void
-	game_shoot(t_app *app)
-{
-	t_proj_ent		ent;
-	const t_weapon	*weapon = &app->assets.weapons[app->game.player.weapon_id];
-
-	if (ray_entities(app, &ent))
-	{
-		weapon->shoot(app);
-		ent.ent->type->interact_fn(app, ent.ent, (t_ent_interaction){
-			.kind = ENTI_ATTACK,
-			.u_data.s_attack = {
-				.damage = weapon->damage,
-				.knockback = weapon->knockback,
-			}
-		});
-	}
-}

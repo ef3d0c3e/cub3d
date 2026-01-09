@@ -68,7 +68,7 @@ static void
 			ghoul->base.data.color = 0xFFFFFF;
 		}
 	}
-	ghoul->aggro_time = clampf(ghoul->aggro_time - app->frame_delta, 0, 1e10);
+	ghoul->aggro_time = clampf(ghoul->aggro_time - app->frame_delta, 0, 1e10f);
 		ghoul->base.data.anim_state.x = 0;
 	if (ghoul->aggro_time != 0.f)
 		ghoul->base.data.anim_state.x = 1 + ((int)(ghoul->aggro_time * 4) % 2);

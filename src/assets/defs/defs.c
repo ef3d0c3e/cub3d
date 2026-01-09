@@ -61,6 +61,7 @@ bool
 		ent_load_assets,
 		asset_loader_items,
 		asset_loader_weapon_shotgun,
+		asset_loader_weapon_chaingun,
 		NULL,
 	};
 	size_t						i;

@@ -24,8 +24,35 @@ void
 		(float)app->map.player_spawn.x + .5f,
 		(float)app->map.player_spawn.y + .5f,
 	};
+	p->weapons[WEAPON_NONE].has_weapon = true;
+	p->weapons[WEAPON_SHOTGUN].has_weapon = true;
 	p->dir = (t_vec2){sinf(p->angle.x), cosf(p->angle.x)};
 	p->plane = (t_vec2){p->dir.y * p->fov, p->dir.x * p->fov};
+}
+
+static void
+	scroll_weapon(t_app *app, int direction)
+{
+	enum e_weapon_id	id;
+
+	id = app->game.player.weapon_id;
+	while (direction == -1)
+	{
+		if (id == WEAPON_NONE)
+			id = WEAPON_NUM_;
+		id -= 1;
+		if (app->game.player.weapons[id].has_weapon)
+			break ;
+	}
+	while (direction == 1)
+	{
+		id += 1;
+		if (id == WEAPON_NUM_)
+			id = WEAPON_NONE;
+		if (app->game.player.weapons[id].has_weapon)
+			break ;
+	}
+	app->game.player.weapon_id = id;
 }
 
 void
@@ -33,24 +60,16 @@ void
 {
 	t_player *const	player = &app->game.player;
 	const t_weapon	*weapon = &app->assets.weapons[player->weapon_id];
-	t_vec2	move;
+	t_vec2			move;
 
 	move = (t_vec2){
 		ui_key_held(app, KEY_W) - ui_key_held(app, KEY_S),
 		ui_key_held(app, KEY_D) - ui_key_held(app, KEY_A)
 	};
-	if (player->weapon_id != WEAPON_NONE && ui_mouse_pressed(app, MOUSE_LEFT)
-		&& player->weapon_anim == 0 && player->weapons[player->weapon_id].ammo)
-	{
-		game_shoot(app);
-		player->weapon_anim = weapon->anim_shoot_time;
-		--player->weapons[player->weapon_id].ammo;
-	}
-	if (player->weapon_anim != 0)
-	{
-		player->weapon_anim -= app->frame_delta;
-		player->weapon_anim = maxf(player->weapon_anim, 0);
-	}
+	if (player->weapon_id != WEAPON_NONE)
+		weapon->use(app, weapon, &app->game.player.weapons[player->weapon_id]);
+	scroll_weapon(app, ui_mouse_released(app, MOUSE_WHEEL_DOWN)
+		- ui_mouse_released(app, MOUSE_WHEEL_UP));
 	app->game.player.angle.x += (ui_key_held(app, KEY_ARROW_RIGHT) - ui_key_held(app, KEY_ARROW_LEFT)) * .05f;
 	if (app->event.mouse_grab)
 		app->game.player.angle.x += (float)app->event.mouse_delta.x * 0.002f;

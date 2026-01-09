@@ -38,7 +38,7 @@ static bool
 	e->sprite = sprite_sheet_get(&ent->type->model,
 			ent->data.anim_state.x, ent->data.anim_state.y);
 	i = e->start_x;
-	min = 1e10;
+	min = 1e10f;
 	while (i < e->end_x)
 		min = fmaxf(min, app->z_buffer[i++]);
 	return (e->dist < min);

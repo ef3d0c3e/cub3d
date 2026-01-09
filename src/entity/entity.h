@@ -136,6 +136,9 @@ typedef struct s_entity
 enum e_ent_id
 {
 	ENT_ITEM_AMMO_SHOTGUN,
+	ENT_ITEM_SHOTGUN,
+	ENT_ITEM_AMMO_CHAINGUN,
+	ENT_ITEM_CHAINGUN,
 	ENT_GHOUL,
 	ENT_NUM_,
 };
@@ -183,6 +186,27 @@ struct s_ent_item
  */
 t_entity_type
 *ent_type_item_ammo_shotgun(void);
+/**
+ * @brief Get the tntity type for @ref ENT_ITEM_SHOTGUN
+ *
+ * @return The entity type for @ref ENT_ITEM_SHOTGUN
+ */
+t_entity_type
+*ent_type_item_shotgun(void);
+/**
+ * @brief Get the tntity type for @ref ENT_ITEM_AMMO_CHAINGUN
+ *
+ * @return The entity type for @ref ENT_ITEM_AMMO_CHAINGUN
+ */
+t_entity_type
+*ent_type_item_ammo_chaingun(void);
+/**
+ * @brief Get the tntity type for @ref ENT_ITEM_CHAINGUN
+ *
+ * @return The entity type for @ref ENT_ITEM_CHAINGUN
+ */
+t_entity_type
+*ent_type_item_chaingun(void);
 
 struct s_ent_ghoul
 {

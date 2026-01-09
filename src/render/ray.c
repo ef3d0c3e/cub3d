@@ -19,7 +19,7 @@ void
 	r->map_y = (int)p->position.y;
 	r->ray = (t_vec2){p->dir.x + p->plane.x * camera_x,
 		p->dir.y + p->plane.y * camera_x};
-	r->delta_dist = (t_vec2){1e10, 1e10};
+	r->delta_dist = (t_vec2){1e10f, 1e10f};
 	if (r->ray.x != 0)
 		r->delta_dist.x = fabsf(1.f / r->ray.x);
 	if (r->ray.y != 0)
@@ -46,7 +46,7 @@ void
 	r->map_x = (int)pos.x;
 	r->map_y = (int)pos.y;
 	r->ray = dir;
-	r->delta_dist = (t_vec2){1e10, 1e10};
+	r->delta_dist = (t_vec2){1e10f, 1e10f};
 	if (r->ray.x != 0)
 		r->delta_dist.x = fabsf(1.f / dir.x);
 	if (r->ray.y != 0)
@@ -119,5 +119,5 @@ void
 		return ;
 	r->perp_dist = !r->side * (r->side_dist.x - r->delta_dist.x)
 		+ !!r->side * (r->side_dist.y - r->delta_dist.y);
-	r->perp_dist = clampf(r->perp_dist, 0.001f, 1e10);
+	r->perp_dist = clampf(r->perp_dist, 0.001f, 1e10f);
 }

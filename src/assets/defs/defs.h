@@ -16,6 +16,7 @@
 
 struct			s_assets;
 struct			s_app;
+struct			s_player_weapondata;
 
 /**
  * @defgroup PredefinedAssets Predefined Assets
@@ -48,18 +49,20 @@ typedef struct s_weapon
 {
 	/** @brief Weapon view model */
 	t_sprite_sheet	view_model;
-	/** @brief Weapon item model (on ground) */
-	t_sprite		item_model;
 	/** @brief Time taken by the shoot animation */
 	float			anim_shoot_time;
 	/** @brief Maximum ammunitions */
 	int				max_ammo;
-	/** @brief Weapon base damage */
-	int				damage;
-	/** @brief Weapon base knockback */
-	float			knockback;
-	/** @brief Shoot function callback */
-	void			(*shoot)(struct s_app *app);
+	/** @brief Use function callback */
+	void			(*use)(
+			struct s_app *app,
+			const struct s_weapon *this,
+			struct s_player_weapondata *data);
+	/** @brief Draw function callback */
+	void			(*draw)(
+			struct s_app *app,
+			const struct s_weapon *this,
+			struct s_player_weapondata *data);
 }	t_weapon;
 
 /** @brief All available weapons */
@@ -69,6 +72,8 @@ enum e_weapon_id
 	WEAPON_NONE = -1,
 	/** @brief The shotgun weapon */
 	WEAPON_SHOTGUN = 0,
+	/** @brief The shotgun weapon */
+	WEAPON_CHAINGUN = 1,
 	/** @brief Number of weapons */
 	WEAPON_NUM_,
 };
@@ -138,6 +143,15 @@ asset_loader_items(struct s_app *app, t_assets *assets);
  */
 bool
 asset_loader_weapon_shotgun(struct s_app *app, t_assets *assets);
+/**
+ * @brief Asset loader for the chaingun weapon
+ *
+ * @param app Application pointer
+ * @param assets Assets
+ * @return `true` on success, `false` on errors
+ */
+bool
+asset_loader_weapon_chaingun(struct s_app *app, t_assets *assets);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Internal                                                                   //

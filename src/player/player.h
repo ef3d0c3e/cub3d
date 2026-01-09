@@ -27,6 +27,8 @@ typedef struct s_player_weapondata
 	bool				has_weapon;
 	/** @brief Number of ammunitions */
 	int					ammo;
+	/** @brief Animation state */
+	t_pos				anim;
 }	t_player_weapondata;
 
 typedef struct s_player
