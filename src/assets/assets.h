@@ -128,9 +128,16 @@ enum e_mat_type
 	MAT_CUBE,
 	/** @brief A door with 2 sides and an orientation */
 	MAT_DOOR,
-	/** @brief A cylinder with a single texture */
-	MAT_CYLINDER,
 };
+
+/** @brief Material properties */
+typedef struct s_material_prop
+{
+	/** @brief Emissive material (not affected by shading) */
+	uint8_t		emission;
+	/** @brief Reflectivity of the material */
+	uint8_t		reflectivity;
+}	t_material_prop;
 
 /** @brief A material */
 typedef struct s_material
@@ -141,6 +148,8 @@ typedef struct s_material
 	enum e_mat_type		type;
 	/** @brief Material textures */
 	t_atlas_id			tex_ids[4];
+	/** @brief Material properties */
+	t_material_prop		props[4];
 	/** @brief Material orientation */
 	enum e_orientation	orientation;
 }	t_material;

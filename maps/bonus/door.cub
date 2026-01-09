@@ -8,17 +8,16 @@ C 153,204,255
 
 MAT DOOR D S FR=textures/wolfenstein/eagle.xpm BA=textures/wolfenstein/purple_stone.xpm BO=textures/wolfenstein/grey_stone.xpm TO=textures/wolfenstein/grey_stone.xpm
 MAT CUBE # NO=textures/own/concrete_1.xpm EA=textures/own/concrete_1.xpm SO=textures/own/concrete_1.xpm WE=textures/own/concrete_1.xpm
-MAT FLOOR _ BO=textures/own/tile_checkboard.xpm TO=textures/own/stripes_ns.xpm
+MAT FLOOR _ BO=textures/own/tile_checkboard.xpm:reflectivity=255 TO=textures/own/tile.xpm
+MAT FLOOR ^ BO=textures/own/tile_checkboard.xpm:reflectivity=255 TO=textures/own/tile.xpm:emission=255
 
 MAT DOOR 2 N FR=textures/wolfenstein/eagle.xpm BA=textures/wolfenstein/purple_stone.xpm BO=textures/wolfenstein/grey_stone.xpm TO=textures/wolfenstein/grey_stone.xpm
 MAT DOOR 3 S FR=textures/wolfenstein/eagle.xpm BA=textures/wolfenstein/purple_stone.xpm BO=textures/wolfenstein/grey_stone.xpm TO=textures/wolfenstein/grey_stone.xpm
 MAT DOOR 4 E FR=textures/wolfenstein/eagle.xpm BA=textures/wolfenstein/purple_stone.xpm BO=textures/wolfenstein/grey_stone.xpm TO=textures/wolfenstein/grey_stone.xpm
 MAT DOOR 5 W FR=textures/wolfenstein/eagle.xpm BA=textures/wolfenstein/purple_stone.xpm BO=textures/wolfenstein/grey_stone.xpm TO=textures/wolfenstein/grey_stone.xpm
 
-PROP player_spawn _
+PROP player_spawn ^
 
-ENT ghoul (1.5, 4.5)
-ENT ghoul (2.5, 4.5)
 ENT item_ammo_chaingun (5.5, 4.5)
 ENT item_chaingun (10.5, 4.5)
 
@@ -26,7 +25,7 @@ ENT item_chaingun (10.5, 4.5)
 #_________#
 #####D#___###################
 #___________________________#
-##_W_________________#2#3#__#
+##_W__^__^__^__^__^__#2#3#__#
 #________________________4__#
 ###_###########___##_____#__#
   #_#       #_______#____5__#

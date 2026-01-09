@@ -42,3 +42,13 @@ size_t
 		++len;
 	return (len);
 }
+
+const char
+	*ft_strmchr(const char *s, const char *e, int c)
+{
+	while (s != e && *s && *s != c)
+		++s;
+	if (*s == c)
+		return (s);
+	return (NULL);
+}

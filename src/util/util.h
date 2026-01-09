@@ -49,6 +49,15 @@ typedef struct s_vec2
 float
 vec2_dist(t_vec2 a, t_vec2 b);
 /**
+ * @brief Compute the squared distance between two vectors
+ *
+ * @param a First vector
+ * @param b Second vector
+ * @return The distance between @p x and @p y: `||x - y||^2`
+ */
+float
+vec2_dist2(t_vec2 a, t_vec2 b);
+/**
  * @brief Compute the direction between two vectors
  *
  * @param x First vector
@@ -413,6 +422,17 @@ char
  */
 size_t
 ft_strnlen(const char *str, size_t n);
+
+/**
+ * @brief Strchr function with bounds
+ *
+ * @param s Start
+ * @param e End
+ * @param c Character to search in `[start, end)`
+ * @return The first occurence of @p c in `[start, end)`, or `NULL` if not found
+ */
+const char
+*ft_strmchr(const char *s, const char *e, int c);
 /**
  * @brief Clamp an integer value
  *

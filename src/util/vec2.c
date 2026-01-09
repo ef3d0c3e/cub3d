@@ -20,6 +20,15 @@ __attribute__((always_inline)) inline float
 	return (sqrtf(dx * dx + dy * dy));
 }
 
+__attribute__((always_inline)) inline float
+	vec2_dist2(t_vec2 a, t_vec2 b)
+{
+	const float	dx = a.x - b.x;
+	const float	dy = a.y - b.y;
+
+	return (dx * dx + dy * dy);
+}
+
 __attribute__((always_inline)) inline t_vec2
 	vec2_dir(t_vec2 from, t_vec2 to)
 {

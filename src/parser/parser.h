@@ -297,6 +297,20 @@ parse_material(
 	const char *ident,
 	const char **tex_attrs,
 	t_material *mat);
+
+/**
+ * @brief Parse material texture properties
+ *
+ * @param parser The parser
+ * @param tex Texture range
+ * @param props Texture's properties
+ * @return `true` on success, `false` on errors
+ */
+bool
+parse_mat_props(
+	struct s_parser *parser,
+	const char *tex[2],
+	t_material_prop *props);
 /**
  * @brief Parse materials textures
  *

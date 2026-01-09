@@ -23,10 +23,10 @@ void
 	t_pos			screen;
 
 	uv.y = 0;
-	while (uv.y < (int)((float)spr->height * p.scale.y))
+	while (uv.y < (int)ceilf((float)spr->height * p.scale.y))
 	{
 		uv.x = 0;
-		while (uv.x < (int)((float)spr->width * p.scale.x))
+		while (uv.x < (int)ceilf((float)spr->width * p.scale.x))
 		{
 			color = sprite_sample_tx(spr,
 					(int)((float)uv.x / p.scale.x),

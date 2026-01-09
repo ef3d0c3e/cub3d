@@ -11,9 +11,33 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
+/** @brief Initialize the default floor material */
+static bool
+	init_default_floor(t_app *app)
+{
+	const t_atlas_id	id = atlas_mat_get_id(&app->material_atlas, '0');
+	t_img				*img;
+
+	img = mlx_new_image(app->mlx_ptr, 1, 1);
+	if (!img)
+		return (false);
+	((t_color *)img->data)[0] = app->map.colors[1];
+	app->material_atlas.materials[id].tex_ids[0]
+		= atlas_tex_add(&app->texture_atlas, (t_texture){1, 1, NULL, img});
+	img = mlx_new_image(app->mlx_ptr, 1, 1);
+	if (!img)
+		return (false);
+	((t_color *)img->data)[0] = app->map.colors[0];
+	app->material_atlas.materials[id].tex_ids[1]
+		= atlas_tex_add(&app->texture_atlas, (t_texture){1, 1, NULL, img});
+	return (true);
+}
+
 bool
 	app_setup(t_app *app)
 {
+	if (!init_default_floor(app))
+		return (false);
 	//if (!thread_pool_init(&app->pool, 16))
 	//	return (false);
 	if (!game_setup(app))

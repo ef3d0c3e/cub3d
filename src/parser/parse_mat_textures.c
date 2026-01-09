@@ -80,6 +80,8 @@ static bool
 	i = 0;
 	while (i < counts[0])
 	{
+		if (!parse_mat_props(parser, &attrs_parsed[1][2 * i], &mat->props[i]))
+			return (false);
 		len = (size_t)(attrs_parsed[1][2 * i + 1] - attrs_parsed[1][2 * i]);
 		if (len < 4 || ft_strncmp(attrs_parsed[1][2 * i] + len - 4, ".xpm", 4))
 			return (parser_error_loc(parser, err(0, "Invalid extension for "

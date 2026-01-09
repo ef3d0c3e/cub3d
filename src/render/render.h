@@ -145,6 +145,23 @@ struct s_render_wall_data
 	const t_texture	*tex;
 };
 
+/** @brief Data for floor/ceiling render */
+struct s_render_fc_data
+{
+	/** @brief Screen coordinates */
+	t_pos					s;
+	/** @brief Texture coordinates */
+	t_pos					t;
+	/** @brief Raycast result */
+	const t_ray				*ray;
+	/** @brief Material properties */
+	const t_material_prop	*props;
+	/** @brief Texture */
+	const t_texture			*tex;
+	/** @brief World coordinates */
+	t_vec2					world;
+};
+
 /** @brief Entity render data */
 struct s_render_ent_data
 {
