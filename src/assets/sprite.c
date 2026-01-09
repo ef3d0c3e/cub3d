@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include <assets/assets.h>
 
-inline t_color
+__attribute__((always_inline)) inline t_color
 	sprite_sample(const t_sprite *spr, float u, float v)
 {
 	t_color	col;
@@ -36,7 +36,30 @@ inline t_color
 	return (col);
 }
 
-inline t_color
+__attribute__((always_inline)) inline t_color
+	sprite_sample_tx(const t_sprite *spr, int tx, int ty)
+{
+	t_color	col;
+
+	if (tx >= spr->width)
+		tx = spr->left + (spr->width - 1);
+	else if (tx <= 0)
+		tx = spr->left;
+	else
+		tx = spr->left + tx;
+	if (ty >= spr->height)
+		ty = spr->top + (spr->height - 1);
+	else if (ty < 0)
+		ty = spr->top;
+	else
+		ty = spr->top + ty;
+	col = ((t_color *)spr->texture->img->data)[tx + ty * spr->line_size];
+	if (col == spr->background)
+		return ((t_color)COLOR_UNINIT);
+	return (col);
+}
+
+__attribute__((always_inline)) inline t_color
 	sprite_sample_bilinear(const t_sprite *spr, float u, float v)
 {
 	const t_color	*buf = (const t_color *)spr->texture->img->data;

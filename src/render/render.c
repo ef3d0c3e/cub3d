@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-static void
+static __attribute__((always_inline)) inline void
 	render_ceiling(t_app *app, int x, int start_y, const t_ray *r)
 {
 	int				y;
@@ -27,20 +27,20 @@ static void
 		if (p <= 0)
 			continue ;
 		world.x = app->game.player.position.x
-			+ ((.5f * (float)app->sizes.y) / (float)p) * r->ray.x;
+			+ (float)app->sizes.y / (float)(2 * p) * r->ray.x;
 		world.y = app->game.player.position.y
-			+ ((.5f * (float)app->sizes.y) / (float)p) * r->ray.y;
+			+ (float)app->sizes.y / (float)(2 * p) * r->ray.y;
 		tex = atlas_tex_get(&app->texture_atlas, map_get(app,
 					(int)world.x, (int)world.y)->tex_ids[0]);
-		t.x = (int)((world.x - floorf(world.x)) * (float)tex->width);
-		t.y = (int)((world.y - floorf(world.y)) * (float)tex->height);
+		t.x = (int)((world.x - (float)(int)world.x) * (float)tex->width);
+		t.y = (int)((world.y - (float)(int)world.y) * (float)tex->height);
 		((t_color *)app->framebuffer->image->data)[x + y * app->sizes.x]
 			= *(t_color *)(tex->img->data + t.y * tex->img->size_line
 				+ t.x * (tex->img->bpp / 8));
 	}
 }
 
-static void
+static __attribute__((always_inline)) inline void
 	render_floor(t_app *app, int x, int end_y, const t_ray *r)
 {
 	int				y;
@@ -56,20 +56,20 @@ static void
 		if (p <= 0)
 			continue ;
 		world.x = app->game.player.position.x
-			+ ((.5f * (float)app->sizes.y) / (float)p) * r->ray.x;
+			+ (float)app->sizes.y / (float)(2 * p) * r->ray.x;
 		world.y = app->game.player.position.y
-			+ ((.5f * (float)app->sizes.y) / (float)p) * r->ray.y;
+			+ (float)app->sizes.y / (float)(2 * p) * r->ray.y;
 		tex = atlas_tex_get(&app->texture_atlas, map_get(app,
 					(int)world.x, (int)world.y)->tex_ids[1]);
-		t.x = (int)((world.x - floorf(world.x)) * (float)tex->width);
-		t.y = (int)((world.y - floorf(world.y)) * (float)tex->height);
+		t.x = (int)((world.x - (float)(int)world.x) * (float)tex->width);
+		t.y = (int)((world.y - (float)(int)world.y) * (float)tex->height);
 		((t_color *)app->framebuffer->image->data)[x + y * app->sizes.x]
 			= *(t_color *)(tex->img->data + t.y * tex->img->size_line
 				+ t.x * (tex->img->bpp / 8));
 	}
 }
 
-void
+static __attribute__((always_inline)) inline void
 	render_slice(t_app *app, int x, const t_ray *r)
 {
 	int		line_h;

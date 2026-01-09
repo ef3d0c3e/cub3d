@@ -44,7 +44,7 @@ static void
 					- 1.f, &r);
 			ray_cast(app, &r);
 			app->z_buffer[x] = r.perp_dist;
-			render_slice(app, x, &r);
+			//render_slice(app, x, &r);
 		}
 		pthread_mutex_lock(&pool->mutex);
 		if (--pool->active_workers == 0)

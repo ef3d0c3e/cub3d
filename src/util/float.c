@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include <util/util.h>
 
-inline float
+__attribute__((always_inline)) inline float
 	clampf(float value, float min, float max)
 {
 	if (value < min)
@@ -21,7 +21,7 @@ inline float
 	return (value);
 }
 
-inline float
+__attribute__((always_inline)) inline float
 	maxf(float a, float b)
 {
 	if (a >= b)
@@ -29,7 +29,7 @@ inline float
 	return (b);
 }
 
-inline void
+__attribute__((always_inline)) inline void
 	normalize_angle(float *angle, bool norm_pitch)
 {
 	if (norm_pitch)

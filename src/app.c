@@ -14,8 +14,8 @@
 bool
 	app_setup(t_app *app)
 {
-	if (!thread_pool_init(&app->pool, 16))
-		return (false);
+	//if (!thread_pool_init(&app->pool, 16))
+	//	return (false);
 	if (!game_setup(app))
 		return (false);
 	app->z_buffer = xmalloc(sizeof(float) * (size_t)app->sizes.x);
@@ -25,7 +25,7 @@ bool
 void
 	app_cleanup(t_app *app)
 {
-	thread_pool_destroy(&app->pool);
+	//thread_pool_destroy(&app->pool);
 	game_cleanup(app);
 	free(app->z_buffer);
 }

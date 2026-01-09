@@ -223,7 +223,7 @@ typedef struct s_sprite
 }	t_sprite;
 
 /**
- * @brief Sample a pixel from a sprite
+ * @brief Sample a pixel from a sprite (in UV space)
  *
  * @param spr Sprite to sample from
  * @param u X-axis factor, in range `[0.f, 1.f]`
@@ -232,6 +232,16 @@ typedef struct s_sprite
  */
 t_color
 sprite_sample(const t_sprite *spr, float u, float v);
+/**
+ * @brief Sample a pixel from a sprite (in texel space)
+ *
+ * @param spr Sprite to sample from
+ * @param tx X-axis coordinate
+ * @param ty Y-axis coordinate
+ * @return The sampled color (or `COLOR_UNINIT` if sampling background)
+ */
+t_color
+sprite_sample_tx(const t_sprite *spr, int tx, int ty);
 /**
  * @brief Sample a pixel from a sprite using bilinear sampling
  *

@@ -23,14 +23,14 @@ void
 	t_pos			screen;
 
 	uv.y = 0;
-	while ((float)uv.y < (float)spr->height * p.scale.y)
+	while (uv.y < (int)((float)spr->height * p.scale.y))
 	{
 		uv.x = 0;
-		while ((float)uv.x < (float)spr->width * p.scale.x)
+		while (uv.x < (int)((float)spr->width * p.scale.x))
 		{
-			color = sprite_sample(spr, (float)uv.x / (((float)spr->width - 1.f)
-						* p.scale.x), (float)uv.y / (((float)spr->height - 1.f)
-						* p.scale.y));
+			color = sprite_sample_tx(spr,
+					(int)((float)uv.x / p.scale.x),
+					(int)((float)uv.y / p.scale.y));
 			screen = (t_pos){screen0.x + uv.x++, screen0.y + uv.y};
 			if (color == (t_color)COLOR_UNINIT || screen.x < 0 || screen.x
 				>= app->sizes.x || screen.y < 0 || screen.y >= app->sizes.y)

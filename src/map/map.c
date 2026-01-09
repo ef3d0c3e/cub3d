@@ -18,7 +18,7 @@ void
 	free(map->map);
 }
 
-t_material
+__attribute__((always_inline)) inline t_material
 	*map_get(const t_app *app, int x, int y)
 {
 	t_atlas_id	id;

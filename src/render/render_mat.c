@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-static inline const t_texture
+static __attribute__((always_inline)) inline const t_texture
 	*get_texture(const t_app *app, const t_ray *r)
 {
 	t_atlas_id	id;
@@ -24,6 +24,10 @@ static inline const t_texture
 		id = ORI_NORTH;
 	else
 		id = ORI_SOUTH;
+	if (r->hit->type == MAT_DOOR && id == ORI_NORTH)
+		id += 2;
+	else if (r->hit->type == MAT_DOOR && id == ORI_SOUTH)
+		id += 1;
 	if (r->hit->orientation != ORI_NONE)
 	{
 		id -= 1;
@@ -33,7 +37,7 @@ static inline const t_texture
 	return (atlas_tex_get(&app->texture_atlas, r->hit->tex_ids[id]));
 }
 
-static inline void
+static __attribute__((always_inline)) inline void
 	render_wall_init(
 	t_app *app,
 	const t_ray *r,
@@ -66,14 +70,14 @@ static inline void
 					-1.f / vec2_dist(r->ray, (t_vec2){0, 0}))), 0.f, 1.f);
 }
 
-static inline t_color
+static __attribute__((always_inline)) inline t_color
 	sample(struct s_render_wall_data *s)
 {
 	t_color	color;
 
 	color = *(t_color *)(s->tex->img->data + s->ty * s->tex->img->size_line
 			+ s->tx * (s->tex->img->bpp / 8));
-	return (color_lerp(color, 0x000000, s->shade / 4));
+	return (color_lerp(color, 0x000000, s->shade / 2));
 }
 
 void

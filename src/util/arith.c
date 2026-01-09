@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include <util/util.h>
 
-inline int
+__attribute__((always_inline)) inline int
 	clamp(int value, int min, int max)
 {
 	if (value < min)
@@ -21,7 +21,7 @@ inline int
 	return (value);
 }
 
-inline int
+__attribute__((always_inline)) inline int
 	absi(int x)
 {
 	if (x < 0)
@@ -29,7 +29,7 @@ inline int
 	return (x);
 }
 
-inline int
+__attribute__((always_inline)) inline int
 	maxi(int x, int y)
 {
 	if (x >= y)

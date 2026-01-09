@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-static inline void
+static __attribute__((always_inline)) inline void
 	render_entity(
 	t_app *app,
 	const t_proj_ent *s,
@@ -31,8 +31,7 @@ static inline void
 		t.x = s->sprite.width - 1 - t.x;
 	if (t.x < 0 || t.x >= s->sprite.width)
 		return ;
-	color = sprite_sample(&s->sprite, (float)t.x / (float)s->sprite.width,
-			(float)t.y / (float)s->sprite.height);
+	color = sprite_sample_tx(&s->sprite, t.x, t.y);
 	if (color != (t_color)COLOR_UNINIT)
 		((t_color *)app->framebuffer->data)[x + y * app->sizes.x]
 			= color_tint(color, s->ent->data.color);
@@ -55,8 +54,7 @@ void
 		t.x = ent->start_x;
 		while (t.x < ent->end_x)
 		{
-			if (t.x >= 0 && t.x < app->sizes.x
-				&& ent->dist < app->z_buffer[t.x])
+			if (t.x >= 0 && ent->dist < app->z_buffer[t.x])
 			{
 				t.y = ent->start_y;
 				while (t.y < ent->end_y)

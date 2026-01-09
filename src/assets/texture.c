@@ -54,7 +54,7 @@ void
 	free(atlas->textures);
 }
 
-const t_texture
+__attribute__((always_inline)) inline const t_texture
 	*atlas_tex_get(const t_texture_atlas *atlas, t_atlas_id tex_id)
 {
 	if (tex_id >= atlas->size)

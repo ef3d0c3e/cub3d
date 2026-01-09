@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include <util/util.h>
 
-inline float
+__attribute__((always_inline)) inline float
 	vec2_dist(t_vec2 a, t_vec2 b)
 {
 	const float	dx = a.x - b.x;
@@ -20,7 +20,7 @@ inline float
 	return (sqrtf(dx * dx + dy * dy));
 }
 
-inline t_vec2
+__attribute__((always_inline)) inline t_vec2
 	vec2_dir(t_vec2 from, t_vec2 to)
 {
 	const float		dist = vec2_dist(from, to);
@@ -31,13 +31,13 @@ inline t_vec2
 	});
 }
 
-inline t_vec2
+__attribute__((always_inline)) inline t_vec2
 	vec2_scale(t_vec2 v, float x)
 {
 	return ((t_vec2){v.x * x, v.y * x});
 }
 
-inline float
+__attribute__((always_inline)) inline float
 	vec2_dot(t_vec2 a, t_vec2 b)
 {
 	return (a.x * b.x + a.y * b.y);

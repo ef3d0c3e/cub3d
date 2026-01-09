@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include <util/util.h>
 
-inline t_color
+__attribute__((always_inline)) inline t_color
 	color_lerp8(t_color x, t_color y, uint8_t f)
 {
 	uint8_t	c[3];
@@ -28,7 +28,7 @@ inline t_color
 	return ((t_color)c[0] | ((t_color)c[1] << 8) | ((t_color)c[2] << 16));
 }
 
-inline t_color
+__attribute__((always_inline)) inline t_color
 	color_lerp(t_color x, t_color y, float f)
 {
 	if (f <= 0.f)
@@ -38,7 +38,7 @@ inline t_color
 	return color_lerp8(x, y, (uint8_t)(f * 255.f + 0.5f));
 }
 
-inline t_color
+__attribute__((always_inline)) inline t_color
 	color_tint(t_color x, t_color y)
 {
 	uint8_t	c[3];
