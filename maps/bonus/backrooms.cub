@@ -12,11 +12,42 @@ MAT FLOOR ^ BO=textures/own/tile_checkboard.xpm:reflectivity=155 TO=textures/own
 
 PROP player_spawn ^
 
-ENT item_ammo_chaingun (5.5, 4.5)
-ENT item_chaingun (10.5, 4.5)
+ENT item_ammo_chaingun (1.5, 1.5)
+ENT item_ammo_chaingun (2.5, 1.5)
+ENT item_chaingun (3.5, 1.5)
+ENT item_shotgun (4.5, 1.5)
+
+ENT item_heal (3.5, 3.5)
+ENT item_ammo_chaingun (7.5, 3.5)
+ENT item_heal (7.5, 7.5)
+ENT item_ammo_shotgun (3.5, 7.5)
+
+ENT item_heal (9.5, 3.5)
+ENT item_ammo_chaingun (13.5, 3.5)
+ENT item_heal (13.5, 7.5)
+ENT item_ammo_shotgun (9.5, 7.5)
+
+ENT item_heal (15.5, 3.5)
+ENT item_ammo_chaingun (19.5, 3.5)
+ENT item_heal (19.5, 7.5)
+ENT item_ammo_shotgun (15.5, 7.5)
+
+ENT item_heal (21.5, 3.5)
+ENT item_ammo_chaingun (25.5, 3.5)
+ENT item_heal (25.5, 7.5)
+ENT item_ammo_shotgun (21.5, 7.5)
+
+ENT ghoul (5.5, 11.5)
+ENT ghoul (5.5, 17.5)
+ENT ghoul (5.5, 23.5)
+ENT ghoul (5.5, 29.5)
+ENT ghoul (11.5, 11.5)
+ENT ghoul (11.5, 17.5)
+ENT ghoul (11.5, 23.5)
+ENT ghoul (11.5, 29.5)
 
 #############################
-#____S______________________#
+#______W____________________#
 #_###_#####_#####_#####_###_#
 #_#_____#_____#_____#_____#_#
 #_#_____#_____#_____#_____#_#
