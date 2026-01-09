@@ -52,24 +52,25 @@ static void
 	const t_vec2				dir = vec2_dir(ghoul->base.data.position,
 			app->game.player.position);
 	const float					vel = 4.f + 10 * (ghoul->aggro_time > 0.f);
+	const float					dist = vec2_dist(ghoul->base.data.position,
+			app->game.player.position);
 
-	if (vec2_dist(ghoul->base.data.position, app->game.player.position) < 10
-		|| ghoul->aggro_time != 0.f)
+	if (dist < 10 || ghoul->aggro_time != 0.f)
+		ghoul->base.data.acceleration = (t_vec2){
+			ghoul->base.data.acceleration.x + dir.x * vel,
+			ghoul->base.data.acceleration.y + dir.y * vel};
+	if (dist < .5 && app->game.player.immunity == 0.f)
 	{
-		ghoul->base.data.acceleration.x += dir.x * vel;
-		ghoul->base.data.acceleration.y += dir.y * vel;
+		app->game.player.health -= 10;
+		app->game.player.velocity.x += dir.x * 10;
+		app->game.player.velocity.y += dir.x * 10;
+		app->game.player.immunity = 1.5f;
 	}
-	if (ghoul->hurt_time != 0.f)
-	{
-		ghoul->hurt_time -= app->frame_delta;
-		if (ghoul->hurt_time <= 0.f)
-		{
-			ghoul->hurt_time = 0.f;
-			ghoul->base.data.color = 0xFFFFFF;
-		}
-	}
+	ghoul->hurt_time = clampf(ghoul->hurt_time - app->frame_delta, 0, 1e10f);
+	if (ghoul->hurt_time == 0.f)
+		ghoul->base.data.color = 0xFFFFFF;
 	ghoul->aggro_time = clampf(ghoul->aggro_time - app->frame_delta, 0, 1e10f);
-		ghoul->base.data.anim_state.x = 0;
+	ghoul->base.data.anim_state.x = 0;
 	if (ghoul->aggro_time != 0.f)
 		ghoul->base.data.anim_state.x = 1 + ((int)(ghoul->aggro_time * 4) % 2);
 }

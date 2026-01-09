@@ -64,7 +64,7 @@ void
 	move = (t_vec2){
 		ui_key_held(app, KEY_W) - ui_key_held(app, KEY_S),
 		ui_key_held(app, KEY_D) - ui_key_held(app, KEY_A)
-	};
+	}; 
 	if (player->weapon_id != WEAPON_NONE)
 		weapon->use(app, weapon, &app->game.player.weapons[player->weapon_id]);
 	scroll_weapon(app, ui_mouse_released(app, MOUSE_WHEEL_DOWN)
@@ -72,5 +72,6 @@ void
 	app->game.player.angle.x += (ui_key_held(app, KEY_ARROW_RIGHT) - ui_key_held(app, KEY_ARROW_LEFT)) * .05f;
 	if (app->event.mouse_grab)
 		app->game.player.angle.x += (float)app->event.mouse_delta.x * 0.002f;
+	player->immunity = clampf(player->immunity - app->frame_delta, 0, 1e10f);
 	player_move(app, move);
 }

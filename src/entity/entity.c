@@ -15,6 +15,7 @@ const t_entity_type
 	*ent_get_type(enum e_ent_id id)
 {
 	static t_entity_type *(*const	getters[])(void) = {
+	[ENT_ITEM_HEAL] = ent_type_item_heal,
 	[ENT_ITEM_AMMO_SHOTGUN] = ent_type_item_ammo_shotgun,
 	[ENT_ITEM_SHOTGUN] = ent_type_item_shotgun,
 	[ENT_ITEM_AMMO_CHAINGUN] = ent_type_item_ammo_chaingun,

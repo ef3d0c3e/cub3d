@@ -59,6 +59,8 @@ typedef struct s_player
 	enum e_weapon_id	weapon_id;
 	/** @brief Time left for the shooting animation */
 	float				weapon_anim;
+	/** @brief Player immunity time */
+	float				immunity;
 }	t_player;
 
 /**

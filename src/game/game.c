@@ -56,7 +56,7 @@ static void
 
 	ft_memcpy(bufs[0], "[ HP ", 5);
 	itoa_buf(bufs[0] + 5, player->health);
-	ft_memcpy(bufs[0] + ft_strlen(bufs[0]), " ]", 2);
+	ft_memcpy(bufs[0] + ft_strlen(bufs[0]), " ]", 3);
 	size = font_textsize(app, &pan_ctx(NULL)->font, bufs[0]);
 	pan_cursor_set((t_vec2){0.f, .99f - size.y});
 	pan_text(bufs[0]);

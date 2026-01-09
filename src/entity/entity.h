@@ -135,6 +135,7 @@ typedef struct s_entity
 /** @brief Entity types */
 enum e_ent_id
 {
+	ENT_ITEM_HEAL,
 	ENT_ITEM_AMMO_SHOTGUN,
 	ENT_ITEM_SHOTGUN,
 	ENT_ITEM_AMMO_CHAINGUN,
@@ -179,6 +180,13 @@ struct s_ent_item
 	t_entity			base;
 };
 
+/**
+ * @brief Get the tntity type for @ref ENT_ITEM_HEAL
+ *
+ * @return The entity type for @ref ENT_ITEM_HEAL
+ */
+t_entity_type
+*ent_type_item_heal(void);
 /**
  * @brief Get the tntity type for @ref ENT_ITEM_AMMO_SHOTGUN
  *
