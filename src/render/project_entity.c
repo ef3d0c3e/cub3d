@@ -19,8 +19,6 @@ static bool
 	int scale)
 {
 	const t_player	*p = &app->game.player;
-	int				i;
-	float			min;
 
 	e->dist = e->trans.y;
 	e->start_x = clamp(e->real_start_x, 0, app->sizes.x);
@@ -37,12 +35,7 @@ static bool
 	e->flip = ent->data.flip;
 	e->sprite = sprite_sheet_get(&ent->type->model,
 			ent->data.anim_state.x, ent->data.anim_state.y);
-	i = e->start_x;
-	return (true); // TODO
-	//min = 1e10f;
-	//while (i < e->end_x)
-	//	min = fmaxf(min, app->z_buffer[i++]);
-	//return (e->dist < min);
+	return (true);
 }
 
 /** @brief Cast for a single entity */

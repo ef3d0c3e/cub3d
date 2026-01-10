@@ -17,7 +17,6 @@ bool
 	struct s_render_ent_data	render;
 	const t_proj_ent			*ent;
 	size_t						i;
-	t_pos						t;
 
 	project_entities(app, &render, "item");
 	if (!render.num)
@@ -26,7 +25,6 @@ bool
 	while (1)
 	{
 		ent = &render.ents[i];
-		t.x = ent->start_x;
 		if (ent->dist < app->z_buffer[app->sizes.x / 2]
 			&& ent->start_x <= app->sizes.x / 2
 			&& ent->end_x > app->sizes.x / 2)

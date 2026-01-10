@@ -12,7 +12,7 @@
 #include <cub3d.h>
 
 static __attribute__((always_inline)) inline void
-	*get_texture(
+	get_texture(
 	const t_app *app,
 	const t_ray *r,
 	struct s_render_wall_data *render)

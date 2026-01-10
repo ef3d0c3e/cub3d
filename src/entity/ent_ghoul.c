@@ -51,7 +51,7 @@ static void
 	struct s_ent_ghoul *const	ghoul = entity;
 	const t_vec2				dir = vec2_dir(ghoul->base.data.position,
 			app->game.player.position);
-	const float					vel = 4.f + 10 * (ghoul->aggro_time > 0.f);
+	const float					vel = 4.f + 10.f * (ghoul->aggro_time > 0.f);
 	const float					dist = vec2_dist(ghoul->base.data.position,
 			app->game.player.position);
 

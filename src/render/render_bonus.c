@@ -92,7 +92,6 @@ void
     while (app->pool.active_workers > 0)
 		pthread_cond_wait(&app->pool.cond_done, &app->pool.mutex);
     pthread_mutex_unlock(&app->pool.mutex);
-    //render_entities(app);
 }
 
 bool
