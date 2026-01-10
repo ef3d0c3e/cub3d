@@ -82,6 +82,11 @@ static int
 	++app->frame;
 	frame_time(app, true);
 	game_input(app);
+	if (ui_key_pressed(app, KEY_ESC))
+	{
+		mlx_loop_end(app->mlx_ptr);
+		return (0);
+	}
 	app->event.mouse_grab = true;
 	game_ui(app);
 	ui_cursor(app);

@@ -57,7 +57,7 @@ static bool
 bool
 	parser_hdr(struct s_parser *parser)
 {
-	const char	*line = parser_trim_start(parser->line, " \t\n");
+	const char	*line = parser_trim_start(parser->line, " \n");
 	int			status;
 
 	if (!line[0])

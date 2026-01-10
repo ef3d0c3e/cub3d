@@ -22,11 +22,11 @@ static bool
 	size_t	len;
 
 	start = 2;
-	while (ft_strchr(" \t", line[start]))
+	while (ft_strchr(" ", line[start]))
 		++start;
 	line += start;
 	len = ft_strlen(line);
-	while (ft_strchr(" \t\n", line[len - 1]))
+	while (ft_strchr(" \n", line[len - 1]))
 		--len;
 	if (len == 0)
 		return (parser_error_loc(parser, err(0, "Missing texture")), false);

@@ -162,7 +162,7 @@ parser_expect(
 /**
  * @brief Expect a space token after another token
  *
- * A space token is any combination of ` ` and `\t`.
+ * A space token is any combination of ` `.
  *
  * @param parser The parser
  * @param line Current line position (will be advanced on success)

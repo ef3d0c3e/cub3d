@@ -29,7 +29,7 @@ bool
 
 	if (!parser->s_data.parsing_properties)
 		init_properties(parser);
-	if (!*parser_trim_start(parser->line, " \t\n"))
+	if (!*parser_trim_start(parser->line, " \n"))
 		return (true);
 	status = parse_property_float(parser, "accelerate",
 			&parser->s_data.properties.accelerate);

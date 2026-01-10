@@ -18,7 +18,7 @@ static int
 	size_t	pos;
 	int		val;
 
-	*line = parser_trim_start(*line, " \t\n");
+	*line = parser_trim_start(*line, " \n");
 	if (!ft_isdigit(**line) || !**line)
 		return (parser_error_loc(parser, err(err(err(0, "Invalid color "
 							"value for "), field), ". Expected a value in "
@@ -33,7 +33,7 @@ static int
 								"value for "), field), ". Expected a value in "
 						"the range [0, 255]")), -1);
 	}
-	*line = parser_trim_start(*line + pos, " \t\n");
+	*line = parser_trim_start(*line + pos, " \n");
 	return (val);
 }
 

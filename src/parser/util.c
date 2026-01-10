@@ -47,7 +47,7 @@ bool
 	const char *after)
 {
 	const size_t	after_len = ft_strlen(after);
-	const char		*advanced = parser_trim_start(*line + after_len, " \t");
+	const char		*advanced = parser_trim_start(*line + after_len, " ");
 
 	if (advanced != *line + after_len)
 	{

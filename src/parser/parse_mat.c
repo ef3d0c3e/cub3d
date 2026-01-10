@@ -48,7 +48,7 @@ bool
 
 	if (parser->s_data.mat_atlas.size == 0)
 		init_atlas(parser);
-	if (!*parser_trim_start(parser->line, " \t\n"))
+	if (!*parser_trim_start(parser->line, " \n"))
 		return (true);
 	status = parse_mat_default(parser);
 	if (status == -1)

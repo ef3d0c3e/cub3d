@@ -73,7 +73,7 @@ int
 {
 	const char	*line;
 
-	line = parser_trim_start(parser->line, " \t");
+	line = parser_trim_start(parser->line, " ");
 	if (ft_strncmp(line, "PROP", 4))
 		return (0);
 	if (!parser_expect_space(parser, &line, "PROP"))
@@ -84,7 +84,7 @@ int
 		return (-1);
 	if (!parse_float(parser, &line, name, value))
 		return (-1);
-	line = parser_trim_start(line, " \t");
+	line = parser_trim_start(line, " ");
 	if (*line && *line != '\n')
 		return (parser_error_loc(parser, err(0, "Unexpected token")), -1);
 	return (1);
@@ -129,7 +129,7 @@ int
 {
 	const char	*line;
 
-	line = parser_trim_start(parser->line, " \t");
+	line = parser_trim_start(parser->line, " ");
 	if (ft_strncmp(line, "PROP", 4))
 		return (0);
 	if (!parser_expect_space(parser, &line, "PROP"))
@@ -140,7 +140,7 @@ int
 		return (-1);
 	if (!parse_mat_id(parser, &line, mat_id))
 		return (-1);
-	line = parser_trim_start(line, " \t");
+	line = parser_trim_start(line, " ");
 	if (*line && *line != '\n')
 		return (parser_error_loc(parser, err(0, "Unexpected token")), -1);
 	return (1);

@@ -75,7 +75,7 @@ int
 	const char	*line;
 	char		buf[2];
 
-	line = parser_trim_start(parser->line, " \t");
+	line = parser_trim_start(parser->line, " ");
 	if (ft_strncmp(line, "MAT", 3))
 		return (0);
 	if (!parser_expect_space(parser, &line, "MAT"))

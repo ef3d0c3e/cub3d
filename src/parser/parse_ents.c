@@ -19,7 +19,7 @@ static const t_entity_type
 	enum e_ent_id		id;
 
 	name_len = 0;
-	while (!ft_strchr(" \t\n", line[name_len]))
+	while (!ft_strchr(" \n", line[name_len]))
 		++name_len;
 	id = 0;
 	while (id < ENT_NUM_)
@@ -48,7 +48,7 @@ static bool
 		return (false);
 	if (!parser_expect(parser, line, ","))
 		return (false);
-	*line = parser_trim_start(*line, " \t");
+	*line = parser_trim_start(*line, " ");
 	if (!parse_float(parser, line, "vector y component", &vec->y))
 		return (false);
 	return (parser_expect(parser, line, ")"));
@@ -76,13 +76,13 @@ static int
 	struct s_parser_ent	ent;
 
 	ft_memset(&ent, 0, sizeof(ent));
-	line = parser_trim_start(parser->line, " \t");
+	line = parser_trim_start(parser->line, " ");
 	if (ft_strncmp(line, "ENT", 3))
 		return (0);
 	if (!parser_expect_space(parser, &line, "ENT"))
 		return (-1);
 	name_len = 0;
-	while (!ft_strchr(" \t\n", line[name_len]))
+	while (!ft_strchr(" \n", line[name_len]))
 		++name_len;
 	ent.type = get_type(parser, line, &ent.id);
 	if (!ent.type)
@@ -102,7 +102,7 @@ bool
 {
 	int	status;
 
-	if (!*parser_trim_start(parser->line, " \t\n"))
+	if (!*parser_trim_start(parser->line, " \n"))
 		return (true);
 	status = parse_entity(parser);
 	if (status == -1)

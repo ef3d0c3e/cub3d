@@ -44,7 +44,7 @@ static int
 	++*line;
 	out[0] = *line;
 	i = 0;
-	while (!ft_strchr(" \t\n", (*line)[i]))
+	while (!ft_strchr(" \n", (*line)[i]))
 		++i;
 	if (!i)
 		return (parser_error_loc(parser, err_style(err_style(err(0, "Empty '"),
@@ -163,7 +163,7 @@ bool
 			if (s == -1)
 				return (false);
 			++counts[0];
-			*line = parser_trim_start(*line, " \t");
+			*line = parser_trim_start(*line, " ");
 		}
 	}
 	return (validate_textures(parser, (const char **[2]){tex_attrs, texs},
