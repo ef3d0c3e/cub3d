@@ -190,8 +190,8 @@ struct s_ent_tr_data
 	const struct s_app			*app;
 	/** @brief Entity render data */
 	struct s_render_ent_data	*render;
-	/** @brief Exclusion filter */
-	const char	*exclude;
+	/** @brief Search filter */
+	const char					*include;
 };
 
 /** @} */

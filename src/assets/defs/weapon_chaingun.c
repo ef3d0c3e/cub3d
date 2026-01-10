@@ -12,14 +12,44 @@
 #include <cub3d.h>
 
 static inline void
+	particle(t_app *app, t_vec2 dir, float dist)
+{
+	const float		ddir = vec2_dist(dir, (t_vec2){0, 0});
+	const t_vec2	world = {
+		app->game.player.position.x + dir.x * dist / ddir,
+		app->game.player.position.y + dir.y * dist / ddir,
+	};
+
+	ent_spawn(app, ENT_PART_CHAINGUN, (t_entity_data){
+		.acceleration = {0, 0},
+		.angles = {0, 0},
+		.anim_state = {0, 0},
+		.color = 0xAFAFAF,
+		.flip = false,
+		.position = world,
+		.velocity = {0, 0},
+		.delete = false,
+	});
+}
+
+static inline void
 	shoot(t_app *app)
 {
 	t_proj_ent	ent;
+	t_ray		r;
 
 	app->game.player.velocity.x -= app->game.player.dir.x * 0.2f;
 	app->game.player.velocity.y -= app->game.player.dir.y * 0.2f;
 	if (!ray_entities(app, &ent))
+	{
+		ray_init(&app->game.player, 0.f, &r);
+		ray_cast(app, &r);
+		particle(app, r.ray, r.perp_dist);
 		return ;
+	}
+	particle(app, (t_vec2){ent.ent->data.position.x
+			- app->game.player.position.x, ent.ent->data.position.y
+			- app->game.player.position.y}, ent.dist);
 	ent.ent->type->interact_fn(app, ent.ent, (t_ent_interaction){
 		.kind = ENTI_ATTACK,
 		.u_data.s_attack = {

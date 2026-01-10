@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ent_item_chaingun.c                                :+:      :+:    :+:   */
+/*   ent_part_chaingun.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,52 +14,49 @@
 static bool
 	item_load(t_app *app)
 {
-	t_entity_type *const	type = ent_type_item_chaingun();
+	t_entity_type *const	type = ent_type_part_chaingun();
 
 	ft_memset(&type->model, 0, sizeof(type->model));
 	atlas_tex_load(app->mlx_ptr, &app->texture_atlas,
-		"assets/items.xpm", &type->model.texture);
+		"assets/explosion.xpm", &type->model.texture);
 	if (!type->model.texture)
 		return (false);
 	type->model.background = (t_color)0x00FFFF;
-	type->model.off_left = 183;
-	type->model.off_top = 15;
-	type->model.width = 54;
-	type->model.height = 16;
-	return (asset_size_check(type->model.texture, 597, 229));
+	type->model.width = 103;
+	type->model.height = 86;
+	type->model.off_left = 0;
+	type->model.off_top = 0;
+	type->model.sep_left = 0;
+	type->model.sep_top = 0;
+	return (asset_size_check(type->model.texture, 103, 258));
 }
 
 static void
 	*item_create(struct s_app *app, t_entity_data data, void *cookie)
 {
-	struct s_ent_item *const	ent = xmalloc(sizeof(struct s_ent_item));
+	struct s_ent_particle *const	ent
+		= xmalloc(sizeof(struct s_ent_particle));
 
 	(void)app;
 	(void)cookie;
-	ent->base.type = ent_type_item_chaingun();
+	ent->base.type = ent_type_part_chaingun();
 	ent->base.data = data;
+	ent->lifetime = 0;
 	return (ent);
 }
 
 static void
 	item_tick(struct s_app *app, void *entity)
 {
-	struct s_ent_item *const	item = entity;
-	t_player_weapondata *const	weapon = &app->game.player.weapons
-	[WEAPON_CHAINGUN];
-	const float					dist = vec2_dist(item->base.data.position,
-		app->game.player.position);
+	struct s_ent_particle *const	part = entity;
 
-	if (dist < .4f)
-	{
-		weapon->has_weapon = true;
-		if (app->game.player.weapon_id == WEAPON_NONE)
-			app->game.player.weapon_id = WEAPON_CHAINGUN;
-		weapon->ammo = clamp(weapon->ammo + 50, 0,
-				app->assets.weapons[WEAPON_CHAINGUN].max_ammo);
-		item->base.data.delete = true;
-	}
-
+	part->lifetime += app->frame_delta;
+	if (part->lifetime > 0.1)
+		part->base.data.anim_state.y = 1;
+	if (part->lifetime > 0.2)
+		part->base.data.anim_state.y = 2;
+	if (part->lifetime > 0.3)
+		part->base.data.delete = true;
 }
 
 static void
@@ -74,12 +71,12 @@ static void
 }
 
 t_entity_type
-	*ent_type_item_chaingun(void)
+	*ent_type_part_chaingun(void)
 {
 	static t_entity_type	data = {
-		.name = "item_chaingun",
-		.offset = {.1625f, 450.f},
-		.scale = {0.675f, 0.160f},
+		.name = "part_chaingun",
+		.offset = {.31f, 0.f},
+		.scale = {0.3f, 0.3f},
 		.load_fn = item_load,
 		.create_fn = item_create,
 		.tick_fn = item_tick,

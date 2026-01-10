@@ -80,8 +80,8 @@ static void
 	const char					*name = ((t_entity *)node->key)->type->name;
 
 	(void)depth;
-	if (!data->exclude
-		|| ft_strncmp(data->exclude, name, ft_strlen(data->exclude)))
+	if (!data->include
+		|| !ft_strncmp(data->include, name, ft_strlen(data->include)))
 		cast_entity(data->app, data->render, node->key);
 }
 
@@ -103,7 +103,7 @@ void
 	project_entities(
 	t_app *app,
 	struct s_render_ent_data *render,
-	const char *exclude)
+	const char *include)
 {
 	struct s_ent_tr_data	data;
 	t_proj_ent				tmp[MAX_ENTITIES];
@@ -111,7 +111,7 @@ void
 	render->num = 0;
 	data.app = app;
 	data.render = render;
-	data.exclude = exclude;
+	data.include = include;
 	rb_apply(&app->entities, entity_traverse, &data);
 	ft_qsort_base(render->ents, render->num, (struct s_qsort_param){
 		.s = sizeof(t_proj_ent),

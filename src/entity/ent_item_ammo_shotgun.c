@@ -26,7 +26,7 @@ static bool
 	type->model.off_top = 66;
 	type->model.width = 14;
 	type->model.height = 7;
-	return (true);
+	return (asset_size_check(type->model.texture, 597, 229));
 }
 
 static void

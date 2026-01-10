@@ -18,7 +18,7 @@ bool
 	const t_proj_ent			*ent;
 	size_t						i;
 
-	project_entities(app, &render, "item");
+	project_entities(app, &render, "mob_");
 	if (!render.num)
 		return false;
 	i = render.num - 1;

@@ -17,9 +17,11 @@ const t_entity_type
 	static t_entity_type *(*const	getters[])(void) = {
 	[ENT_ITEM_HEAL] = ent_type_item_heal,
 	[ENT_ITEM_AMMO_SHOTGUN] = ent_type_item_ammo_shotgun,
+	[ENT_PART_SHOTGUN] = ent_type_part_shotgun,
 	[ENT_ITEM_SHOTGUN] = ent_type_item_shotgun,
 	[ENT_ITEM_AMMO_CHAINGUN] = ent_type_item_ammo_chaingun,
 	[ENT_ITEM_CHAINGUN] = ent_type_item_chaingun,
+	[ENT_PART_CHAINGUN] = ent_type_part_chaingun,
 	[ENT_GHOUL] = ent_type_ghoul,
 	};
 

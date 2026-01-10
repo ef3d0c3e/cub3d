@@ -105,7 +105,7 @@ t_entity_type
 	*ent_type_ghoul(void)
 {
 	static t_entity_type	data = {
-		.name = "ghoul",
+		.name = "mob_ghoul",
 		.offset = {0, 0},
 		.scale = {1.f, 1.f},
 		.load_fn = ghoul_load,

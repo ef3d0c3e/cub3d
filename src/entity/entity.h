@@ -137,9 +137,11 @@ enum e_ent_id
 {
 	ENT_ITEM_HEAL,
 	ENT_ITEM_AMMO_SHOTGUN,
+	ENT_PART_SHOTGUN,
 	ENT_ITEM_SHOTGUN,
 	ENT_ITEM_AMMO_CHAINGUN,
 	ENT_ITEM_CHAINGUN,
+	ENT_PART_CHAINGUN,
 	ENT_GHOUL,
 	ENT_NUM_,
 };
@@ -215,6 +217,28 @@ t_entity_type
  */
 t_entity_type
 *ent_type_item_chaingun(void);
+
+struct s_ent_particle
+{
+	/** @brief Base entity data */
+	t_entity			base;
+	/** @brief Alive time of the particle */
+	float				lifetime;
+};
+/**
+ * @brief Get the entity type for @ref ENT_PART_SHOTGUN
+ *
+ * @return The entity type for @ref ENT_PART_SHOTGUN
+ */
+t_entity_type
+*ent_type_part_shotgun(void);
+/**
+ * @brief Get the entity type for @ref ENT_PART_CHAINGUN
+ *
+ * @return The entity type for @ref ENT_PART_CHAINGUN
+ */
+t_entity_type
+*ent_type_part_chaingun(void);
 
 struct s_ent_ghoul
 {
