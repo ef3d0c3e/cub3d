@@ -16,11 +16,13 @@
 # include <pthread.h>
 
 struct	s_app;
+struct	s_render_ent_data;
 
 typedef struct s_render_job
 {
-	struct s_app	*app;
-	int				next_x;
+	struct s_app				*app;
+	int							next_x;
+	struct s_render_ent_data	*ents;
 }	t_render_job;
 
 typedef struct s_thread_pool

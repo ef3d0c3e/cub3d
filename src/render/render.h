@@ -112,9 +112,19 @@ project_entities(
 /** @brief Render a frame */
 void
 render_frame(struct s_app *app);
+
+void
+render_scanline(struct s_app *app, int x, const t_ray *r);
 /** @brief Render a wall */
 void
 render_wall(struct s_app *app, int x, const t_ray *ray);
+/** @brief Render a single entity pixel */
+void
+render_entity_pix(
+	struct s_app *app,
+	const t_proj_ent *s,
+	int x,
+	int y);
 /** @brief Render entieies */
 void
 render_entities(struct s_app *app);

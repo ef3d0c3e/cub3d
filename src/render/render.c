@@ -12,7 +12,7 @@
 #include <cub3d.h>
 
 /** @brief Floor/Ceiling color fragment shader */
-static __attribute__((always_inline)) inline void
+__attribute__((always_inline)) inline void
 	sample(t_app *app, const struct s_render_fc_data *r, t_pos bounds)
 {
 	const float			dist = vec2_dist2(app->game.player.position, r->world);
@@ -35,7 +35,7 @@ static __attribute__((always_inline)) inline void
 		= color;
 }
 
-static __attribute__((always_inline)) inline void
+__attribute__((always_inline)) inline void
 	render_ceiling(t_app *app, int x, t_pos bounds, const t_ray *r)
 {
 	int						p;
@@ -65,7 +65,7 @@ static __attribute__((always_inline)) inline void
 	}
 }
 
-static __attribute__((always_inline)) inline void
+__attribute__((always_inline)) inline void
 	render_floor(t_app *app, int x, t_pos bounds, const t_ray *r)
 {
 	int						p;
@@ -95,8 +95,8 @@ static __attribute__((always_inline)) inline void
 	}
 }
 
-static __attribute__((always_inline)) inline void
-	render_slice(t_app *app, int x, const t_ray *r)
+__attribute__((always_inline)) inline void
+	render_scanline(t_app *app, int x, const t_ray *r)
 {
 	int		line_h;
 	int		ds;
@@ -131,7 +131,7 @@ void
 			2.f * ((float)x / (float)app->sizes.x) - 1.f, &r);
 		ray_cast(app, &r);
 		app->z_buffer[x] = r.perp_dist;
-		render_slice(app, x, &r);
+		render_scanline(app, x, &r);
 		++x;
 	}
 	render_entities(app);

@@ -1,6 +1,6 @@
 NAME := cub3D
 CC := cc
-CFLAGS := -Wall -Wextra -Wconversion -pedantic -ggdb -std=c99
+CFLAGS := -Wall -Wextra -Wconversion -pedantic -ggdb -std=gnu99
 IFLAGS := -I./src
 LFLAGS := -lm
 
@@ -25,7 +25,12 @@ build/%.o: %.c
 # Default target
 $(NAME): LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
 $(NAME): $(LIB_FT) $(LIB_GNL) $(LIB_MLX) $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LFLAGS)
+	$(CC) $(CFLAGS) $(IFLAGS) -o $@ $(OBJECTS) $(LFLAGS)
+
+fast: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
+fast: CFLAGS += -O3 -Ofast -mtune=native -march=native -flto
+fast: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
+	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES) -o $@ $(LFLAGS)
 
 # Bonus
 .PHONY: all
@@ -78,6 +83,7 @@ lclean:
 .PHONY: fclean
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) fast
 
 .PHONY: re
 re: fclean all

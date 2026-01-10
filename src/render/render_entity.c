@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-static __attribute__((always_inline)) inline void
-	render_entity(
+__attribute__((always_inline)) inline void
+	render_entity_pix(
 	t_app *app,
 	const t_proj_ent *s,
 	int x,
@@ -58,7 +58,7 @@ void
 			{
 				t.y = ent->start_y;
 				while (t.y < ent->end_y)
-					render_entity(app, ent, t.x, t.y++);
+					render_entity_pix(app, ent, t.x, t.y++);
 			}
 			++t.x;
 		}
