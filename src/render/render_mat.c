@@ -66,12 +66,11 @@ static __attribute__((always_inline)) inline void
 		s->wall_x = app->game.player.position.y + r->perp_dist * r->ray.y;
 	else
 		s->wall_x = app->game.player.position.x + r->perp_dist * r->ray.x;
-	if (r->side == 0)
-		normal = (t_vec2){0.f, 1 - 2 * (r->ray.y >= 0)};
-	else
-		normal = (t_vec2){1 - 2 * (r->ray.x >= 0), 0.f};
+	normal = (t_vec2){(float)(r->side == 1) * (1 - 2 * (r->ray.x >= 0)),
+		(float)(r->side == 0) * (1 - 2 * (r->ray.y >= 0))};
 	s->shade = clampf(vec2_dot(normal, vec2_scale(r->ray,
-					-1.f / vec2_dist(r->ray, (t_vec2){0, 0}))), 0.f, 1.f);
+					-1.f / vec2_dist(r->ray, (t_vec2){0, 0}))), 0.f, 1.f) / 2;
+	s->shade = clampf(s->shade + (1 - 1 / (1 + r->perp_dist / 64)), 0.f, 1.f);
 }
 
 /** @brief Wall fragment shader */
@@ -82,8 +81,9 @@ static __attribute__((always_inline)) inline t_color
 
 	color = *(t_color *)(s->tex->img->data + s->ty * s->tex->img->size_line
 			+ s->tx * (s->tex->img->bpp / 8));
-	return (color_lerp8(color, s->props->fade_color,
-			(uint8_t)((255 - s->props->emission) * s->shade / 2)));
+	color = color_lerp8(color, s->props->fade_color,
+			(uint8_t)((255 - s->props->emission) * s->shade));
+	return (color);
 }
 
 void
