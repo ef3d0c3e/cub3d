@@ -66,8 +66,8 @@ static __attribute__((always_inline)) inline void
 		s->wall_x = app->game.player.position.y + r->perp_dist * r->ray.y;
 	else
 		s->wall_x = app->game.player.position.x + r->perp_dist * r->ray.x;
-	normal = (t_vec2){(float)(r->side == 1) * (1 - 2 * (r->ray.x >= 0)),
-		(float)(r->side == 0) * (1 - 2 * (r->ray.y >= 0))};
+	normal = (t_vec2){(float)((r->side == 1) * (1 - 2 * (r->ray.x >= 0))),
+		(float)((r->side == 0) * (1 - 2 * (r->ray.y >= 0)))};
 	s->shade = clampf(vec2_dot(normal, vec2_scale(r->ray,
 					-1.f / vec2_dist(r->ray, (t_vec2){0, 0}))), 0.f, 1.f) / 2;
 	s->shade = clampf(s->shade + (1 - 1 / (1 + r->perp_dist / 64)), 0.f, 1.f);

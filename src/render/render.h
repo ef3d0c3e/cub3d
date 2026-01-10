@@ -138,23 +138,23 @@ ray_entities(struct s_app *app, t_proj_ent *found);
 
 struct s_render_wall_data
 {
-	int				line_h;
+	int						line_h;
 	/** @brief Draw top screen vertical position */
-	int				ds;
+	int						ds;
 	/** @briof Draw end screen vertical poosition */
-	int				de;
+	int						de;
 
-	int				tx;
-	int				ty;
-	float			wall_x;
+	int						tx;
+	int						ty;
+	float					wall_x;
 	/** @brief Framebuffer */
-	t_color			*pix;
+	t_color					*pix;
 	/** @brief Wall shade */
-	float			shade;
+	float					shade;
 	/** @brief Material properties */
 	const t_material_prop	*props;
 	/** @brief Wall texture */
-	const t_texture	*tex;
+	const t_texture			*tex;
 };
 
 /** @brief Data for floor/ceiling render */

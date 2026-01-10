@@ -112,6 +112,6 @@ t_err_str
 t_err_str
 	err_rst(t_err_str errstr, const char *str)
 {
-	return err_style(errstr, str,
-		(t_text_style){COL_NONE, COL_NONE, STYLE_NONE});
+	return (err_style(errstr, str,
+			(t_text_style){COL_NONE, COL_NONE, STYLE_NONE}));
 }

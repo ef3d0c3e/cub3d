@@ -52,17 +52,17 @@ typedef struct s_thread_pool
 	t_render_job	job;
 }	t_thread_pool;
 
-struct s_pool_arg
-{
-	t_thread_pool	*pool;
-	size_t			id;
-};
-
+/** @brief Render a frame using the thread pool */
 void
 render_frame_bonus(struct s_app *app);
+/** @brief Initialize thread pool */
 bool
 thread_pool_init(t_thread_pool *pool, size_t thread_count);
+/** @brief Destroy thread pool */
 void
 thread_pool_destroy(t_thread_pool *pool);
+/** @brief Worker thread routine */
+void
+*render_worker(void *arg);
 
 #endif // RENDER_BONUS_H

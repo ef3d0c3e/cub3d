@@ -48,7 +48,7 @@ static void
 	t_player_weapondata *const	weapon = &app->game.player.weapons
 	[WEAPON_SHOTGUN];
 	const float					dist = vec2_dist(item->base.data.position,
-		app->game.player.position);
+			app->game.player.position);
 
 	if (dist < .4f)
 	{
@@ -59,7 +59,6 @@ static void
 				app->assets.weapons[WEAPON_SHOTGUN].max_ammo);
 		item->base.data.delete = true;
 	}
-
 }
 
 static void
@@ -89,4 +88,3 @@ t_entity_type
 
 	return (&data);
 }
-

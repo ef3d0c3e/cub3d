@@ -33,7 +33,7 @@ static void
 		pos.x += app->game.player.dir.x * 2;
 		pos.y += app->game.player.dir.y * 2;
 		ent_spawn(app, (enum e_ent_id)id, (t_entity_data){
-			{0, 0}, pos, {0, 0}, {0, 0}, {0, 0}, false, 0xFFFFFF, false
+		{0, 0}, pos, {0, 0}, {0, 0}, {0, 0}, false, 0xFFFFFF, false
 		});
 	}
 	pan_slider_f("X Scale", &ent->scale.x, (float [2]){0.05f, 1});

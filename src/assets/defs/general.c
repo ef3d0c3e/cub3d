@@ -15,7 +15,6 @@ bool
 	asset_loader_font(t_app *app, t_assets *assets)
 {
 	(void)assets;
-
 	atlas_tex_load(app->mlx_ptr, &app->texture_atlas, "assets/font.xpm",
 		&app->hud.font.texture);
 	if (!app->hud.font.texture)

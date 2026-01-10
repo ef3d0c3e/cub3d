@@ -20,7 +20,7 @@ bool
 
 	project_entities(app, &render, "mob_");
 	if (!render.num)
-		return false;
+		return (false);
 	i = render.num - 1;
 	while (1)
 	{

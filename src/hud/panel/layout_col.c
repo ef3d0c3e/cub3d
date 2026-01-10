@@ -88,5 +88,5 @@ void
 	if (ctx->layout_stack_size)
 		pan_cursor_set(ctx->layout_stack[ctx->layout_stack_size - 1].rect.pos);
 	pan_cursor_set((t_vec2){0,
-			layout->rect.pos.y + layout->vertical_space});
+		layout->rect.pos.y + layout->vertical_space});
 }

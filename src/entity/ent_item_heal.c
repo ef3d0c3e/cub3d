@@ -46,14 +46,13 @@ static void
 {
 	struct s_ent_item *const	item = entity;
 	const float					dist = vec2_dist(item->base.data.position,
-		app->game.player.position);
+			app->game.player.position);
 
 	if (dist < .4f && app->game.player.health != 100)
 	{
 		app->game.player.health = clamp(app->game.player.health + 30, 0, 100);
 		item->base.data.delete = true;
 	}
-
 }
 
 static void
@@ -83,4 +82,3 @@ t_entity_type
 
 	return (&data);
 }
-

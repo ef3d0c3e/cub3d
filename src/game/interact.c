@@ -23,6 +23,6 @@ void
 		action_text(app, "Press E to open");
 		if (ui_key_pressed(app, KEY_E))
 			map_state_door_interact(map_state_get(app, ray.map_x, ray.map_y),
-					app);
+				app);
 	}
 }

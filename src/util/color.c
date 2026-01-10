@@ -35,7 +35,7 @@ __attribute__((always_inline)) inline t_color
 		return (x);
 	if (f >= 1.f)
 		return (y);
-	return color_lerp8(x, y, (uint8_t)(f * 255.f + 0.5f));
+	return (color_lerp8(x, y, (uint8_t)(f * 255.f + 0.5f)));
 }
 
 __attribute__((always_inline)) inline t_color

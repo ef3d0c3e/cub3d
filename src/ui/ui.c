@@ -71,7 +71,6 @@ static void
 		.font = font,
 		.pos = pos,
 	}});
-
 }
 
 /** @brief Frame draw function */

@@ -48,8 +48,8 @@ static inline void
 		return ;
 	}
 	particle(app, (t_vec2){ent.ent->data.position.x
-			- app->game.player.position.x, ent.ent->data.position.y
-			- app->game.player.position.y}, ent.dist);
+		- app->game.player.position.x, ent.ent->data.position.y
+		- app->game.player.position.y}, ent.dist);
 	ent.ent->type->interact_fn(app, ent.ent, (t_ent_interaction){
 		.kind = ENTI_ATTACK,
 		.u_data.s_attack = {

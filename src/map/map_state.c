@@ -30,7 +30,7 @@ void
 	uintptr_t	key;
 
 	key = ((uintptr_t)(int32_t)x) | (((uintptr_t)(int32_t)y) << 32);
-	return (rb_find(&app->map.map_state, (void*)key));
+	return (rb_find(&app->map.map_state, (void *)key));
 }
 
 void
@@ -39,5 +39,5 @@ void
 	uintptr_t	key;
 
 	key = (uintptr_t)(int32_t)x | (((uintptr_t)(int32_t)y) << 32);
-	rb_insert(&app->map.map_state, (void*)key, state);
+	rb_insert(&app->map.map_state, (void *)key, state);
 }

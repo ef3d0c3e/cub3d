@@ -33,9 +33,7 @@ __attribute__((always_inline)) inline void
 	normalize_angle(float *angle, bool norm_pitch)
 {
 	if (norm_pitch)
-	{
-		*angle = clampf(*angle, -C_PI/2.f + 0.01f, C_PI/2.f - 0.01f);
-	}
+		*angle = clampf(*angle, -C_PI / 2.f + 0.01f, C_PI / 2.f - 0.01f);
 	else
 	{
 		while (*angle >= C_PI)

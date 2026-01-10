@@ -31,7 +31,7 @@ static void
 		if (door->open == 1.f)
 			door->direction = 0;
 	}
-	if (door->open == 1.f  && app->frame > door->close_time)
+	if (door->open == 1.f && app->frame > door->close_time)
 	{
 		door->direction = -1;
 	}
@@ -70,7 +70,8 @@ void
 		if (door->open == 0.f)
 		{
 			door->direction = 1;
-			door->close_time = app->frame + (size_t)(2.f / app->map.props.frame_time);
+			door->close_time = app->frame
+				+ (size_t)(2.f / app->map.props.frame_time);
 		}
 	}
 }

@@ -86,4 +86,3 @@ t_entity_type
 
 	return (&data);
 }
-

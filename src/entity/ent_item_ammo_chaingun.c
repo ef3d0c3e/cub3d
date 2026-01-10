@@ -49,15 +49,13 @@ static void
 	t_player_weapondata *const	data = &app->game.player.weapons
 	[WEAPON_CHAINGUN];
 	const float					dist = vec2_dist(item->base.data.position,
-		app->game.player.position);
+			app->game.player.position);
 
 	if (dist < .4f && data->ammo < weapon->max_ammo)
 	{
-		data->ammo = clamp(data->ammo + 100, 0,
-				app->assets.weapons[WEAPON_CHAINGUN].max_ammo);
+		data->ammo = clamp(data->ammo + 100, 0, weapon->max_ammo);
 		item->base.data.delete = true;
 	}
-
 }
 
 static void
@@ -87,4 +85,3 @@ t_entity_type
 
 	return (&data);
 }
-
