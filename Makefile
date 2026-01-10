@@ -28,7 +28,7 @@ $(NAME): $(LIB_FT) $(LIB_GNL) $(LIB_MLX) $(OBJECTS)
 	$(CC) $(CFLAGS) $(IFLAGS) -o $@ $(OBJECTS) $(LFLAGS)
 
 fast: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
-fast: CFLAGS += -O3 -Ofast -mtune=native -march=native -flto
+fast: CFLAGS += -O3 -Ofast -mtune=native -march=native
 fast: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
 	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES) -o $@ $(LFLAGS)
 

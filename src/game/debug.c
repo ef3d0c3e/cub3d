@@ -47,6 +47,9 @@ void
 	t_player *const	player = &app->game.player;
 	static bool		show;
 
+	if (app->game.infinite_ammo && app->game.player.weapon_id != WEAPON_NONE)
+		app->game.player.weapons[app->game.player.weapon_id].ammo
+			= app->assets.weapons[app->game.player.weapon_id].max_ammo;
 	if (ui_key_pressed(app, KEY_F1))
 		show = !show;
 	if (!show)
@@ -61,6 +64,7 @@ void
 	pan_next_columns();
 	pan_checkbox("Minimap", &app->game.show_minimap);
 	pan_next_columns();
+	pan_checkbox("Infinite Ammo", &app->game.infinite_ammo);
 	pan_pop_columns();
 	debug_ent(app);
 }

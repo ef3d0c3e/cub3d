@@ -39,6 +39,9 @@ typedef struct s_game
 
 	/** @brief Show the minimap */
 	bool		show_minimap;
+
+	/** @brief Infinite ammo mode */
+	bool		infinite_ammo;
 }	t_game;
 
 /**

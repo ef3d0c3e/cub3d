@@ -48,7 +48,6 @@ static void
 	const t_weapon				*weapon = &app->assets.weapons[WEAPON_CHAINGUN];
 	t_player_weapondata *const	data = &app->game.player.weapons
 	[WEAPON_CHAINGUN];
-
 	const float					dist = vec2_dist(item->base.data.position,
 		app->game.player.position);
 
