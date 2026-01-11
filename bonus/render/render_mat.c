@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-static __attribute__((always_inline)) inline void
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline void
 	get_texture(
 	const t_app *app,
 	const t_ray *r,
@@ -41,7 +42,8 @@ static __attribute__((always_inline)) inline void
 	render->props = &r->hit->props[id];
 }
 
-static __attribute__((always_inline)) inline void
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline void
 	render_wall_init(
 	t_app *app,
 	const t_ray *r,
@@ -74,7 +76,8 @@ static __attribute__((always_inline)) inline void
 }
 
 /** @brief Wall fragment shader */
-static __attribute__((always_inline)) inline t_color
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline t_color
 	sample(struct s_render_wall_data *s)
 {
 	t_color	color;
@@ -86,7 +89,8 @@ static __attribute__((always_inline)) inline t_color
 	return (color);
 }
 
-void
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline void
 	render_wall(t_app *app, int x, const t_ray *r)
 {
 	struct s_render_wall_data	s;

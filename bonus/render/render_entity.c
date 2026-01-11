@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
-__attribute__((always_inline)) inline void
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline void
 	render_entity_pix(
 	t_app *app,
 	const t_proj_ent *s,

@@ -12,8 +12,6 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define CUB_BONUS
-
 # include <util/util.h>
 # include <assets/defs/defs.h>
 # include <map/map.h>
@@ -24,12 +22,6 @@
 # include <entity/entity.h>
 # include <game/game.h>
 # include <render/render.h>
-# ifdef CUB_BONUS
-#  include <render/render_bonus.h>
-# else
-
-typedef int	t_thread_pool;
-# endif // CUB_BONUS
 
 /** @brief Initialization status */
 enum e_init_error
@@ -69,8 +61,6 @@ typedef struct s_app
 	unsigned long long	frame;
 	/** @brief Z-Buffer */
 	float				*z_buffer;
-	/** @brief Bonus thread pool for rendering */
-	t_thread_pool		pool;
 
 	/* --- UI Data --- */
 	/** @brief Event data */

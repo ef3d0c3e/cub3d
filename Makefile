@@ -1,7 +1,7 @@
 NAME := cub3D
 CC := cc
-CFLAGS := -Wall -Wextra -Wconversion -pedantic -ggdb -std=gnu99
-IFLAGS := -I./src
+CFLAGS := -Wall -Wextra -Wconversion -pedantic -std=gnu99
+IFLAGS :=
 LFLAGS := -lm
 
 
@@ -26,23 +26,32 @@ build/%.o: %.c
 
 # Default target
 $(NAME): LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
+$(NAME): IFLAGS += -I./src
+$(NAME): CFLAGS += -O2
 $(NAME): $(LIB_FT) $(LIB_GNL) $(LIB_MLX) $(OBJECTS)
 	$(CC) $(CFLAGS) $(IFLAGS) -o $@ $(OBJECTS) $(LFLAGS)
 
+# Bonus
 .PHONY: bonus
 bonus: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
+bonus: IFLAGS += -I./bonus
+bonus: CFLAGS += -O2
 bonus: $(LIB_FT) $(LIB_GNL) $(LIB_MLX) $(OBJECTS_BONUS)
 	$(CC) $(CFLAGS) $(IFLAGS) -o $(NAME) $(OBJECTS_BONUS) $(LFLAGS)
 
-.PHONY: fast
-fast: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
-fast: CFLAGS += -O3 -Ofast -mtune=native -march=native
-fast: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
-	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $@ $(LFLAGS)
+.PHONY: fast-clang
+fast-clang: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
+fast-clang: IFLAGS += -I./bonus
+fast-clang: CFLAGS += -O3 -Ofast -march=native -mtune=native -ffast-math -funroll-loops -fomit-frame-pointer -DNDEBUG -pthread -flto
+fast-clang: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
+	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
 
-# Bonus
-.PHONY: all
-bonus: $(NAME)
+.PHONY: fast-gcc
+fast-gcc: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
+fast-gcc: IFLAGS += -I./bonus
+fast-gcc: CFLAGS += -O3 -Ofast -march=native -mtune=native -ffast-math -funroll-loops -fomit-frame-pointer -DNDEBUG -pthread -flto
+fast-gcc: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
+	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
 
 # All
 .PHONY: all

@@ -12,28 +12,34 @@
 #include <render/render_bonus.h>
 #include <cub3d.h>
 
-static __attribute__((always_inline)) inline void
+static __attribute__((always_inline)) __attribute__((hot))
+	__attribute__((flatten)) inline void
 	worker_scanline(t_app *app, int x, const struct s_render_ent_data *ents)
 {
 	t_ray				r;
+	const int			x2 = clamp(x + WORK_CHUNK, 0, app->sizes.x - 1);
 	size_t				i;
 	int					y;
 	const t_proj_ent	*ent;
 
-	ray_init(&app->game.player, 2.f * ((float)x / (float)app->sizes.x) - 1.f,
-		&r);
-	ray_cast(app, &r);
-	app->z_buffer[x] = r.perp_dist;
-	render_scanline(app, x, &r);
-	i = 0;
-	while (i < ents->num)
+	while (x < x2)
 	{
-		ent = &ents->ents[i++];
-		if (ent->start_x > x || ent->end_x < x || ent->dist > r.perp_dist)
-			continue ;
-		y = ent->start_y;
-		while (y < ent->end_y)
-			render_entity_pix(app, ent, x, y++);
+		ray_init(&app->game.player, 2.f * ((float)x / (float)app->sizes.x) - 1,
+				&r);
+		ray_cast(app, &r);
+		app->z_buffer[x] = r.perp_dist;
+		render_scanline(app, x, &r);
+		i = 0;
+		while (i < ents->num)
+		{
+			ent = &ents->ents[i++];
+			if (ent->start_x > x || ent->end_x < x || ent->dist > r.perp_dist)
+				continue ;
+			y = ent->start_y;
+			while (y < ent->end_y)
+				render_entity_pix(app, ent, x, y++);
+		}
+		++x;
 	}
 }
 
@@ -66,7 +72,8 @@ void
 			break ;
 		while (1)
 		{
-			x = __atomic_fetch_add(&pool->job.next_x, 1, __ATOMIC_RELAXED);
+			x = __atomic_fetch_add(&pool->job.next_x, WORK_CHUNK,
+					__ATOMIC_RELAXED);
 			if (x >= app->sizes.x)
 				break ;
 			worker_scanline(app, x, pool->job.ents);

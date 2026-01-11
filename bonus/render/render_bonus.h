@@ -18,6 +18,9 @@
 struct	s_app;
 struct	s_render_ent_data;
 
+/** @brief Number of scanline per work request */
+#define WORK_CHUNK 8
+
 typedef struct s_render_job
 {
 	struct s_app				*app;

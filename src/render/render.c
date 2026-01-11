@@ -15,22 +15,11 @@
 __attribute__((always_inline)) inline void
 	sample(t_app *app, const struct s_render_fc_data *r, t_pos bounds)
 {
-	const float			dist = vec2_dist2(app->game.player.position, r->world);
 	t_color				color;
-	t_color				cur;
 
-	cur = r->props->reflect_color;
-	if (r->s.y >= bounds.y && r->s.y < 2 * bounds.y - bounds.x)
-		cur = ((t_color *)app->framebuffer->image->data)
-		[r->s.x + (2 * bounds.y - r->s.y) * app->sizes.x];
-	else if (r->s.y < bounds.x && r->s.y > 2 * bounds.x - bounds.y + 1)
-		cur = ((t_color *)app->framebuffer->image->data)
-		[r->s.x + (2 * bounds.x - r->s.y) * app->sizes.x];
+	(void)bounds;
 	color = *(t_color *)(r->tex->img->data + r->t.y * r->tex->img->size_line
 			+ r->t.x * (r->tex->img->bpp / 8));
-	color = color_lerp8(color, cur, r->props->reflectivity);
-	color = color_lerp8(color, r->props->fade_color,
-			(uint8_t)((r->props->emission - 255) / (1 + dist / 64)));
 	((t_color *)app->framebuffer->image->data)[r->s.x + r->s.y * app->sizes.x]
 		= color;
 }

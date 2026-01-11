@@ -81,8 +81,6 @@ static __attribute__((always_inline)) inline t_color
 
 	color = *(t_color *)(s->tex->img->data + s->ty * s->tex->img->size_line
 			+ s->tx * (s->tex->img->bpp / 8));
-	color = color_lerp8(color, s->props->fade_color,
-			(uint8_t)((255 - s->props->emission) * s->shade));
 	return (color);
 }
 

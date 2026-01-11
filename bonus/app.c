@@ -38,7 +38,7 @@ bool
 {
 	if (!init_default_floor(app))
 		return (false);
-	if (!thread_pool_init(&app->pool, 16))
+	if (!thread_pool_init(&app->pool, 8))
 		return (false);
 	if (!game_setup(app))
 		return (false);

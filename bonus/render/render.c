@@ -12,7 +12,8 @@
 #include <cub3d.h>
 
 /** @brief Floor/Ceiling color fragment shader */
-__attribute__((always_inline)) inline void
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline void
 	sample(t_app *app, const struct s_render_fc_data *r, t_pos bounds)
 {
 	const float			dist = vec2_dist2(app->game.player.position, r->world);
@@ -35,7 +36,8 @@ __attribute__((always_inline)) inline void
 		= color;
 }
 
-__attribute__((always_inline)) inline void
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline void
 	render_ceiling(t_app *app, int x, t_pos bounds, const t_ray *r)
 {
 	int						p;
@@ -65,7 +67,8 @@ __attribute__((always_inline)) inline void
 	}
 }
 
-__attribute__((always_inline)) inline void
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline void
 	render_floor(t_app *app, int x, t_pos bounds, const t_ray *r)
 {
 	int						p;
@@ -95,7 +98,8 @@ __attribute__((always_inline)) inline void
 	}
 }
 
-__attribute__((always_inline)) inline void
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline void
 	render_scanline(t_app *app, int x, const t_ray *r)
 {
 	int		line_h;

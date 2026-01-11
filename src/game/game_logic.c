@@ -61,7 +61,7 @@ void
 	static char	fps[256] = "FPS ";
 
 	map_state_update(app);
-	render_frame_bonus(app);
+	render_frame(app);
 	if (app->game.show_minimap)
 		game_minimap_render(app);
 	draw_viewmodel(app);
