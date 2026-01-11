@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite.c                                           :+:      :+:    :+:   */
+/*   sprite_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,7 +9,7 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <assets/assets.h>
+#include <cub3d_bonus.h>
 
 __attribute__((always_inline)) inline t_color
 	sprite_sample(const t_sprite *spr, float u, float v)

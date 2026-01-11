@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   defs.h                                             :+:      :+:    :+:   */
+/*   defs_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,10 +9,10 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef DEFS_H
-# define DEFS_H
+#ifndef DEFS_BONUS_H
+# define DEFS_BONUS_H
 
-# include <assets/assets.h>
+# include <assets/assets_bonus.h>
 
 struct			s_assets;
 struct			s_app;
@@ -181,4 +181,4 @@ asset_size_check(const t_texture *tex, int width, int height);
 
 /** @} */
 
-#endif // DEFS_H
+#endif // DEFS_BONUS_H

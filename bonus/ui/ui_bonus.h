@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui.h                                               :+:      :+:    :+:   */
+/*   ui_bonus.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,10 +9,10 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef UI_H
-# define UI_H
+#ifndef UI_BONUS_H
+# define UI_BONUS_H
 
-# include <util/util.h>
+# include <util/util_bonus.h>
 
 struct				s_app;
 
@@ -364,4 +364,4 @@ ui_ev_mousemove(int x, int y, struct s_app *app);
 
 /** @} */
 
-#endif // UI_H
+#endif // UI_BONUS_H

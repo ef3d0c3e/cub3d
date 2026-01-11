@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread_pool_bonus.c                                :+:      :+:    :+:   */
+/*   thread_pool_bonus_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include <render/render_bonus.h>
-#include <cub3d.h>
+#include <cub3d_bonus.h>
 
 bool
 	thread_pool_init(t_thread_pool *pool, size_t thread_count)

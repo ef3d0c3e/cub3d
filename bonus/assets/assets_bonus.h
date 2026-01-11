@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assets.h                                           :+:      :+:    :+:   */
+/*   assets_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,10 +9,10 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef ASSETS_H
-# define ASSETS_H
+#ifndef ASSETS_BONUS_H
+# define ASSETS_BONUS_H
 
-# include <util/util.h>
+# include <util/util_bonus.h>
 
 /**
  * @defgroup Assets Assets
@@ -327,4 +327,4 @@ sprite_sheet_anim_count(const t_sprite_sheet *sheet);
 
 /** @} */
 
-#endif // ASSETS_H
+#endif // ASSETS_BONUS_H

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture.c                                          :+:      :+:    :+:   */
+/*   texture_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,8 +9,7 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "assets/defs/defs.h"
-#include <assets/assets.h>
+#include <cub3d_bonus.h>
 
 t_atlas_id
 	atlas_tex_add(t_texture_atlas *atlas, t_texture texture)

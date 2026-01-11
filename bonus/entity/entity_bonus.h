@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity.h                                           :+:      :+:    :+:   */
+/*   entity_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,10 +9,10 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef ENTITY_H
-# define ENTITY_H
+#ifndef ENTITY_BONUS_H
+# define ENTITY_BONUS_H
 
-# include <assets/assets.h>
+# include <assets/assets_bonus.h>
 
 struct	s_app;
 struct	s_assets;
@@ -300,4 +300,4 @@ ent_update(struct s_app *app);
 
 /** @} */
 
-#endif // ENTITY_H
+#endif // ENTITY_BONUS_H

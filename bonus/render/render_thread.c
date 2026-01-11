@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_bonus.c                                     :+:      :+:    :+:   */
+/*   render_thread_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,8 +9,7 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <render/render_bonus.h>
-#include <cub3d.h>
+#include <cub3d_bonus.h>
 
 static __attribute__((always_inline)) __attribute__((hot))
 	__attribute__((flatten)) inline void

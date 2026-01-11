@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.h                                             :+:      :+:    :+:   */
+/*   util_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,8 +9,8 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef UTIL_H
-# define UTIL_H
+#ifndef UTIL_BONUS_H
+# define UTIL_BONUS_H
 
 # include <stdint.h>
 # include <stdlib.h>
@@ -22,7 +22,7 @@
 # include <libft.h>
 # include <get_next_line.h>
 
-# include <util/rbtree/rbtree.h>
+# include <util/rbtree/rbtree_bonus.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions                                                                //
@@ -539,4 +539,4 @@ void
 ft_qsort(void *base, size_t nmemb, size_t size,
 	int (*cmp)(const void *, const void *));
 
-#endif // UTIL_H
+#endif // UTIL_BONUS_H

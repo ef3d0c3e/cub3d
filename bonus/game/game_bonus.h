@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.h                                             :+:      :+:    :+:   */
+/*   game_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,11 +9,11 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef GAME_H
-# define GAME_H
+#ifndef GAME_BONUS_H
+# define GAME_BONUS_H
 
-# include <player/player.h>
-# include <assets/assets.h>
+# include <player/player_bonus.h>
+# include <assets/assets_bonus.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Game data                                                                  //
@@ -103,4 +103,4 @@ action_text(struct s_app *app, const char *text);
 
 /** @} */
 
-#endif // GAME_H
+#endif // GAME_BONUS_H

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   map_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,11 +9,11 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef MAP_H
-# define MAP_H
+#ifndef MAP_BONUS_H
+# define MAP_BONUS_H
 
-# include <util/util.h>
-# include <assets/assets.h>
+# include <util/util_bonus.h>
+# include <assets/assets_bonus.h>
 
 struct	s_app;
 
@@ -155,4 +155,4 @@ map_state_set(struct s_app *app, int x, int y, void *state);
 
 /** @} */
 
-#endif // MAP_H
+#endif // MAP_BONUS_H

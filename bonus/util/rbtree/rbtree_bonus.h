@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rbtree.h                                           :+:      :+:    :+:   */
+/*   rbtree_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,8 +9,8 @@
 /*   Updated: 2025/03/17 11:59:41 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef RBTREE_H
-# define RBTREE_H
+#ifndef RBTREE_BONUS_H
+# define RBTREE_BONUS_H
 
 # include <libft.h>
 # include <stdlib.h>
@@ -202,4 +202,4 @@ rb_delete_fixup(t_rbtree *tree, t_rbnode *x, t_rbnode *x_parent);
 
 /** @} */
 
-#endif // BTREE_H
+#endif // BTREE_BONUS_H

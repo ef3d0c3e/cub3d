@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   parser_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,13 +9,13 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef PARSER_BONUS_H
+# define PARSER_BONUS_H
 
-# include <util/util.h>
-# include <assets/assets.h>
-# include <entity/entity.h>
-# include <map/map.h>
+# include <util/util_bonus.h>
+# include <assets/assets_bonus.h>
+# include <entity/entity_bonus.h>
+# include <map/map_bonus.h>
 
 struct	s_app;
 
@@ -444,4 +444,4 @@ parser_make_map(struct s_parser *parser, struct s_app *app);
 
 /** @} */
 
-#endif // PARSER_H
+#endif // PARSER_BONUS_H

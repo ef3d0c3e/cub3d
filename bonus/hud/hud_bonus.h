@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hud.h                                              :+:      :+:    :+:   */
+/*   hud_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,11 +9,11 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef HUD_H
-# define HUD_H
+#ifndef HUD_BONUS_H
+# define HUD_BONUS_H
 
-# include <util/util.h>
-# include <assets/assets.h>
+# include <util/util_bonus.h>
+# include <assets/assets_bonus.h>
 
 struct						s_app;
 typedef struct s_draw_item	t_draw_item;
@@ -377,4 +377,4 @@ hud_free(struct s_app *app);
 
 /** @} */
 
-#endif // HUD_H
+#endif // HUD_BONUS_H

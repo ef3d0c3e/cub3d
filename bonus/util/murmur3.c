@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   murmur3.c                                          :+:      :+:    :+:   */
+/*   murmur3_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,7 +15,7 @@
  * https://en.wikipedia.org/wiki/MurmurHash#Algorithm
  */
 
-#include <util/util.h>
+#include <cub3d_bonus.h>
 
 static inline uint32_t
 	murmur_32_scramble(uint32_t k)

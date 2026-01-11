@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,27 +9,21 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
-# define CUB_BONUS
-
-# include <util/util.h>
-# include <assets/defs/defs.h>
-# include <map/map.h>
-# include <hud/hud.h>
-# include <hud/panel/panel.h>
-# include <ui/ui.h>
-# include <player/player.h>
-# include <entity/entity.h>
-# include <game/game.h>
-# include <render/render.h>
-# ifdef CUB_BONUS
-#  include <render/render_bonus.h>
-# else
-
-typedef int	t_thread_pool;
-# endif // CUB_BONUS
+# include <util/util_bonus.h>
+# include <parser/parser_bonus.h>
+# include <assets/defs/defs_bonus.h>
+# include <map/map_bonus.h>
+# include <hud/hud_bonus.h>
+# include <hud/panel/panel_bonus.h>
+# include <ui/ui_bonus.h>
+# include <player/player_bonus.h>
+# include <entity/entity_bonus.h>
+# include <game/game_bonus.h>
+# include <render/render_bonus.h>
+# include <render/render_thread_bonus.h>
 
 /** @brief Initialization status */
 enum e_init_error
@@ -106,4 +100,4 @@ app_setup(t_app *app);
 void
 app_cleanup(t_app *app);
 
-#endif // CUB3D_H
+#endif // CUB3D_BONUS_H

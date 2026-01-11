@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.h                                           :+:      :+:    :+:   */
+/*   player_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,11 +9,11 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PLAYER_H
-# define PLAYER_H
+#ifndef PLAYER_BONUS_H
+# define PLAYER_BONUS_H
 
-# include <util/util.h>
-# include <assets/defs/defs.h>
+# include <util/util_bonus.h>
+# include <assets/defs/defs_bonus.h>
 
 struct	s_app;
 
@@ -86,4 +86,4 @@ player_input(struct s_app *app);
 void
 player_move(struct s_app *app, t_vec2 move);
 
-#endif // PLAYER_H
+#endif // PLAYER_BONUS_H

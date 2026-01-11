@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   panel.h                                            :+:      :+:    :+:   */
+/*   panel_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,10 +9,10 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PANEL_H
-# define PANEL_H
+#ifndef PANEL_BONUS_H
+# define PANEL_BONUS_H
 
-# include <hud/hud.h>
+# include <hud/hud_bonus.h>
 
 struct					s_app;
 
@@ -537,4 +537,4 @@ pan_is_active(void);
 
 /** @} */
 
-#endif // PANEL_H
+#endif // PANEL_BONUS_H

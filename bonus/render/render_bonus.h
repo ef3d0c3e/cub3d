@@ -12,60 +12,188 @@
 #ifndef RENDER_BONUS_H
 # define RENDER_BONUS_H
 
-# include <stdbool.h>
-# include <pthread.h>
+# include <map/map_bonus.h>
+# include <entity/entity_bonus.h>
 
 struct	s_app;
+struct	s_player;
 struct	s_render_ent_data;
 
-/** @brief Number of scanline per work request */
-#define WORK_CHUNK 8
+////////////////////////////////////////////////////////////////////////////////
+// Render                                                                     //
+////////////////////////////////////////////////////////////////////////////////
 
-typedef struct s_render_job
+/**
+ * @defgroup Render Render
+ * @{
+ */
+
+/** @brief Ray casting data */
+typedef struct s_ray
 {
-	struct s_app				*app;
-	int							next_x;
-	struct s_render_ent_data	*ents;
-}	t_render_job;
+	/* -- Ray input parameters -- */
+	/* Ray direction */
+	t_vec2		ray;
+	int			step_x;
+	int			step_y;
+	/* Map coordinates */
+	int			map_x;
+	int			map_y;
 
-typedef struct s_thread_pool
+	/* -- DDA values -- */
+	t_vec2		delta_dist;
+	t_vec2		side_dist;
+	int			side;
+
+	/* -- Output -- */
+	/* Hit wall */
+	t_material	*hit;
+	float		perp_dist;
+}	t_ray;
+
+/** @brief Maximum number of entities that can be processed */
+# define MAX_ENTITIES 256
+
+/** @brief Data for projected entities */
+typedef struct s_proj_ent
 {
-	/** @brief Render threads */
-	pthread_t		*threads;
-	/** @brief Number of render threads */
-	size_t			thread_count;
+	/** @brief Distance to player */
+	float				dist;
+	/** @brief Entity */
+	t_entity			*ent;
 
-	/** @brief Mutex for the condition variables, `active_workers` and `stop` */
-	pthread_mutex_t	mutex;
-	/** @brief Condvar to start rendering */
-	pthread_cond_t	cond_start;
-	/** @brief Condvar to stop rendering */
-	pthread_cond_t	cond_done;
+	/** @brief `1 / det(Transform Matrix)` */
+	float				inv_det;
+	/** @brief Position in player-local space */
+	/** @brief  Translate */
+	t_vec2				space;
+	/** @brief Scale */
+	t_vec2				trans;
+	/** @brief Screen X center coordinate */
+	float				screen_x;
+	/** @brief Draw start X screen position (Unclamped) */
+	int					real_start_x;
+	/** @brief Draw start X screen position */
+	int					start_x;
+	/** @brief Draw end X screen position */
+	int					end_x;
+	/** @brief Draw start Y screen position */
+	int					start_y;
+	/** @brief Draw end Y screen position */
+	int					end_y;
+	/** @brief Width scale factor */
+	int					w;
+	/** @brief Height scale factor */
+	int					h;
+	/** @brief Entity sprite */
+	t_sprite			sprite;
+	/** @brief Render flipped sprite */
+	bool				flip;
+	/** @brief Vertical offset */
+	int					vmove_y;
+}	t_proj_ent;
 
-	/** @brief Number of active workers */
-	size_t			active_workers;
-	/** @brief Whether to stop working */
-	bool			stop;
-	/** @brief Whether work is available */
-	bool			work_available;
-	/** @brief Current job ID */
-	size_t			job_id;
-
-	/** @brief Render job */
-	t_render_job	job;
-}	t_thread_pool;
-
-/** @brief Render a frame using the thread pool */
+/** @brief Initialize a ray using screen width coordinate */
 void
-render_frame_bonus(struct s_app *app);
-/** @brief Initialize thread pool */
+ray_init(const struct s_player *p, float camera_x, t_ray *r);
+/** @brief Initialize a ray using arbitrary vectors */
+void
+ray_init_vec(t_vec2 pos, t_vec2 dir, t_ray *r);
+/** @brief Cast a ray */
+void
+ray_cast(struct s_app *app, t_ray *r);
+/** @brief Ray algorithm for entities */
+void
+project_entities(
+	struct s_app *app,
+	struct s_render_ent_data *render,
+	const char *exclude);
+
+/** @brief Render a frame */
+void
+render_frame(struct s_app *app);
+
+void
+render_scanline(struct s_app *app, int x, const t_ray *r);
+/** @brief Render a wall */
+void
+render_wall(struct s_app *app, int x, const t_ray *ray);
+/** @brief Render a single entity pixel */
+void
+render_entity_pix(
+	struct s_app *app,
+	const t_proj_ent *s,
+	int x,
+	int y);
+/** @brief Render entieies */
+void
+render_entities(struct s_app *app);
+/** @brief Get the entity in front of the player */
 bool
-thread_pool_init(t_thread_pool *pool, size_t thread_count);
-/** @brief Destroy thread pool */
-void
-thread_pool_destroy(t_thread_pool *pool);
-/** @brief Worker thread routine */
-void
-*render_worker(void *arg);
+ray_entities(struct s_app *app, t_proj_ent *found);
+
+/******************************************************************************/
+/* Internals                                                                  */
+/******************************************************************************/
+
+struct s_render_wall_data
+{
+	int						line_h;
+	/** @brief Draw top screen vertical position */
+	int						ds;
+	/** @briof Draw end screen vertical poosition */
+	int						de;
+
+	int						tx;
+	int						ty;
+	float					wall_x;
+	/** @brief Framebuffer */
+	t_color					*pix;
+	/** @brief Wall shade */
+	float					shade;
+	/** @brief Material properties */
+	const t_material_prop	*props;
+	/** @brief Wall texture */
+	const t_texture			*tex;
+};
+
+/** @brief Data for floor/ceiling render */
+struct s_render_fc_data
+{
+	/** @brief Screen coordinates */
+	t_pos					s;
+	/** @brief Texture coordinates */
+	t_pos					t;
+	/** @brief Raycast result */
+	const t_ray				*ray;
+	/** @brief Material properties */
+	const t_material_prop	*props;
+	/** @brief Texture */
+	const t_texture			*tex;
+	/** @brief World coordinates */
+	t_vec2					world;
+};
+
+/** @brief Entity render data */
+struct s_render_ent_data
+{
+	/** @brief Entities to render */
+	t_proj_ent	ents[MAX_ENTITIES];
+	/** @brief Number of entities to render */
+	size_t		num;
+};
+
+/** @brief Entity RBTree traversal data */
+struct s_ent_tr_data
+{
+	/** @brief Application pointer */
+	const struct s_app			*app;
+	/** @brief Entity render data */
+	struct s_render_ent_data	*render;
+	/** @brief Search filter */
+	const char					*include;
+};
+
+/** @} */
 
 #endif // RENDER_BONUS_H
