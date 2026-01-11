@@ -9,7 +9,7 @@
 /*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <cub3d.h>
+#include <cub3d_bonus.h>
 
 static bool
 	item_load(t_app *app)
@@ -45,9 +45,9 @@ static void
 	item_tick(struct s_app *app, void *entity)
 {
 	struct s_ent_item *const	item = entity;
-	const t_weapon				*weapon = &app->assets.weapons[WEAPON_CHAINGUN];
+	const t_weapon				*weapon = &app->assets.weapons[WEAPON_SHOTGUN];
 	t_player_weapondata *const	data = &app->game.player.weapons
-	[WEAPON_CHAINGUN];
+	[WEAPON_SHOTGUN];
 	const float					dist = vec2_dist(item->base.data.position,
 			app->game.player.position);
 
