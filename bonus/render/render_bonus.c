@@ -27,7 +27,6 @@ static __attribute__((always_inline)) __attribute__((hot))
 		ray_init(&app->game.player, 2.f * ((float)x / (float)app->sizes.x) - 1,
 				&r);
 		ray_cast(app, &r);
-		app->z_buffer[x] = r.perp_dist;
 		render_scanline(app, x, &r);
 		i = 0;
 		while (i < ents->num)
@@ -43,7 +42,7 @@ static __attribute__((always_inline)) __attribute__((hot))
 	}
 }
 
-static __attribute__((always_inline)) inline bool
+static __attribute__((always_inline)) __attribute__((cold)) inline bool
 	wait_work(t_thread_pool *pool, size_t *job, t_app **app)
 {
 	pthread_mutex_lock(&pool->mutex);

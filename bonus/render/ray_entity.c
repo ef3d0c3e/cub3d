@@ -11,10 +11,21 @@
 /* ************************************************************************** */
 #include <cub3d.h>
 
+static inline float
+	length(t_app *app)
+{
+	t_ray	ray;
+
+	ray_init(&app->game.player, 0, &ray);
+	ray_cast(app, &ray);
+	return (ray.perp_dist);
+}
+
 bool
 	ray_entities(t_app *app, t_proj_ent *found)
 {
 	struct s_render_ent_data	render;
+	const float					depth = length(app);
 	const t_proj_ent			*ent;
 	size_t						i;
 
@@ -25,7 +36,7 @@ bool
 	while (1)
 	{
 		ent = &render.ents[i];
-		if (ent->dist < app->z_buffer[app->sizes.x / 2]
+		if (ent->dist < depth
 			&& ent->start_x <= app->sizes.x / 2
 			&& ent->end_x > app->sizes.x / 2)
 		{

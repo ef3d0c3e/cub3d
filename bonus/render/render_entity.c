@@ -37,32 +37,3 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 		((t_color *)app->framebuffer->data)[x + y * app->sizes.x]
 			= color_tint(color, s->ent->data.color);
 }
-
-void
-	render_entities(
-	t_app *app)
-{
-	struct s_render_ent_data	render;
-	const t_proj_ent			*ent;
-	size_t						i;
-	t_pos						t;
-
-	project_entities(app, &render, NULL);
-	i = 0;
-	while (i < render.num)
-	{
-		ent = &render.ents[i];
-		t.x = ent->start_x;
-		while (t.x < ent->end_x)
-		{
-			if (t.x >= 0 && ent->dist < app->z_buffer[t.x])
-			{
-				t.y = ent->start_y;
-				while (t.y < ent->end_y)
-					render_entity_pix(app, ent, t.x, t.y++);
-			}
-			++t.x;
-		}
-		++i;
-	}
-}

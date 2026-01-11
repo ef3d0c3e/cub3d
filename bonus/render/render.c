@@ -121,22 +121,3 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	render_ceiling(app, x, (t_pos){ds, de}, r);
 	render_floor(app, x, (t_pos){ds, de}, r);
 }
-
-void
-	render_frame(t_app *app)
-{
-	t_ray	r;
-	int		x;
-
-	x = 0;
-	while (x < app->sizes.x)
-	{
-		ray_init(&app->game.player,
-			2.f * ((float)x / (float)app->sizes.x) - 1.f, &r);
-		ray_cast(app, &r);
-		app->z_buffer[x] = r.perp_dist;
-		render_scanline(app, x, &r);
-		++x;
-	}
-	render_entities(app);
-}

@@ -1,6 +1,6 @@
 NAME := cub3D
 CC := cc
-CFLAGS := -Wall -Wextra -Wconversion -pedantic -std=gnu99
+CFLAGS := -Wall -Wextra -Wconversion -Werror -pedantic -std=gnu99
 IFLAGS :=
 LFLAGS := -lm
 
