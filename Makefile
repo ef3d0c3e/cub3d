@@ -1,6 +1,6 @@
 NAME := cub3D
 CC := cc
-CFLAGS := -Wall -Wextra -Wconversion -Werror -pedantic -std=gnu99
+CFLAGS := -Wall -Wextra -Wconversion -Werror -std=gnu99
 IFLAGS :=
 LFLAGS := -lm
 
@@ -42,9 +42,9 @@ bonus: $(LIB_FT) $(LIB_GNL) $(LIB_MLX) $(OBJECTS_BONUS)
 .PHONY: fast-clang
 fast-clang: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
 fast-clang: IFLAGS += -I./bonus
-fast-clang: CFLAGS += -O3 -Ofast -march=native -mtune=native -ffast-math -funroll-loops -fomit-frame-pointer -DNDEBUG -pthread -flto
+fast-clang: CFLAGS += -O3 -ffast-math -march=native -mtune=native -funroll-loops -fomit-frame-pointer -DNDEBUG -pthread -flto
 fast-clang: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
-	clang $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
+	clang-21 $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
 
 .PHONY: fast-gcc
 fast-gcc: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
@@ -71,7 +71,8 @@ $(LIB_GNL):
 # MLX
 $(LIB_MLX):
 	echo "Building libmlx..."
-	cd $(dir $(LIB_MLX)) && CFLAGS="-std=c89" ./configure
+	cd $(dir $(LIB_MLX)) && make CFLAGS="-std=c99 -Wno-implicit-function-declaration -I $(realpath ./libs/minilibx-linux/)"
+	#cd $(dir $(LIB_MLX)) && CFLAGS="-std=c89" ./configure
 
 .PHONY: clangd
 clangd:
