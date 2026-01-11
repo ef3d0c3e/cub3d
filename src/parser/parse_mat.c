@@ -44,16 +44,7 @@ static void
 bool
 	parser_mat(struct s_parser *parser)
 {
-	int	status;
-
-	if (parser->s_data.mat_atlas.size == 0)
-		init_atlas(parser);
-	if (!*parser_trim_start(parser->line, " \n"))
-		return (true);
-	status = parse_mat_default(parser);
-	if (status == -1)
-		return (false);
-	else if (status == 0)
-		parser->state = PARSE_PROPS;
+	init_atlas(parser);
+	parser->state = PARSE_PROPS;
 	return (true);
 }

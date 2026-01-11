@@ -71,7 +71,7 @@ bool
 	{
 		if (!hdr_check_missing(parser))
 			return (false);
-		parser->state = PARSE_MAP;
+		parser->state = PARSE_MAT;
 	}
 	return (true);
 }
