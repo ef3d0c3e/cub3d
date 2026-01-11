@@ -6,9 +6,9 @@ EA textures/simonkraft/netherrack_02.xpm
 F 164,169,20
 C 153,204,255
 
-MAT CUBE # NO=textures/own/concrete_1.xpm EA=textures/own/concrete_1.xpm SO=textures/own/concrete_1.xpm WE=textures/own/concrete_1.xpm
-MAT FLOOR _ BO=textures/own/tile_checkboard.xpm:reflectivity=155:reflect_color=1f1f1f TO=textures/own/tile.xpm:reflectivity=40
-MAT FLOOR ^ BO=textures/own/tile_checkboard.xpm:reflectivity=155 TO=textures/own/tile.xpm:emission=255
+MAT CUBE # NO=textures/own/concrete_2.xpm EA=textures/own/concrete_2.xpm SO=textures/own/concrete_2.xpm WE=textures/own/concrete_2.xpm
+MAT FLOOR _ BO=textures/own/tile_checkboard_4.xpm:reflectivity=155:reflect_color=1f1f1f TO=textures/own/tile.xpm:reflectivity=40
+MAT FLOOR ^ BO=textures/own/tile_checkboard_4.xpm:reflectivity=155 TO=textures/own/tile.xpm:emission=255
 
 PROP player_spawn ^
 
