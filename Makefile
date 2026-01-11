@@ -44,14 +44,14 @@ fast-clang: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
 fast-clang: IFLAGS += -I./bonus
 fast-clang: CFLAGS += -O3 -Ofast -march=native -mtune=native -ffast-math -funroll-loops -fomit-frame-pointer -DNDEBUG -pthread -flto
 fast-clang: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
-	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
+	clang $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
 
 .PHONY: fast-gcc
 fast-gcc: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
 fast-gcc: IFLAGS += -I./bonus
 fast-gcc: CFLAGS += -O3 -Ofast -march=native -mtune=native -ffast-math -funroll-loops -fomit-frame-pointer -DNDEBUG -pthread -flto
 fast-gcc: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
-	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
+	gcc $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
 
 # All
 .PHONY: all

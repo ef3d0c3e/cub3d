@@ -2,12 +2,12 @@
 
 This project is part of 42's curriculum.
 
-![screenshot](./docs/screenshot.png) Screenshot of the game
+![screenshot](./docs/screenshot.png) Screenshot of the game running the `bonus/backrooms.cub` map
 
 ## Building
 
 Build the basic version using `make`.
-To build the fast version, use `make fast`.
+To build the fast version, use `make fast-gcc` or `make fast-clang`.
 
 ## Features
  - Mouse movement
