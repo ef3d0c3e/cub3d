@@ -1,0 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 05:57:40 by lgamba            #+#    #+#             */
+/*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <parser/parser.h>
+
+const char
+	*parser_trim_start(const char *str, const char *set)
+{
+	while (*str && ft_strchr(set, *str))
+		++str;
+	return (str);
+}
+
+bool
+	parser_expect(
+	struct s_parser *parser,
+	const char **line,
+	const char *token)
+{
+	const t_text_style	st_hi = (t_text_style){COL_CYAN, 0, STYLE_BOLD};
+	const t_text_style	st_none = (t_text_style){0, 0, 0};
+
+	if (!ft_strncmp(*line, token, ft_strlen(token)))
+	{
+		*line += ft_strlen(token);
+		return (true);
+	}
+	parser_error_loc(parser, err_style(err_style(err_style(err_style_n(err(0,
+							"Unexpected token: '"), *line, ft_strlen(token),
+						st_hi), "', expected: '", st_none), token, st_hi), "'",
+			st_none));
+	return (false);
+}
+
+bool
+	parser_expect_space(
+	struct s_parser *parser,
+	const char **line,
+	const char *after)
+{
+	const size_t	after_len = ft_strlen(after);
+	const char		*advanced = parser_trim_start(*line + after_len, " ");
+
+	if (advanced != *line + after_len)
+	{
+		*line = advanced;
+		return (true);
+	}
+	parser_error_loc(parser, err_style(err_style(err(0, "Expected a space after"
+					" '"), after, (t_text_style){COL_YELLOW, 0, STYLE_BOLD}),
+			"'", (t_text_style){0, 0, 0}));
+	return (false);
+}

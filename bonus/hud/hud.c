@@ -1,0 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hud.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgamba <linogamba@pundalik.org>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 05:57:40 by lgamba            #+#    #+#             */
+/*   Updated: 2025/12/04 05:57:40 by lgamba           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <cub3d.h>
+
+void
+	hud_init(t_app *app)
+{
+	float	sx;
+	float	sy;
+
+	sx = 1024.f / (float)app->sizes.x * .5f;
+	sy = 1024.f / (float)app->sizes.y * .5f;
+	if (sx <= sy)
+		app->hud.scale = sx;
+	else
+		app->hud.scale = sy;
+	app->hud.queue.items = xmalloc(sizeof(t_draw_item) * 256);
+	app->hud.queue.capacity = 256;
+	pan_init(app, .1f * app->hud.scale, (int [2]){6, 6}, 12);
+}
+
+void
+	hud_free(t_app *app)
+{
+	free(app->hud.queue.items);
+}

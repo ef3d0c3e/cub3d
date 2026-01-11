@@ -7,16 +7,18 @@ LFLAGS := -lm
 
 # :^ `.!find src -name "*.c" -exec echo "{} \\" \;`
 SOURCES := $(shell find src -name '*.c')
+SOURCES_BONUS := $(shell find bonus -name '*.c')
 
 # Objects
 OBJECTS := $(addprefix build/,$(SOURCES:.c=.o))
+OBJECTS_BONUS := $(addprefix build/,$(SOURCES_BONUS:.c=.o))
 # Libraries
 LIB_FT := ./libs/libft/libft.a
-IFLAGS += -I$(dir $(LIB_FT))/
+IFLAGS += -I$(dir $(LIB_FT))
 LIB_GNL := ./libs/gnl/libgnl.a
-IFLAGS += -I$(dir $(LIB_GNL))/
+IFLAGS += -I$(dir $(LIB_GNL))
 LIB_MLX := ./libs/minilibx-linux/libmlx_Linux.a
-IFLAGS += -I$(dir $(LIB_MLX))/
+IFLAGS += -I$(dir $(LIB_MLX))
 
 build/%.o: %.c
 	@mkdir -p $(@D)
@@ -27,10 +29,16 @@ $(NAME): LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
 $(NAME): $(LIB_FT) $(LIB_GNL) $(LIB_MLX) $(OBJECTS)
 	$(CC) $(CFLAGS) $(IFLAGS) -o $@ $(OBJECTS) $(LFLAGS)
 
+.PHONY: bonus
+bonus: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
+bonus: $(LIB_FT) $(LIB_GNL) $(LIB_MLX) $(OBJECTS_BONUS)
+	$(CC) $(CFLAGS) $(IFLAGS) -o $(NAME) $(OBJECTS_BONUS) $(LFLAGS)
+
+.PHONY: fast
 fast: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
 fast: CFLAGS += -O3 -Ofast -mtune=native -march=native
 fast: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
-	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES) -o $@ $(LFLAGS)
+	$(CC) $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $@ $(LFLAGS)
 
 # Bonus
 .PHONY: all
@@ -54,7 +62,7 @@ $(LIB_GNL):
 # MLX
 $(LIB_MLX):
 	echo "Building libmlx..."
-	cd $(dir $(LIB_MLX)) && CFLAGS="-std=gnu89" ./configure
+	cd $(dir $(LIB_MLX)) && CFLAGS="-std=c89" ./configure
 
 .PHONY: clangd
 clangd:
@@ -83,7 +91,6 @@ lclean:
 .PHONY: fclean
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) fast
 
 .PHONY: re
 re: fclean all
