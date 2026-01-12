@@ -44,7 +44,7 @@ fast-clang: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
 fast-clang: IFLAGS += -I./bonus
 fast-clang: CFLAGS += -O3 -ffast-math -march=native -mtune=native -funroll-loops -fomit-frame-pointer -DNDEBUG -pthread -flto
 fast-clang: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
-	clang-21 $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
+	clang $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
 
 .PHONY: fast-gcc
 fast-gcc: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
@@ -78,7 +78,7 @@ $(LIB_GNL):
 # MLX
 $(LIB_MLX):
 	echo "Building libmlx..."
-	cd $(dir $(LIB_MLX)) && make CFLAGS="-std=c99 -Wno-implicit-function-declaration -I $(realpath ./libs/minilibx-linux/)"
+	cd $(dir $(LIB_MLX)) && make CFLAGS="-std=c99 -O2 -Wno-implicit-function-declaration -I $(realpath ./libs/minilibx-linux/)"
 	#cd $(dir $(LIB_MLX)) && CFLAGS="-std=c89" ./configure
 
 .PHONY: clangd
