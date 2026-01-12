@@ -23,48 +23,7 @@
 
 # include <util/rbtree/rbtree_bonus.h>
 
-//# include <mlx.h>
-
-extern void
-*mlx_init(void);
-extern void
-*mlx_destroy_display(void *_0);
-extern void
-*mlx_new_window(void *_0, int _1, int _2, const char *_3);
-extern void
-*mlx_destroy_window(void *_0, void *_1);
-extern void
-*mlx_new_image(void *_0, int _1, int _2);
-extern int
-mlx_destroy_image(void *_0, void *_1);
-extern void
-*mlx_xpm_file_to_image(void *_0, void *_1, int *_2, int *_3);
-union u_mlx_hook
-{
-	void	*ptr;
-	int		(*fn)(void *_0, int _1, int _2, void *_3, void *_4);
-};
-extern int
-mlx_hook(void);
-extern int
-mlx_loop_hook(void *_0, void *_1, void *_2);
-extern int
-mlx_loop_end(void *_0);
-extern int
-mlx_mouse_hide(void *_0, void *_1);
-extern int
-mlx_mouse_show(void *_0, void *_1);
-extern int
-mlx_mouse_move(void *_0, void *_1, int _2, int _3);
-union u_mlx_put_image_to_window
-{
-	void	*ptr;
-	int		(*fn)(void *_0, void *_1, void *_2, int _3, int _4);
-};
-extern int
-mlx_put_image_to_window(void);
-extern int
-mlx_loop(void *_0);
+# include <mlx.h>
 
 typedef struct s_image
 {

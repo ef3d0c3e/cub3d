@@ -24,7 +24,7 @@ static __attribute__((always_inline)) __attribute__((hot))
 	while (x < x2)
 	{
 		ray_init(&app->game.player, 2.f * ((float)x / (float)app->sizes.x) - 1,
-				&r);
+			&r);
 		ray_cast(app, &r);
 		render_scanline(app, x, &r);
 		i = 0;

@@ -28,24 +28,21 @@ static int
 void
 	event_setup(t_app *app)
 {
-	union u_mlx_hook	hook;
-
 	app->event.mouse_pos = (t_pos){0, 0};
 	app->event.mouse_delta = (t_pos){0.f, 0.f};
 	app->event.events = rb_new(event_code_cmp, NULL, NULL);
-	hook.ptr = (void *)mlx_hook;
-	hook.fn(app->mlx_window, EVENT_MOUSEDOWN, MASK_BUTTON_PRESS,
-		(void *)ui_ev_mousedown, app);
-	hook.fn(app->mlx_window, EVENT_MOUSEUP, MASK_BUTTON_RELEASE,
-		(void *)ui_ev_mouseup, app);
-	hook.fn(app->mlx_window, EVENT_MOUSEMOVE, MASK_POINTER_MOTION,
-		(void *)ui_ev_mousemove, app);
-	hook.fn(app->mlx_window, EVENT_KEYDOWN, MASK_KEY_PRESS,
-		(void *)ui_ev_keydown, app);
-	hook.fn(app->mlx_window, EVENT_KEYUP, MASK_KEY_RELEASE,
-		(void *)ui_ev_keyup, app);
-	hook.fn(app->mlx_window, EVENT_DESTROY, MASK_NONE,
-		(void *)mlx_loop_end, app->mlx_ptr);
+	mlx_hook(app->mlx_window, EVENT_MOUSEDOWN, MASK_BUTTON_PRESS,
+		ui_ev_mousedown, app);
+	mlx_hook(app->mlx_window, EVENT_MOUSEUP, MASK_BUTTON_RELEASE,
+		ui_ev_mouseup, app);
+	mlx_hook(app->mlx_window, EVENT_MOUSEMOVE, MASK_POINTER_MOTION,
+		ui_ev_mousemove, app);
+	mlx_hook(app->mlx_window, EVENT_KEYDOWN, MASK_KEY_PRESS,
+		ui_ev_keydown, app);
+	mlx_hook(app->mlx_window, EVENT_KEYUP, MASK_KEY_RELEASE,
+		ui_ev_keyup, app);
+	mlx_hook(app->mlx_window, EVENT_DESTROY, MASK_NONE,
+		mlx_loop_end, app->mlx_ptr);
 }
 
 void

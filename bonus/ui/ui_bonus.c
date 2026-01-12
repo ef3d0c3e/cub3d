@@ -77,8 +77,6 @@ static void
 static int
 	ui_update(t_app *app)
 {
-	union u_mlx_put_image_to_window	put;
-
 	if (app->frame_delta == 0)
 		app->frame_delta = 1.f;
 	++app->frame;
@@ -93,8 +91,7 @@ static int
 	game_ui(app);
 	ui_cursor(app);
 	hud_render(app);
-	put.ptr = (void *)mlx_put_image_to_window;
-	put.fn(app->mlx_ptr, app->mlx_window,
+	mlx_put_image_to_window(app->mlx_ptr, app->mlx_window,
 		app->framebuffer, 0, 0);
 	pan_context_reset(app);
 	event_update(app);
@@ -107,7 +104,7 @@ bool
 {
 	app->framebuffer = mlx_new_image(app->mlx_ptr, app->sizes.x, app->sizes.y);
 	event_setup(app);
-	mlx_loop_hook(app->mlx_ptr, (void *)ui_update, app);
+	mlx_loop_hook(app->mlx_ptr, ui_update, app);
 	hud_init(app);
 	mlx_mouse_hide(app->mlx_ptr, app->mlx_window);
 	return (true);

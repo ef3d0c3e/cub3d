@@ -16,13 +16,36 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <math.h>
+# include <fcntl.h>
 
-# include <mlx_int.h>
-# include <mlx.h>
 # include <libft.h>
 # include <get_next_line.h>
-
 # include <util/rbtree/rbtree.h>
+
+# include <mlx.h>
+
+typedef struct s_image
+{
+	int		width;
+	int		height;
+	int		xoffset;
+	int		format;
+	char	*data;
+}	t_image;
+
+typedef struct s_img
+{
+	t_image			*image;
+	unsigned long	pix;
+	void			*gc;
+	int				size_line;
+	int				bpp;
+	int				width;
+	int				height;
+	int				type;
+	int				format;
+	char			*data;
+}	t_img;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions                                                                //
