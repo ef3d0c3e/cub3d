@@ -19,7 +19,7 @@ void
 	p->fov = .66f;
 	p->health = 100;
 	p->angle.x = ((float)app->map.player_orientation / 2.f) * C_PI;
-	normalize_angle(&p->angle.x, false);
+	normalize_yaw(&p->angle.x);
 	p->position = (t_vec2){
 		(float)app->map.player_spawn.x + .5f,
 		(float)app->map.player_spawn.y + .5f,
@@ -73,6 +73,11 @@ void
 			- ui_key_held(app, KEY_ARROW_LEFT)) * .05f;
 	if (app->event.mouse_grab)
 		app->game.player.angle.x += (float)app->event.mouse_delta.x * 0.002f;
+	app->game.player.angle.y = clampf(app->game.player.angle.y
+			- (float)app->event.mouse_delta.y * 0.002f, -1, 1);
+	app->game.player.pitch = (int)(app->game.player.angle.y
+			* (float)app->sizes.y * .90f);
+	app->game.player.pitch *= app->map.props.pitch_enabled;
 	player->immunity = clampf(player->immunity - app->frame_delta, 0, 1e10f);
 	player_move(app, move);
 }

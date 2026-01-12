@@ -32,7 +32,7 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	color = color_lerp8(color, cur, r->props->reflectivity);
 	color = color_lerp8(color, r->props->fade_color,
 			(uint8_t)((r->props->emission - 255) / (1 + dist / 64)));
-	app->framebuffer->image->data[r->s.x + (r->s.y - 1) * app->sizes.x]
+	app->framebuffer->image->data[r->s.x + r->s.y * app->sizes.x]
 		= color;
 }
 
@@ -45,12 +45,11 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	struct s_render_fc_data	render;
 
 	render.ray = r;
-	render.s.x = x;
-	render.s.y = 0;
+	render.s = (t_pos){x, 0};
 	while (render.s.y < bounds.x)
 	{
-		p = app->sizes.y / 2 - render.s.y++;
-		if (p <= 0)
+		p = app->sizes.y / 2 - render.s.y + app->game.player.pitch;
+		if ((render.s.y > app->sizes.y || p <= 0) && (++render.s.y, 1))
 			continue ;
 		render.world.x = app->game.player.position.x
 			+ (float)app->sizes.y / (float)(2 * p) *r->ray.x;
@@ -64,6 +63,7 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 		render.t.y = (int)((render.world.y - (float)(int)render.world.y)
 				* (float)render.tex->height);
 		sample(app, &render, bounds);
+		++render.s.y;
 	}
 }
 
@@ -76,12 +76,11 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	struct s_render_fc_data	render;
 
 	render.ray = r;
-	render.s.x = x;
-	render.s.y = bounds.y + 1;
+	render.s = (t_pos){x, bounds.y + 1};
 	while (render.s.y < app->sizes.y)
 	{
-		p = render.s.y++ - app->sizes.y / 2;
-		if (p <= 0)
+		p = render.s.y - app->sizes.y / 2 - app->game.player.pitch;
+		if ((render.s.y <= 0 || p <= 0) && (++render.s.y, 1))
 			continue ;
 		render.world.x = app->game.player.position.x
 			+ (float)app->sizes.y / (float)(2 * p) *r->ray.x;
@@ -95,6 +94,7 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 		render.t.y = (int)((render.world.y - (float)(int)render.world.y)
 				* (float)render.tex->height);
 		sample(app, &render, bounds);
+		++render.s.y;
 	}
 }
 

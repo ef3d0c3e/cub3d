@@ -66,8 +66,7 @@ void
 	t_map_props *const	pr = &app->map.props;
 
 	p->velocity = (t_vec2){
-		p->velocity.x * pr->friction + fwd.x * app->frame_delta
-		* pr->accelerate,
+		p->velocity.x * pr->friction + fwd.x * app->frame_delta * pr->accelerate,
 		p->velocity.y * pr->friction - fwd.y * app->frame_delta * pr->accelerate
 	};
 	p->dir = (t_vec2){sinf(p->angle.x), -cosf(p->angle.x)};

@@ -30,15 +30,10 @@ __attribute__((always_inline)) inline float
 }
 
 __attribute__((always_inline)) inline void
-	normalize_angle(float *angle, bool norm_pitch)
+	normalize_yaw(float *angle)
 {
-	if (norm_pitch)
-		*angle = clampf(*angle, -C_PI / 2.f + 0.01f, C_PI / 2.f - 0.01f);
-	else
-	{
-		while (*angle >= C_PI)
-			*angle -= 2.f * C_PI;
-		while (*angle < -C_PI)
-			*angle += 2.f * C_PI;
-	}
+	while (*angle >= C_PI)
+		*angle -= 2.f * C_PI;
+	while (*angle < -C_PI)
+		*angle += 2.f * C_PI;
 }

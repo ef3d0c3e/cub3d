@@ -33,6 +33,8 @@ typedef struct s_map_props
 	float	frame_time;
 	/** @brief Material for the player's spawn point */
 	char	player_spawn;
+	/** @brief Whether pitch is enabled */
+	int		pitch_enabled;
 }	t_map_props;
 
 /** @brief The Cub3D map */

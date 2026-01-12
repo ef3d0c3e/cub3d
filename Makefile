@@ -1,6 +1,6 @@
 NAME := cub3D
 CC := cc
-CFLAGS := -Wall -Wextra -Wconversion -Werror -std=gnu99
+CFLAGS := -Wall -Wextra -Wconversion -pedantic -std=gnu99
 IFLAGS :=
 LFLAGS := -lm
 
@@ -51,6 +51,13 @@ fast-gcc: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
 fast-gcc: IFLAGS += -I./bonus
 fast-gcc: CFLAGS += -O3 -Ofast -march=native -mtune=native -ffast-math -funroll-loops -fomit-frame-pointer -DNDEBUG -pthread -flto
 fast-gcc: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
+	gcc $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
+	
+.PHONY: dbg
+dbg: LFLAGS += $(LIB_FT) $(LIB_GNL) $(LIB_MLX) -L/usr/lib -lXext -lX11
+dbg: IFLAGS += -I./bonus
+dbg: CFLAGS += -ggdb
+dbg: $(LIB_FT) $(LIB_GNL) $(LIB_MLX)
 	gcc $(CFLAGS) $(IFLAGS) $(SOURCES_BONUS) -o $(NAME) $(LFLAGS)
 
 # All

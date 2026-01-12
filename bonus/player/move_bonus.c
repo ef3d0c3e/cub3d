@@ -73,5 +73,5 @@ void
 	p->dir = (t_vec2){sinf(p->angle.x), -cosf(p->angle.x)};
 	p->plane = (t_vec2){-p->dir.y * p->fov, p->dir.x * p->fov};
 	player_collide(app, app->frame_delta);
-	normalize_angle(&p->angle.x, false);
+	normalize_yaw(&p->angle.x);
 }

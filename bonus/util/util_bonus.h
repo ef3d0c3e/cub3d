@@ -514,13 +514,12 @@ clampf(float value, float min, float max);
 float
 maxf(float a, float b);
 /**
- * @brief Normalize an angle value
+ * @brief Normalize a yaw angle value
  *
  * @param angle Angle to normalize
- * @param norm_pitch Set to `true` to normalize pitch, `false` to normalize yaw
  */
 void
-normalize_angle(float *angle, bool norm_pitch);
+normalize_yaw(float *angle);
 /**
  * @brief Computes the murmur3_32 hash of a buffer
  *

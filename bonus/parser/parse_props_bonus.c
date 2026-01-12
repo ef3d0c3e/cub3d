@@ -20,6 +20,46 @@ static void
 	parser->s_data.properties.friction = 0.92f;
 	parser->s_data.properties.frame_time = 1.f / 60.f;
 	parser->s_data.properties.player_spawn = '0';
+	parser->s_data.properties.pitch_enabled = 1;
+}
+
+static int
+	parse_property_bool(struct s_parser *parser, const char *name, int *val)
+{
+	const char	*line;
+
+	line = parser_trim_start(parser->line, " ");
+	if (ft_strncmp(line, "PROP", 4))
+		return (0);
+	if (!parser_expect_space(parser, &line, "PROP"))
+		return (-1);
+	if (ft_strncmp(line, name, ft_strlen(name)))
+		return (-2);
+	if (!parser_expect_space(parser, &line, name))
+		return (-1);
+	if (*line == '0')
+		*val = 0;
+	else if (*line == '1')
+		*val = 1;
+	else
+		return (parser_error_loc(parser, err(0, "Expected 0 or 1")), -1);
+	line = parser_trim_start(line + 1, " ");
+	if (*line && *line != '\n')
+		return (parser_error_loc(parser, err(0, "Unexpected token")), -1);
+	return (1);
+}
+
+int
+	parser_props2(struct s_parser *parser)
+{
+	int	status;
+
+	status = parse_property_mat(parser, "player_spawn",
+			&parser->s_data.properties.player_spawn);
+	if (status == 0 || status == -2)
+		status = parse_property_bool(parser, "pitch_enabled",
+			&parser->s_data.properties.pitch_enabled);
+	return (status);
 }
 
 bool
@@ -40,8 +80,7 @@ bool
 		status = parse_property_float(parser, "frame_time",
 				&parser->s_data.properties.frame_time);
 	if (status == 0 || status == -2)
-		status = parse_property_mat(parser, "player_spawn",
-				&parser->s_data.properties.player_spawn);
+		status = parser_props2(parser);
 	if (status == -2)
 		return (parser_error_loc(parser, err(0, "Unknown property name")),
 			false);
