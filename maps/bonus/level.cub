@@ -1,0 +1,51 @@
+NO textures/simonkraft/wet_sponge.xpm
+SO textures/simonkraft/cyan_concrete.xpm
+WE textures/simonkraft/soul_sand.xpm
+EA textures/simonkraft/netherrack_02.xpm
+
+F 164,169,20
+C 153,204,255
+
+MAT CUBE # NO=textures/own/concrete_2.xpm EA=textures/own/concrete_2.xpm SO=textures/own/concrete_2.xpm WE=textures/own/concrete_2.xpm
+MAT FLOOR _ BO=textures/own/tile_checkboard_4.xpm:reflectivity=155:reflect_color=1f1f1f TO=textures/own/tile.xpm
+MAT FLOOR ^ BO=textures/own/tile_checkboard_4.xpm:reflectivity=155 TO=textures/own/tile.xpm:emission=255
+
+PROP player_spawn _
+
+ENT item_shotgun (1.5, 5.5)
+ENT item_ammo_shotgun (1.5, 3.5)
+ENT item_chaingun (3.5, 5.5)
+ENT item_ammo_chaingun (3.5, 3.5)
+
+ENT item_ammo_shotgun (34.5, 7.5)
+ENT item_ammo_chaingun (34.5, 9.5)
+
+ENT mob_ghoul (7.5, 1.5)
+ENT mob_ghoul (11.5, 1.5)
+ENT mob_ghoul (15.5, 1.5)
+ENT mob_ghoul (19.5, 1.5)
+ENT mob_ghoul (23.5, 1.5)
+ENT mob_ghoul (27.5, 1.5)
+ENT mob_ghoul (31.5, 1.5)
+
+
+     ###############################
+     #_____________________________#####
+######_____________________________#___#
+#___##_________________________________#
+#_S_##_____________________________#___#
+#___##_____________________________#___#
+##_####_############################___#
+#__________________________________#___#
+#______________________________________#
+#__________________________________#___#
+################################___#####
+#______________________________#___#___#
+#__________________________________#___#
+#______________________________#___#___#
+#______________________________#___#___#
+#______________________________######_######
+#______________________________#___________#
+#__________________________________________#
+#______________________________#___________#
+############################################

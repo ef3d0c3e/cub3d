@@ -7,10 +7,10 @@ F 164,169,20
 C 153,204,255
 
 MAT CUBE # NO=textures/own/concrete_2.xpm EA=textures/own/concrete_2.xpm SO=textures/own/concrete_2.xpm WE=textures/own/concrete_2.xpm
-MAT FLOOR _ BO=textures/own/tile_checkboard_4.xpm:reflectivity=155:reflect_color=1f1f1f TO=textures/own/tile.xpm:reflectivity=40
+MAT FLOOR _ BO=textures/own/tile_checkboard_4.xpm:reflectivity=155:reflect_color=1f1f1f TO=textures/own/tile.xpm
 MAT FLOOR ^ BO=textures/own/tile_checkboard_4.xpm:reflectivity=155 TO=textures/own/tile.xpm:emission=255
 
-PROP player_spawn ^
+PROP player_spawn _
 
 ENT item_ammo_chaingun (1.5, 1.5)
 ENT item_ammo_chaingun (2.5, 1.5)
