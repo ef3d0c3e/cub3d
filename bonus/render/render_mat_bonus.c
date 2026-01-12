@@ -46,23 +46,15 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	inline void
 	render_wall_init(
 	t_app *app,
+	t_pos bounds,
 	const t_ray *r,
 	struct s_render_wall_data *s)
 {
 	t_vec2	normal;
 
-	s->pix = (t_color *)app->framebuffer->image->data;
-	s->line_h = (int)((float)app->sizes.y / r->perp_dist);
-	if (s->line_h > app->sizes.y * 4)
-		s->line_h = app->sizes.y * 4;
-	s->ds = (int)(-(float)s->line_h / 2.f + (float)app->sizes.y / 2.f
-			+ (float)app->game.player.pitch);
-	if (s->ds < 0)
-		s->ds = 0;
-	s->de = (int)((float)s->line_h / 2.f + (float)app->sizes.y / 2.f
-			+ (float)app->game.player.pitch);
-	if (s->de >= app->sizes.y)
-		s->de = app->sizes.y - 1;
+	s->pix = app->framebuffer->image->data;
+	s->ds = bounds.x;
+	s->de = bounds.y;
 	get_texture(app, r, s);
 	if (r->side == 0)
 		s->wall_x = app->game.player.position.y + r->perp_dist * r->ray.y;
@@ -73,6 +65,10 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	s->shade = clampf(vec2_dot(normal, vec2_scale(r->ray,
 					-1.f / vec2_dist(r->ray, (t_vec2){0, 0}))), 0.f, 1.f) / 2;
 	s->shade = clampf(s->shade + (1 - 1 / (1 + r->perp_dist / 64)), 0.f, 1.f);
+	s->wall_x -= (float)(int)s->wall_x;
+	s->tx = (int)(s->wall_x * (float)s->tex->width);
+	if ((r->side == 0 && r->ray.x < 0) || (r->side == 1 && r->ray.y > 0))
+		s->tx = s->tex->width - s->tx - 1;
 }
 
 /** @brief Wall fragment shader */
@@ -91,24 +87,21 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 
 __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	inline void
-	render_wall(t_app *app, int x, const t_ray *r)
+	render_wall(t_app *app, t_pos geom, t_pos bounds, const t_ray *r)
 {
 	struct s_render_wall_data	s;
 	int							y;
 	int							d;
 
-	render_wall_init(app, r, &s);
-	s.wall_x -= floorf(s.wall_x);
-	s.tx = (int)(s.wall_x * (float)s.tex->width);
-	if ((r->side == 0 && r->ray.x < 0) || (r->side == 1 && r->ray.y > 0))
-		s.tx = s.tex->width - s.tx - 1;
+	s.line_h = geom.y;
+	render_wall_init(app, bounds, r, &s);
 	y = s.ds;
 	while (y <= s.de)
 	{
 		d = (int)(((float)y - (float)app->game.player.pitch) * 256)
 			- app->sizes.y * 128 + s.line_h * 128;
 		s.ty = clamp(((d * s.tex->height) / s.line_h) / 256, 0, s.tex->height);
-		s.pix[x + y * (int)app->sizes.x] = sample(&s);
+		s.pix[geom.x + y * (int)app->sizes.x] = sample(&s);
 		++y;
 	}
 }

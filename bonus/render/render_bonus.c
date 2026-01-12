@@ -22,17 +22,17 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 
 	cur = r->props->reflect_color;
 	if (r->s.y >= bounds.y && r->s.y < 2 * bounds.y - bounds.x)
-		cur = ((t_color *)app->framebuffer->image->data)
+		cur = app->framebuffer->image->data
 		[r->s.x + (2 * bounds.y - r->s.y) * app->sizes.x];
 	else if (r->s.y < bounds.x && r->s.y > 2 * bounds.x - bounds.y + 1)
-		cur = ((t_color *)app->framebuffer->image->data)
+		cur = app->framebuffer->image->data
 		[r->s.x + (2 * bounds.x - r->s.y) * app->sizes.x];
 	color = *(t_color *)(r->tex->img->data + r->t.y * r->tex->img->size_line
 			+ r->t.x * (r->tex->img->bpp / 8));
 	color = color_lerp8(color, cur, r->props->reflectivity);
 	color = color_lerp8(color, r->props->fade_color,
 			(uint8_t)((r->props->emission - 255) / (1 + dist / 64)));
-	((t_color *)app->framebuffer->image->data)[r->s.x + r->s.y * app->sizes.x]
+	app->framebuffer->image->data[r->s.x + (r->s.y - 1) * app->sizes.x]
 		= color;
 }
 
@@ -105,6 +105,7 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	int		line_h;
 	int		ds;
 	int		de;
+	t_pos	bounds;
 
 	line_h = (int)((float)app->sizes.y / r->perp_dist);
 	if (line_h > app->sizes.y * 4)
@@ -117,7 +118,8 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 			+ (float)app->game.player.pitch);
 	if (de >= app->sizes.y)
 		de = app->sizes.y - 1;
-	render_wall(app, x, r);
-	render_ceiling(app, x, (t_pos){ds, de}, r);
-	render_floor(app, x, (t_pos){ds, de}, r);
+	bounds = (t_pos){ds, de};
+	render_wall(app, (t_pos){x, line_h}, bounds, r);
+	render_ceiling(app, x, bounds, r);
+	render_floor(app, x, bounds, r);
 }

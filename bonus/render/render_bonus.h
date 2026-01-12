@@ -117,7 +117,7 @@ void
 render_scanline(struct s_app *app, int x, const t_ray *r);
 /** @brief Render a wall */
 void
-render_wall(struct s_app *app, int x, const t_ray *ray);
+render_wall(struct s_app *app, t_pos geom, t_pos bounds, const t_ray *ray);
 /** @brief Render a single entity pixel */
 void
 render_entity_pix(
@@ -144,6 +144,7 @@ struct s_render_wall_data
 	/** @briof Draw end screen vertical poosition */
 	int						de;
 
+	/** @brief Texture sampling coordinates */
 	int						tx;
 	int						ty;
 	float					wall_x;

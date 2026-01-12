@@ -20,8 +20,8 @@ __attribute__((always_inline)) inline void
 	(void)bounds;
 	color = *(t_color *)(r->tex->img->data + r->t.y * r->tex->img->size_line
 			+ r->t.x * (r->tex->img->bpp / 8));
-	((t_color *)app->framebuffer->image->data)[r->s.x + r->s.y * app->sizes.x]
-		= color;
+	((t_color *)app->framebuffer->image->data)[r->s.x
+		+ (r->s.y - 1) * app->sizes.x] = color;
 }
 
 __attribute__((always_inline)) inline void

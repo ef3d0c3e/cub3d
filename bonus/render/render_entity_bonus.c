@@ -34,6 +34,6 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 		return ;
 	color = sprite_sample_tx(&s->sprite, t.x, t.y);
 	if (color != (t_color)COLOR_UNINIT)
-		((t_color *)app->framebuffer->data)[x + y * app->sizes.x]
+		app->framebuffer->image->data[x + y * app->sizes.x]
 			= color_tint(color, s->ent->data.color);
 }

@@ -25,13 +25,16 @@
 
 # include <mlx.h>
 
+/** @brief Color type */
+typedef uint32_t	t_color;
+
 typedef struct s_image
 {
 	int		width;
 	int		height;
 	int		xoffset;
 	int		format;
-	char	*data;
+	t_color	*data;
 }	t_image;
 
 typedef struct s_img
@@ -144,9 +147,6 @@ enum e_orientation
 	/** @brief Facing West */
 	ORI_WEST,
 };
-
-/** @brief Color type */
-typedef uint32_t	t_color;
 
 /**
  * @brief Interpolate between two colors
