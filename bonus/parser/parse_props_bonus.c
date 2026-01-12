@@ -58,7 +58,7 @@ int
 			&parser->s_data.properties.player_spawn);
 	if (status == 0 || status == -2)
 		status = parse_property_bool(parser, "pitch_enabled",
-			&parser->s_data.properties.pitch_enabled);
+				&parser->s_data.properties.pitch_enabled);
 	return (status);
 }
 
