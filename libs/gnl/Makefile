@@ -12,7 +12,7 @@
 
 NAME = libgnl.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O2
 
 SOURCES := \
 ./get_next_line.c \
