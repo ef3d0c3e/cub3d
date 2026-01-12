@@ -11,6 +11,31 @@
 /* ************************************************************************** */
 #include <cub3d_bonus.h>
 
+__attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
+	inline t_color
+	sample_ref(t_app *app, const struct s_render_fc_data *r, t_pos bounds)
+{
+	const int	max = bounds.y - bounds.x;
+	t_color		cur;
+
+	cur = r->props->reflect_color;
+	if (r->s.y >= bounds.y && r->s.y < 2 * bounds.y - bounds.x)
+	{
+		cur = app->framebuffer->image->data
+		[r->s.x + (2 * bounds.y - r->s.y) * app->sizes.x];
+		return (color_lerp8(cur, r->props->reflect_color,
+				(uint8_t)((255 * (r->s.y - bounds.y)) / max)));
+	}
+	else if (r->s.y < bounds.x && r->s.y > 2 * bounds.x - bounds.y + 1)
+	{
+		cur = app->framebuffer->image->data
+		[r->s.x + (2 * bounds.x - r->s.y) * app->sizes.x];
+		return (color_lerp8(cur, r->props->reflect_color,
+				(uint8_t)((255 * (bounds.x - r->s.y)) / max)));
+	}
+	return (r->props->reflect_color);
+}
+
 /** @brief Floor/Ceiling color fragment shader */
 __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	inline void
@@ -20,13 +45,7 @@ __attribute__((always_inline)) __attribute__((hot)) __attribute__((flatten))
 	t_color				color;
 	t_color				cur;
 
-	cur = r->props->reflect_color;
-	if (r->s.y >= bounds.y && r->s.y < 2 * bounds.y - bounds.x)
-		cur = app->framebuffer->image->data
-		[r->s.x + (2 * bounds.y - r->s.y) * app->sizes.x];
-	else if (r->s.y < bounds.x && r->s.y > 2 * bounds.x - bounds.y + 1)
-		cur = app->framebuffer->image->data
-		[r->s.x + (2 * bounds.x - r->s.y) * app->sizes.x];
+	cur = sample_ref(app, r, bounds);
 	color = *(t_color *)(r->tex->img->data + r->t.y * r->tex->img->size_line
 			+ r->t.x * (r->tex->img->bpp / 8));
 	color = color_lerp8(color, cur, r->props->reflectivity);
