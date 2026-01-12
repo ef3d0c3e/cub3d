@@ -48,6 +48,7 @@ PROP friction 0.92 # Floor friction factor
               ^ Default Value
 PROP frame_time 0.0166666 # Frame duration in ms
 PROP player_spawn 0 # Tile type of the player's spawn
+PROP pitch_enabled 0 # Disable pitch
 ```
 
 **Entities**
