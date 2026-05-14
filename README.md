@@ -2,7 +2,7 @@
 
 This project is part of 42's curriculum.
 
-![video](./docs/demo.mp4) Demo video of the game running the `bonus/backrooms.cub` map
+[![Demo Video](./docs/demo.gif)](./docs/demo.mp4)
 ![screenshot](./docs/screenshot.png) Screenshot of the game running the `bonus/backrooms.cub` map
 
 ## Building
